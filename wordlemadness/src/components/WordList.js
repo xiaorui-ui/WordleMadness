@@ -1,6 +1,6 @@
-import {useState} from "react";
+import { useState } from "react";
 
-export default function WordList({words, onWordChange}) {
+export default function WordList({ words, onWordChange }) {
 
     const handleChange = (i) => () => {
         console.log(i);
@@ -17,17 +17,19 @@ export default function WordList({words, onWordChange}) {
                     <th>remove</th>
                 </tr>
                 {
-                    words.map((word, i) => {
-                        return (
-                            <tr key = {i}>
-                                <td>{i}</td>
-                                <td>{word.word}</td>
-                                <td><input type="checkbox" checked={word.remove} onChange = {handleChange(i)}/></td>
-                            </tr>
-                        )
-                    })
+                    words.length === 0 ?
+                        <p>Add in some words!</p> :
+                        words.map((word, i) => {
+                            return (
+                                <tr key={i}>
+                                    <td>{i}</td>
+                                    <td>{word.word}</td>
+                                    <td><input type="checkbox" checked={word.remove} onChange={handleChange(i)} /></td>
+                                </tr>
+                            )
+                        })
                 }
-                
+
             </table>
         </>
     )
