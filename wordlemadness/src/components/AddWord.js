@@ -1,7 +1,7 @@
 import { useState } from "react";
 import WordList from "./WordList";
 
-export default function AddWord({ wordList, setWordList, len }) {
+export default function AddWord({ wordList, setWordList, len, setLen }) {
 
   const [word, setWord] = useState('');
 
@@ -16,21 +16,31 @@ export default function AddWord({ wordList, setWordList, len }) {
   }
 
   const handleSubmit = (event) => {
+    var str = " Press enter to continue";
     event.preventDefault();
+    if (!onlyLetters(word)) {
+      return prompt("Enter a word with letters only!" + str);
+    }
+
+    // wordList is empty
+    if (len === -1) {
+      setWordList([{ word: word, remove: false }]);
+      setLen(word.length);
+      setWord('');
+      return;
+    }
+
     if (word.length === len) {
-      if (onlyLetters(word)) {
-        setWordList(
-          [...wordList,
-          { word: word, remove: false }
-          ]
-        );
-        console.log("submission handled");
-        setWord('');
-      } else {
-        prompt("Enter a word with letters only!");
-      }
-    } else {
-      prompt("Enter a word with " + len + " characters");
+      setWordList(
+        [...wordList,
+        { word: word, remove: false }
+        ]
+      );
+      console.log("submission handled");
+      setWord('');
+    }
+    else {
+      prompt("Enter a word with " + len + " letters!" + str);
     }
   }
 
@@ -39,7 +49,7 @@ export default function AddWord({ wordList, setWordList, len }) {
       ...wordList.slice(0, i),
       { word: wordList[i].word, remove: !wordList[i].remove },
       ...wordList.slice(i + 1)
-    ])
+    ]);
   }
 
   return (

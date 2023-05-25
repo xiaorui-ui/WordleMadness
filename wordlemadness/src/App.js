@@ -1,30 +1,31 @@
 import "./styles.css";
-import {useState} from "react";
+import { useState } from "react";
 import Header from "./components/Header.js";
 import AddWord from "./components/AddWord";
 import RemoveWords from "./components/RemoveWords";
-// import {AddWord} from "./components/AddWord.js";
-
+import Compute from "./components/Compute";
 
 
 export default function App() {
 
-  const words = [
-    {word: "crane", remove: false}, 
-    {word: "trace", remove: true}
+  const defaultWords = [
+    { word: "crane", remove: false },
+    { word: "trace", remove: true }
   ];
 
-  const len = 5;
+  const [len, setLen] = useState(5);
 
-  const [wordList, setWordList] = useState(words);
+  const [wordList, setWordList] = useState(defaultWords);
 
 
   return (
     <div className="App">
-      <Header/>
+      <Header />
       <main>
-        <AddWord wordList = {wordList} setWordList = {setWordList} len = {len}/>
-        <RemoveWords  wordList = {wordList} setWordList = {setWordList}/>
+        <AddWord wordList={wordList} setWordList={setWordList} len={len} setLen={setLen} />
+        <RemoveWords wordList={wordList} setWordList={setWordList} setLen={setLen} />
+        <Compute wordList={wordList} />
+        {/* We will allow txt addition of the wordList later */}
       </main>
     </div>
   );
