@@ -18,6 +18,7 @@ export default function RemoveWords({ wordList, setWordList, setLen }) {
     return (
         <>
             <button type="submit" onClick={handleRemoval}> Remove Selected </button>
+            <br />
             <button type="submit" onClick={removeAll}> Remove ALL </button>
         </>
     )
