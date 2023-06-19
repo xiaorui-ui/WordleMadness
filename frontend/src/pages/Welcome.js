@@ -15,6 +15,7 @@ export default function Welcome() {
         { word: "crane", remove: false },
         { word: "jazzy", remove: true },
         { word: "fjord", remove: false }
+        { Word: "trace", remove: false }
     ];
 
     const [len, setLen] = useState(5);
