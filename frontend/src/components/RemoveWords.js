@@ -3,7 +3,7 @@ export default function RemoveWords({ wordList, setWordList, setLen }) {
     const handleRemoval = () => {
         var newArr = [...wordList.filter(word => !word.remove)]
         setWordList(newArr);
-        if (newArr.length == 0) {
+        if (newArr.length === 0) {
             setLen(-1);
         }
     }
@@ -18,7 +18,7 @@ export default function RemoveWords({ wordList, setWordList, setLen }) {
     return (
         <>
             <button type="submit" onClick={handleRemoval}> Remove Selected </button>
-            <br />
+            <div style={{ height: "30px" }}></div>
             <button type="submit" onClick={removeAll}> Remove ALL </button>
         </>
     )

@@ -1,13 +1,17 @@
 import { useState } from "react";
 import WordList from "./WordList";
+import CustomPrompt from "./CustomPrompt";
+import TxtWordList from "./TxtWordList";
 
-export default function AddWord({ wordList, setWordList, len, setLen }) {
+export default function AddWord({ wordList, setWordList, len, setLen,
+  showPrompt, setShowPrompt, promptMessage, setPromptMessage }) {
 
   const [word, setWord] = useState('');
 
 
   const handleWordChange = (event) => {
     setWord(event.target.value);
+    // cannot key in upper-case atm, so no need to change
   }
 
 
@@ -15,11 +19,17 @@ export default function AddWord({ wordList, setWordList, len, setLen }) {
     return /^[A-Za-z]*$/.test(str);
   }
 
+  const handleDismiss = () => {
+    setShowPrompt(false);
+  }
+
   const handleSubmit = (event) => {
-    var str = " Press enter to continue";
+    var str = " Press the enter key or confirm to continue";
     event.preventDefault();
     if (!onlyLetters(word)) {
-      return prompt("Enter a word with letters only!" + str);
+      setShowPrompt(true);
+      setPromptMessage("Enter only letters!" + str);
+      return;
     }
 
     // wordList is empty
@@ -31,6 +41,14 @@ export default function AddWord({ wordList, setWordList, len, setLen }) {
     }
 
     if (word.length === len) {
+      // don't allow submission if the word is already in the list
+      for (let i = 0; i < wordList.length; i++) {
+        console.log(word + ", " + wordList[i].word);
+        if (word === wordList[i].word) {
+          setShowPrompt(true);
+          setPromptMessage(`This word is identical to word ${i}. Be careful!`);
+        }
+      }
       setWordList(
         [...wordList,
         { word: word, remove: false }
@@ -40,7 +58,8 @@ export default function AddWord({ wordList, setWordList, len, setLen }) {
       setWord('');
     }
     else {
-      prompt("Enter a word with " + len + " letters!" + str);
+      setPromptMessage("Enter a word with " + len + " letter(s)!" + str);
+      setShowPrompt(true);
     }
   }
 
@@ -58,9 +77,15 @@ export default function AddWord({ wordList, setWordList, len, setLen }) {
 
       <form id="addWordForm" onSubmit={handleSubmit}>
         <input type="text" value={word} onChange={handleWordChange} />
+        <br />
         <button type="submit">Add</button>
       </form>
-      <WordList words={wordList} onWordChange={changeRemove}></WordList>
+
+      <p>OR</p>
+      <br />
+      <TxtWordList setWordList={setWordList} setLen={setLen} setPromptMessage={setPromptMessage} setShowPrompt={setShowPrompt} />
+      {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} />)}
+      <WordList words={wordList} onWordChange={changeRemove} />
     </>
   )
 }
