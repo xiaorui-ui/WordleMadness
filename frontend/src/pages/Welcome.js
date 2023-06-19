@@ -14,7 +14,7 @@ export default function Welcome() {
     const defaultWords = [
         { word: "crane", remove: false },
         { word: "jazzy", remove: true },
-        { word: "fjord", remove: false }
+        { word: "fjord", remove: false },
         { Word: "trace", remove: false }
     ];
 
