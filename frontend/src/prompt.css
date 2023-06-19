@@ -1,0 +1,37 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+}
+
+.modal-content p {
+    margin-bottom: 10px;
+}
+
+.modal-content button {
+    padding: 5px 10px;
+    /* margin-top: 100px; */
+    /* Add some spacing between the message and the button */
+}
+
+
+.vertical-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    /* Set a height for the container to enable vertical centering */
+}

@@ -1,0 +1,39 @@
+.App {
+  font-family: Cambria;
+  /* text-align: center; */
+}
+
+table {
+  border: 2px solid;
+  width: 800px;
+  /* Removed height as height is variable. */
+}
+
+.row {
+  width: 800px;
+  height: 30px;
+}
+
+.login {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+label {
+  display: inline-block;
+  float: left;
+  clear: left;
+  width: 100px;
+  text-align: left;
+}
+
+.space-below {
+  margin-bottom: 10px;
+}
+
+
+input {
+  margin-bottom: 10px;
+}
