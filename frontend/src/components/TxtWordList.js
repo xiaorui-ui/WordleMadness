@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-export default function TxtWordList({ setWordList, setLen, setPromptMessage, setShowPrompt }) {
+export default function TxtWordList({ setWordList, setLen, setPromptMessage, setShowPrompt, onlyLetters,
+    setWordListFreq }) {
+
     const [selectedFile, setSelectedFile] = useState(null);
 
     const handleFileChange = (event) => {
@@ -9,10 +11,6 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
         // Perform any additional actions with the selected file
         console.log("submitted");
 
-        function onlyLetters(str) {
-            return /^[A-Za-z]*$/.test(str);
-        }
-
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
@@ -20,10 +18,14 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
                 const words = extractWords(contents);
                 console.log(words);
                 var list = []
+                var freq = {};
                 var l = words.length;
-                var wordset = new Set();
+                var str = " Press the enter key or confirm to continue.";
                 for (let i = 0; i < l; i++) {
-                    var str = " Press the enter key or confirm to continue.";
+                    // this looks similar to handleSubmit in addWord but this is 
+                    // way more efficient
+                    // can consider creating a frequency hashmap to make it the same efficiency
+                    // The prompt also look somewhat different, but can consider generalizing it?
                     if (!onlyLetters(words[i])) {
                         setPromptMessage(`Words to contain letters only, check word ${i}! ${str}`);
                         setShowPrompt(true);
@@ -32,14 +34,18 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
                         setPromptMessage(`Word ${i} has a different number of letters from word ${i + 1}! ${str}`);
                         setShowPrompt(true);
                         return;
-                    }
-                    if (wordset.has(words[i])) {
-                        setPromptMessage(`Be careful! There are repeated words in this list.`);
+                    } else if (freq.hasOwnProperty(words[i])) {
+                        // for now, we disallow the addition of new words
+                        setPromptMessage(`Word ${i} has appeared in the list before.`);
                         setShowPrompt(true);
+                        return;
                     }
-                    wordset.add(words[i]);
+                    freq[words[i]] = 0;
+                    freq[words[i]] += 1;
                     list.push({ word: words[i], remove: false });
                 }
+                console.log(freq);
+                setWordListFreq(freq);
                 setLen(list[l - 1].word.length);
                 setWordList(list);
             };
@@ -56,10 +62,11 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
 
     return (
         <div>
-            <label>Upload TXT File</label>
+            <>Upload TXT File: </>
             <input
                 id="file-upload"
                 type="file"
+                accept=".txt"
                 onChange={handleFileChange}
             />
             {selectedFile && <p>Selected file: {selectedFile.name}</p>}

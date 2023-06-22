@@ -51,12 +51,12 @@ export default function Login() {
             <h1>Wordle Madness</h1>
             <form id="Login" onSubmit={handleSubmit}>
                 <label>Username:</label><input type='text' value={username} onChange={handleUsernameChange}
-                    placeholder="Josh_Wordle" />
+                    placeholder="e.g: Josh_Wordle" />
                 {/*Line break */}
                 <br />
 
                 <label>Password:</label><input type='text' value={password} onChange={handlePasswordChange}
-                    placeholder="79salet20" />
+                    placeholder="e.g: 79salet20" />
                 <br />
                 <div className='space-below'></div>
 
