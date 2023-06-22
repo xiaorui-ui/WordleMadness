@@ -27,7 +27,7 @@ export default function Login() {
         // change the logic to whatever appropriate
         // access the backend here
         if (username.length < 3 && password.length < 3) {
-            axios.post('localhost:8080', {
+            axios.post('http://localhost:8080/backend/add', {
                 name: username,
                 password: password
             })
