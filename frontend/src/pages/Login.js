@@ -31,6 +31,13 @@ export default function Login() {
                 name: username,
                 password: password
             })
+            .then((response) => {
+                console.log(response.data);
+                  // Handle data
+              })
+              .catch((error) => {
+                console.log(error);
+              });
             destination = '/';
         } else {
             setShowPrompt(true);
