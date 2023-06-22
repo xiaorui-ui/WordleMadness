@@ -10,7 +10,7 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
 
-    @CrossOrigin(origins="https://vercel.com/kjw142857/wordle-madness")
+    @CrossOrigin(origins="https://wordle-madness.vercel.app/")
     @PostMapping(path="/add")
     public @ResponseBody String addNewUser (@RequestParam String name
             , @RequestParam String password) {
