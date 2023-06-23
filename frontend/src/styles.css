@@ -23,7 +23,7 @@ table {
 
 label {
   display: inline-block;
-  float: left;
+  /*   float: left; */
   clear: left;
   width: 100px;
   text-align: left;

@@ -9,7 +9,6 @@ export default function WordList({ words, onWordChange }) {
 
     return (
         <>
-            <h1>Word List</h1>
             <table>
                 <tr height="100px">
                     <th>No.</th>

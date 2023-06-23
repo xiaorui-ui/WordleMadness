@@ -1,6 +1,19 @@
-export default function RemoveWords({ wordList, setWordList, setLen }) {
+export default function RemoveWords({ wordList, setWordList, setLen, wordListFreq, setWordListFreq }) {
 
     const handleRemoval = () => {
+        // modify the frequency map
+        // modify the list
+        for (let i = 0; i < wordList.length; i++) {
+            var word = wordList[i];
+            if (word.remove) {
+                if (wordListFreq[word.word] === 1) {
+                    delete wordListFreq[word.word];
+                } else {
+                    wordListFreq[word.word] -= 1;
+                }
+            }
+        }
+        console.log(wordListFreq);
         var newArr = [...wordList.filter(word => !word.remove)]
         setWordList(newArr);
         if (newArr.length === 0) {
@@ -13,6 +26,7 @@ export default function RemoveWords({ wordList, setWordList, setLen }) {
             []
         );
         setLen(-1);
+        setWordListFreq({});
     }
 
     return (
