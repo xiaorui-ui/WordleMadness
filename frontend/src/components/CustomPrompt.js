@@ -22,7 +22,7 @@ const CustomPrompt = ({ message, onDismiss }) => {
     }, [onDismiss]);
 
     return (
-        <div className="modal-overlay">
+        <div className="modal-overlay" data-testid="prompt">
             <div className="modal-content">
                 <p>{message}</p>
                 <div className='vertical-center'>

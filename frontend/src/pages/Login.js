@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 // possible to use the Link function from the same library as well
 import { useState } from 'react';
-import CustomPrompt from '../components/CustomPrompt';
+import CustomPrompt from '../components/CustomPrompt.js';
 
 // to-do: redirect user to create an account as well?
 

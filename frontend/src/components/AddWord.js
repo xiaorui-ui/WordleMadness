@@ -1,7 +1,7 @@
 import { useState } from "react";
-import WordList from "./WordList";
-import CustomPrompt from "./CustomPrompt";
-import TxtWordList from "./TxtWordList";
+import WordList from "./WordList.js";
+import CustomPrompt from "./CustomPrompt.js";
+import TxtWordList from "./TxtWordList.js";
 
 export default function AddWord({ wordList, setWordList, len, setLen,
   showPrompt, setShowPrompt, promptMessage, setPromptMessage,
@@ -77,9 +77,9 @@ export default function AddWord({ wordList, setWordList, len, setLen,
       <p>Add a word you want in your word list.</p>
 
       <form id="addWordForm" onSubmit={handleSubmit}>
-        <input type="text" value={word} onChange={handleWordChange} />
+        <input type="text" value={word} onChange={handleWordChange} data-testid="add-word-input" />
         <br />
-        <button type="submit">Add</button>
+        <button type="submit" data-testid="add-button">Add</button>
       </form >
 
       <p>OR</p>

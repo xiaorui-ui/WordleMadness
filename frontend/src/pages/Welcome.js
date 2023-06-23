@@ -1,8 +1,8 @@
 import "../styles.css";
 import { useState } from "react";
 import Header from "../components/Header.js";
-import Compute from "../components/Compute";
-import ModifyWords from "../components/ModifyWords";
+import Compute from "../components/Compute.js";
+import ModifyWords from "../components/ModifyWords.js";
 
 // to do: create a pages bar on the left, like in nerdtree
 
@@ -49,7 +49,8 @@ export default function Welcome() {
                 <ModifyWords wordList={answerList} setWordList={setAnswerList} len={len} setLen={setLen}
                     showPrompt={showPrompt} setShowPrompt={setShowPrompt}
                     promptMessage={promptMessage} setPromptMessage={setPromptMessage}
-                    wordListFreq={answerListFreq} setWordListFreq={setAnswerListFreq} />
+                    wordListFreq={answerListFreq} setWordListFreq={setAnswerListFreq}
+                    data-testid="modify-words" />
 
 
                 <button type="click" onClick={handleClick}> Set lists to {differentList ? 'different' : 'same'} </button>
