@@ -13,17 +13,14 @@ public class MainController {
     private UserRepository userRepository;
 
     @CrossOrigin(origins=FRONTEND)
-    @PostMapping(path="/add")
-    public @ResponseBody String addNewUser (@RequestParam String name
-            , @RequestParam String password) {
-        User n = new User();
-        n.setName(name);
-        n.setPassword(password);
-        userRepository.save(n);
-        return "Saved";
+    @PatchMapping(path="/add")
+    public @ResponseBody String addNewWord (@RequestParam String username, @RequestParam String word) {
+        User currentUser = userRepository.findUserByName(username);
+        currentUser.addWord(word);
+        return "Success";
     }
     @CrossOrigin(origins=FRONTEND)
-    @GetMapping(path="/verify")
+    @RequestMapping(path="/verify")
     public @ResponseBody String conditionalLogin(@RequestParam String name
             , @RequestParam String password) {
         if (!userRepository.existsUserByName(name)) {
@@ -34,7 +31,8 @@ public class MainController {
             return "Saved";
         }
         if (userRepository.existsUserByNameAndPassword(name, password)) {
-            return "Logged in";
+            User loggedInUser = userRepository.findUserByName(name);
+            return "Logged in: " + loggedInUser.getName() + loggedInUser.getWordList();
         }
         return "Invalid login details";
     }

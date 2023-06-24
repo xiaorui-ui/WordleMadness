@@ -1,8 +1,8 @@
 import "./styles.css";
-import Welcome from "./pages/Welcome";
-import Login from "./pages/Login";
-import UserGuide from "./pages/UserGuide";
-import DecisionTree from "./pages/DecisionTree";
+import Welcome from "./pages/Welcome.js";
+import Login from "./pages/Login.js";
+import UserGuide from "./pages/UserGuide.js";
+import DecisionTree from "./pages/DecisionTree.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
