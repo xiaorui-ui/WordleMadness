@@ -7,6 +7,8 @@ import CustomPrompt from '../components/CustomPrompt.js';
 
 export default function Login() {
 
+    const BACKEND_LOGIN = "http://localhost:8080/backend/verify";
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPrompt, setShowPrompt] = useState(false);
@@ -26,6 +28,14 @@ export default function Login() {
         // change the logic to whatever appropriate
         // access the backend here
         if (username.length < 3 && password.length < 3) {
+            axios.post(BACKEND_LOGIN, {}, { params: { name: username, password: password } })
+            .then((response) => {
+                console.log(response.data);
+                  // Handle data
+              })
+              .catch((error) => {
+                console.log(error);
+              });
             destination = '/';
         } else {
             setShowPrompt(true);
