@@ -49,13 +49,13 @@ export default function Welcome() {
                 <ModifyWords wordList={answerList} setWordList={setAnswerList} len={len} setLen={setLen}
                     showPrompt={showPrompt} setShowPrompt={setShowPrompt}
                     promptMessage={promptMessage} setPromptMessage={setPromptMessage}
-                    wordListFreq={answerListFreq} setWordListFreq={setAnswerListFreq}
-                    data-testid="modify-words" />
+                    wordListFreq={answerListFreq} setWordListFreq={setAnswerListFreq} />
 
 
-                <button type="click" onClick={handleClick}> Set lists to {differentList ? 'different' : 'same'} </button>
+                <button type="click" onClick={handleClick} data-testid="set-same-diff">
+                    Set lists to {differentList ? 'different' : 'same'} </button>
 
-                <h2>Allowed List({differentList ? 'Different' : 'Same'} from answer list)</h2>
+                <h2>Allowed List({differentList ? 'Different from' : 'Same as'} answer list)</h2>
 
 
                 {differentList &&

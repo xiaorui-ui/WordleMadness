@@ -76,7 +76,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     <>
       <p>Add a word you want in your word list.</p>
 
-      <form id="addWordForm" onSubmit={handleSubmit}>
+      <form id="addWordForm" onSubmit={handleSubmit} data-testid="add-word-form">
         <input type="text" value={word} onChange={handleWordChange} data-testid="add-word-input" />
         <br />
         <button type="submit" data-testid="add-button">Add</button>

@@ -31,9 +31,9 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
 
     return (
         <>
-            <button type="submit" onClick={handleRemoval}> Remove Selected </button>
+            <button type="submit" onClick={handleRemoval} data-testid={"remove-selected"}> Remove Selected </button>
             <div style={{ height: "30px" }}></div>
-            <button type="submit" onClick={removeAll}> Remove ALL </button>
+            <button type="submit" onClick={removeAll} data-testid={"remove-all"}> Remove ALL </button>
         </>
     )
 }

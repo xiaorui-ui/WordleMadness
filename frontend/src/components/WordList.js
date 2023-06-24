@@ -17,14 +17,15 @@ export default function WordList({ words, onWordChange }) {
                         <th>remove</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody data-testid="table-body">
                     {
                         words.map((word, i) => {
                             return (
                                 <tr key={i} height="30px">
                                     <td>{i}</td>
-                                    <td>{word.word}</td>
-                                    <td><input type="checkbox" checked={word.remove} onChange={handleChange(i)} /></td>
+                                    <td data-testid="word">{word.word}</td>
+                                    <td><input type="checkbox" checked={word.remove} onChange={handleChange(i)}
+                                        data-testid="checkbox" /></td>
                                 </tr>
 
                             )
