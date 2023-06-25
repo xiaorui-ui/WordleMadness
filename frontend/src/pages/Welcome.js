@@ -7,24 +7,26 @@ import ModifyWords from "../components/ModifyWords.js";
 // to do: create a pages bar on the left, like in nerdtree
 
 
-export default function Welcome() {
+export default function Welcome({ wordList }) {
 
-    const defaultWords = [
-        { word: "crane", remove: false },
-        { word: "jazzy", remove: true },
-        { word: "fjord", remove: false }
-    ];
+    function f(wordList) {
+        if (wordList.length === 0) {
+            return -1;
+        }
+        return wordList[0].length;
+    }
 
     // All words in list must have length len
-    const [len, setLen] = useState(5);
 
-    const [answerList, setAnswerList] = useState(defaultWords);
+    const [len, setLen] = useState(f(wordList));
+
+    const [answerList, setAnswerList] = useState(wordList);
 
     const [answerListFreq, setAnswerListFreq] = useState({
         "crane": 1, "jazzy": 1, "fjord": 1
     });
 
-    const [allowedList, setAllowedList] = useState(defaultWords);
+    const [allowedList, setAllowedList] = useState(wordList);
 
     const [allowedListFreq, setAllowedListFreq] = useState({
         "crane": 1, "jazzy": 1, "fjord": 1
@@ -32,7 +34,7 @@ export default function Welcome() {
 
     const [differentList, setDifferentList] = useState(true);
 
-    const [promptMessage, setPromptMessage] = useState(defaultWords);
+    const [promptMessage, setPromptMessage] = useState('');
 
     const [showPrompt, setShowPrompt] = useState(false);
 
@@ -53,7 +55,7 @@ export default function Welcome() {
 
 
                 <button type="click" onClick={handleClick} data-testid="set-same-diff">
-                    Set lists to {differentList ? 'different' : 'same'} </button>
+                    Set lists to {differentList ? 'same' : 'different'} </button>
 
                 <h2>Allowed List({differentList ? 'Different from' : 'Same as'} answer list)</h2>
 

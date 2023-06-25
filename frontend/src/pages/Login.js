@@ -5,7 +5,7 @@ import CustomPrompt from '../components/CustomPrompt.js';
 
 // to-do: redirect user to create an account as well?
 
-export default function Login() {
+export default function Login({ setWordList }) {
 
     const BACKEND_LOGIN = "http://localhost:8080/backend/verify";
 
@@ -26,20 +26,27 @@ export default function Login() {
         let destination = '';
 
         // change the logic to whatever appropriate
-        // access the backend here
+
+        // change the if block; the condition was simply a placeholder 
         if (username.length < 3 && password.length < 3) {
             axios.post(BACKEND_LOGIN, {}, { params: { name: username, password: password } })
-            .then((response) => {
-                console.log(response.data);
-                  // Handle data
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+                .then((response) => {
+                    console.log(response.data);
+                    // Handle data
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            // find wordList here from the backend(if present), placeholder is what you find from backend
+            var retrieve = (1 > 2);
+            var placeholder = [];
+            if (retrieve) {
+                setWordList(placeholder);
+            }
             destination = '/';
         } else {
             setShowPrompt(true);
-            setPromptMessage("Username bad");
+            setPromptMessage("Password bad");
         }
 
         // Redirect to the destination page

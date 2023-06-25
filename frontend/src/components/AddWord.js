@@ -48,16 +48,29 @@ export default function AddWord({ wordList, setWordList, len, setLen,
       return;
     }
 
-    if (wordListFreq.hasOwnProperty(word)) {
-      setShowPrompt(true);
-      setPromptMessage(`This word is already in the list. Enter a new word!${str}`);
-      return;
+    // check for repeated words
+    for (let i = 0; i < wordList.length; i++) {
+      if (word === wordList[i].word) {
+        setShowPrompt(true);
+        setPromptMessage(`This word is already in the list. Enter a new word!${str}`);
+        return;
+      }
     }
 
-    wordListFreq[word] = 0;
-    wordListFreq[word] += 1;
+    // if (wordListFreq.hasOwnProperty(word)) {
+    //   setShowPrompt(true);
+    //   setPromptMessage(`This word is already in the list. Enter a new word!${str}`);
+    //   return;
+    // }
+
+    // wordListFreq[word] = 0;
+    // wordListFreq[word] += 1;
     wordList.push({ word: word, remove: false });
     setWordList(wordList);
+
+    // send the post request here
+    // the new word is pushed to the back of the list so perhaps you can do sth similar in the backend
+    // also to make it more efficient?
 
     console.log(`submission handled`);
     console.log(wordListFreq);
