@@ -40,6 +40,8 @@ public class User {
     }
 
     public ArrayList<String> getWordList() {
+        wordList.add("hello");
+        wordList.add("goodbye");
         return wordList;
     }
 
