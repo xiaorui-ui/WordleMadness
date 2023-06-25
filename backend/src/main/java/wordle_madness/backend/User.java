@@ -39,7 +39,9 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<String> getWordList() { return wordList; }
+    public ArrayList<String> getWordList() {
+        return wordList;
+    }
 
     public void addWord(String word) { wordList.add(word); }
 
