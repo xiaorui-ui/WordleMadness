@@ -18,8 +18,8 @@ export default function Login({ setAns, setAllowed, setUser }) {
     const [showPrompt, setShowPrompt] = useState(false);
     const [promptMessage, setPromptMessage] = useState("");
 
-    const retrieveWordList = (user) => {
-        axios.get(BACKEND_GET_WORD_LIST, {}, { params: { username: user } })
+    const retrieveWordList = () => {
+        axios.get(BACKEND_GET_WORD_LIST, {}, { params: { username: username } })
                 .then((response) => {
                     console.log(response.data);
                     // setAns
@@ -29,8 +29,8 @@ export default function Login({ setAns, setAllowed, setUser }) {
                 });
     }
 
-    const retrieveAllowedWordList = (user) => {
-        axios.get(BACKEND_GET_ALLOWED_WORD_LIST, {}, { params: { username: user } })
+    const retrieveAllowedWordList = () => {
+        axios.get(BACKEND_GET_ALLOWED_WORD_LIST, {}, { params: { username: username } })
                 .then((response) => {
                     console.log(response.data);
                     // setAllowed
