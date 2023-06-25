@@ -56,10 +56,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
         // Determine the destination based on username and password
         let destination = '';
 
-        // change the logic to whatever appropriate
-
-        // change the if block; the condition was simply a placeholder 
-        if (username.length < 3 && password.length < 3) {
+        if (username.length <= 10 && password.length <= 10) {
             axios.post(BACKEND_LOGIN, {}, { params: { name: username, password: password } })
                 .then((response) => {
                     console.log(response.data);
@@ -78,7 +75,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
             destination = '/';
         } else {
             setShowPrompt(true);
-            setPromptMessage("Password bad");
+            setPromptMessage("Please enter a username and password with 10 or fewer characters");
         }
 
         // Redirect to the destination page
