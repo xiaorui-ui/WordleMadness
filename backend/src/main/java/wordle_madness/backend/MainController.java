@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @Controller
 @RequestMapping(path="/backend")
 public class MainController {
@@ -28,12 +30,25 @@ public class MainController {
             n.setName(name);
             n.setPassword(password);
             userRepository.save(n);
-            return "Saved";
+            return "Logged in";
         }
         if (userRepository.existsUserByNameAndPassword(name, password)) {
             User loggedInUser = userRepository.findUserByName(name);
-            return "Logged in: " + loggedInUser.getName() + loggedInUser.getWordList();
+            return "Logged in";
         }
         return "Invalid login details";
+    }
+    @CrossOrigin(origins=FRONTEND)
+    @GetMapping(path="/getWords")
+    public @ResponseBody ArrayList<String> getWordList (@RequestParam String username) {
+        User currentUser = userRepository.findUserByName(username);
+        return currentUser.getWordList();
+    }
+
+    @CrossOrigin(origins=FRONTEND)
+    @GetMapping(path="/getAllowedWords")
+    public @ResponseBody ArrayList<String> getAllowedList (@RequestParam String username) {
+        User currentUser = userRepository.findUserByName(username);
+        return currentUser.getAllowedList();
     }
 }
