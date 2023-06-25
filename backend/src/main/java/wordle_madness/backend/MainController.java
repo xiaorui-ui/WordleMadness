@@ -15,7 +15,7 @@ public class MainController {
     private UserRepository userRepository;
 
     @CrossOrigin(origins=FRONTEND)
-    @PatchMapping(path="/add")
+    @PatchMapping(path="/addWord")
     public @ResponseBody String addNewWord (@RequestParam String username, @RequestParam String word) {
         User currentUser = userRepository.findUserByName(username);
         currentUser.addWord(word);

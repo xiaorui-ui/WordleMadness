@@ -18,22 +18,22 @@ export default function Login({ setAns, setAllowed, setUser }) {
     const [showPrompt, setShowPrompt] = useState(false);
     const [promptMessage, setPromptMessage] = useState("");
 
-    const retrieveWordList = (user) => {
-        axios.get(BACKEND_GET_WORD_LIST, {}, { params: { username: user } })
+    const retrieveWordList = () => {
+        axios.get(BACKEND_GET_WORD_LIST, { params: { username: username } })
                 .then((response) => {
                     console.log(response.data);
-                    // setAns
+                    setAns(response.data);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
     }
 
-    const retrieveAllowedWordList = (user) => {
-        axios.get(BACKEND_GET_ALLOWED_WORD_LIST, {}, { params: { username: user } })
+    const retrieveAllowedWordList = () => {
+        axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: username } })
                 .then((response) => {
                     console.log(response.data);
-                    // setAllowed
+                    setAllowed(response.data);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -56,17 +56,14 @@ export default function Login({ setAns, setAllowed, setUser }) {
         // Determine the destination based on username and password
         let destination = '';
 
-        // change the logic to whatever appropriate
-
-        // change the if block; the condition was simply a placeholder 
-        if (username.length < 3 && password.length < 3) {
+        if (username.length <= 10 && password.length <= 10) {
             axios.post(BACKEND_LOGIN, {}, { params: { name: username, password: password } })
                 .then((response) => {
                     console.log(response.data);
                     if (response.data === "Logged in") {
                         setUser({ name: username, loggedIn: true });
-                        retrieveWordList(username);
-                        retrieveAllowedWordList(username);
+                        retrieveWordList();
+                        retrieveAllowedWordList();
                     } else {
                         handleInvalidLogin();
                     }
@@ -78,7 +75,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
             destination = '/';
         } else {
             setShowPrompt(true);
-            setPromptMessage("Password bad");
+            setPromptMessage("Please enter a username and password with 10 or fewer characters");
         }
 
         // Redirect to the destination page
