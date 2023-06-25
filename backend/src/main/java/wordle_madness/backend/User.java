@@ -17,6 +17,8 @@ public class User {
 
     private ArrayList<String> wordList = new ArrayList<>();
 
+    private ArrayList<String> allowedList = new ArrayList<>();
+
     public Integer getId() {
         return id;
     }
@@ -42,4 +44,10 @@ public class User {
     public void addWord(String word) { wordList.add(word); }
 
     public void deleteWord(String word) { wordList.remove(word); }
+
+    public ArrayList<String> getAllowedList() { return allowedList; }
+
+    public void addAllowedWord(String word) { allowedList.add(word); }
+
+    public void deleteAllowedWord(String word) { allowedList.remove(word); }
 }

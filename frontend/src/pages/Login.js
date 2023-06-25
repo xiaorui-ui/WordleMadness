@@ -8,17 +8,47 @@ import CustomPrompt from '../components/CustomPrompt.js';
 
 export default function Login({ setAns, setAllowed, setUser }) {
 
+    // to-do: store these backend urls as environment variables in another file
     const BACKEND_LOGIN = "http://localhost:8080/backend/verify";
+    const BACKEND_GET_WORD_LIST = "http://localhost:8080/backend/getWords";
+    const BACKEND_GET_ALLOWED_WORD_LIST = "http://localhost:8080/backend/getAllowedWords";
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPrompt, setShowPrompt] = useState(false);
     const [promptMessage, setPromptMessage] = useState("");
 
+    const retrieveWordList = (user) => {
+        axios.get(BACKEND_GET_WORD_LIST, {}, { params: { username: user } })
+                .then((response) => {
+                    console.log(response.data);
+                    // setAns
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+    }
+
+    const retrieveAllowedWordList = (user) => {
+        axios.get(BACKEND_GET_ALLOWED_WORD_LIST, {}, { params: { username: user } })
+                .then((response) => {
+                    console.log(response.data);
+                    // setAllowed
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+    }
+
     const navigate = useNavigate();
 
     const handleDismiss = () => {
         setShowPrompt(false);
+    }
+
+    const handleInvalidLogin = () => {
+        setShowPrompt(true);
+        setPromptMessage("Wrong login details! Please try again.");
     }
 
     const handleSubmit = (event) => {
@@ -33,24 +63,17 @@ export default function Login({ setAns, setAllowed, setUser }) {
             axios.post(BACKEND_LOGIN, {}, { params: { name: username, password: password } })
                 .then((response) => {
                     console.log(response.data);
-                    // Handle data
+                    if (response.data === "Logged in") {
+                        setUser({ name: username, loggedIn: true });
+                        retrieveWordList(username);
+                        retrieveAllowedWordList(username);
+                    } else {
+                        handleInvalidLogin();
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-            // find wordList here from the backend(if present), placeholder is what you find from backend
-            // for ans
-            var retrieve = (1 > 2);
-            var placeholder = [];
-            if (retrieve) {
-                setAns(placeholder);
-            }
-            // for allowed
-            retrieve = (2 > 3);
-            placeholder = [];
-            if (retrieve) {
-                setAllowed(placeholder);
-            }
             setUser({ name: username, loggedIn: true });
             destination = '/';
         } else {
