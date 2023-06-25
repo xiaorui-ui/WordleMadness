@@ -13,7 +13,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
         if (wordList.length === 0) {
             return -1;
         }
-        return wordList[0].word.length;
+        return wordList[0].length;
     }
 
     // All words in list must have length len
