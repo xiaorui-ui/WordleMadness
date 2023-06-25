@@ -65,8 +65,8 @@ export default function Login({ setAns, setAllowed, setUser }) {
                     console.log(response.data);
                     if (response.data === "Logged in") {
                         setUser({ name: username, loggedIn: true });
-                        retrieveWordList(username);
-                        retrieveAllowedWordList(username);
+                        retrieveWordList();
+                        retrieveAllowedWordList();
                     } else {
                         handleInvalidLogin();
                     }
