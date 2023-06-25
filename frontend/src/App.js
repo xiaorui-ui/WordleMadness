@@ -12,18 +12,30 @@ export default function App() {
   const defaultWords = [
     { word: "crane", remove: false },
     { word: "jazzy", remove: true },
-    { word: "fjord", remove: false }
+    { word: "fjord", remove: false },
+    { word: "found", remove: false }
   ];
 
-  const [wordList, setWordList] = useState(defaultWords);
+  // answer before allowed, ALWAYS!!!
+
+  const [answerList, setAnswerList] = useState(defaultWords);
+
+  const [allowedList, setAllowedList] = useState(defaultWords);
+
+  const [user, setUser] = useState({ loggedIn: false, userName: "" });
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Welcome wordList={wordList} />} />
-          <Route path="/login" element={<Login setWordList={setWordList} />} />
-          <Route path="/decisionTree" element={<DecisionTree />} />
+          <Route path="/" element={<Welcome answerList={answerList} setAnswerList={setAnswerList}
+            allowedList={allowedList} setAllowedList={setAllowedList} user={user} />} />
+
+          <Route path="/login" element={<Login setAns={setAnswerList} setAllowedList={setAllowedList}
+            setUser={setUser} />} />
+
+          <Route path="/decisionTree" element={<DecisionTree answerList={answerList} allowedList={allowedList} />} />
+
           <Route path="/userGuide" element={<UserGuide />} />
         </Routes>
       </BrowserRouter>

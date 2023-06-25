@@ -10,10 +10,20 @@ import Welcome from '../pages/Welcome';
 
 afterEach(cleanup);
 
+
+
 test("submit word", () => {
     // query... will return null, whereas get... will return an error
+
+    const defaultWords = [
+        { word: "crane", remove: false },
+        { word: "jazzy", remove: true },
+        { word: "fjord", remove: false },
+    ];
+
+
     const { queryByLabelText, getByLabelText } = render(
-        <Welcome />,
+        <Welcome wordList={defaultWords} />,
     );
 
 
@@ -60,8 +70,16 @@ test("submit word", () => {
 });
 
 test("remove words", () => {
+
+    const defaultWords = [
+        { word: "crane", remove: false },
+        { word: "jazzy", remove: true },
+        { word: "fjord", remove: false },
+    ];
+
+
     const { queryByLabelText, getByLabelText } = render(
-        <Welcome />,
+        <Welcome wordList={defaultWords} />,
     );
 
     // in this test case we will work on the 2nd table
@@ -101,7 +119,15 @@ test("remove words", () => {
 });
 
 test("set same", () => {
-    render(<Welcome />,);
+
+    const defaultWords = [
+        { word: "crane", remove: false },
+        { word: "jazzy", remove: true },
+        { word: "fjord", remove: false },
+    ];
+
+
+    render(<Welcome wordList={defaultWords} />,);
 
     // after setting same, the 2nd AddWord component will vanish
     fireEvent.click(screen.getByTestId("set-same-diff"));

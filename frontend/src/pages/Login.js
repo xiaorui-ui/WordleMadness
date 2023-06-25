@@ -6,7 +6,7 @@ import CustomPrompt from '../components/CustomPrompt.js';
 
 // to-do: redirect user to create an account as well?
 
-export default function Login({ setWordList }) {
+export default function Login({ setAns, setAllowed, setUser }) {
 
     const BACKEND_LOGIN = "http://localhost:8080/backend/verify";
 
@@ -39,11 +39,19 @@ export default function Login({ setWordList }) {
                     console.log(error);
                 });
             // find wordList here from the backend(if present), placeholder is what you find from backend
+            // for ans
             var retrieve = (1 > 2);
             var placeholder = [];
             if (retrieve) {
-                setWordList(placeholder);
+                setAns(placeholder);
             }
+            // for allowed
+            retrieve = (2 > 3);
+            placeholder = [];
+            if (retrieve) {
+                setAllowed(placeholder);
+            }
+            setUser({ name: username, loggedIn: true });
             destination = '/';
         } else {
             setShowPrompt(true);

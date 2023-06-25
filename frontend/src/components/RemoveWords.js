@@ -1,4 +1,6 @@
-export default function RemoveWords({ wordList, setWordList, setLen, wordListFreq, setWordListFreq }) {
+
+export default function RemoveWords({ wordList, setWordList, setLen, wordListFreq, setWordListFreq
+    , user, id }) {
 
     const handleRemoval = () => {
         // modify the frequency map
@@ -17,7 +19,16 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         console.log(wordListFreq);
         var newArr = [...wordList.filter(word => !word.remove)]
 
-        // ergo here
+        // insert ergo here, variable user
+        // placeholder code block
+        if (user.loggedIn) {
+            if (id === 1) {
+                // modify answerList
+            }
+            else if (id === 2) {
+                // modify allowedList
+            }
+        }
 
         setWordList(newArr);
         if (newArr.length === 0) {
@@ -33,6 +44,14 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         setWordListFreq({});
 
         // ergo anywhere to set word list to []
+        if (user.loggedIn) {
+            if (id === 1) {
+                // modify answerList
+            }
+            else if (id === 2) {
+                // modify allowedList
+            }
+        }
     }
 
     return (

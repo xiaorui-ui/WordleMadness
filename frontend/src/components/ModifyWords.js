@@ -3,18 +3,20 @@ import RemoveWords from "./RemoveWords.js";
 
 export default function ModifyWords({ wordList, setWordList, len, setLen,
     showPrompt, setShowPrompt, promptMessage, setPromptMessage,
-    wordListFreq, setWordListFreq }) {
+    wordListFreq, setWordListFreq, user, id }) {
     return (
         <>
             <AddWord wordList={wordList} setWordList={setWordList} len={len} setLen={setLen}
                 showPrompt={showPrompt} setShowPrompt={setShowPrompt}
                 promptMessage={promptMessage} setPromptMessage={setPromptMessage}
                 wordListFreq={wordListFreq} setWordListFreq={setWordListFreq}
+                user={user} id={id}
                 data-testid="add-word" />
             <div style={{ height: "30px" }}></div>
 
             <RemoveWords wordList={wordList} setWordList={setWordList} setLen={setLen}
                 wordListFreq={wordListFreq} setWordListFreq={setWordListFreq}
+                user={user} id={id}
                 data-testid="remove-words" />
             <div style={{ height: "30px" }}></div>
         </>
