@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function TxtWordList({ setWordList, setLen, setPromptMessage, setShowPrompt, onlyLetters,
-    setWordListFreq }) {
+    setWordListFreq, user, id }) {
 
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -52,6 +52,15 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
                 setLen(list[l - 1].word.length);
 
                 // insert post request here, variable list
+                // placeholder code block
+                if (user.loggedIn) {
+                    if (id === 1) {
+                        // modify answerList
+                    }
+                    else if (id === 2) {
+                        // modify allowedList
+                    }
+                }
 
                 setWordList(list);
             };

@@ -5,14 +5,14 @@ import TxtWordList from "./TxtWordList.js";
 
 export default function AddWord({ wordList, setWordList, len, setLen,
   showPrompt, setShowPrompt, promptMessage, setPromptMessage,
-  wordListFreq, setWordListFreq }) {
+  wordListFreq, setWordListFreq, user, id }) {
 
   const [word, setWord] = useState('');
 
 
   const handleWordChange = (event) => {
     setWord(event.target.value);
-    // cannot key in upper-case atm(seems like React's default behaviour?)
+    // key in upper case in future
   }
 
 
@@ -30,7 +30,6 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     if (!onlyLetters(word)) {
       setShowPrompt(true);
       setPromptMessage("Enter only letters!" + str);
-      // alert("Enter only letters!" + str)
       return;
     }
 
@@ -72,6 +71,17 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     // the new word is pushed to the back of the list so perhaps you can do sth similar in the backend
     // also to make it more efficient?
 
+    // placeholder code block, variable wordList
+    if (user.loggedIn) {
+      if (id === 1) {
+        // modify answerList
+      }
+      else if (id === 2) {
+        // modify allowedList
+      }
+    }
+
+
     console.log(`submission handled`);
     console.log(wordListFreq);
     setWord('');
@@ -98,7 +108,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
       <p>OR</p>
       <br />
       <TxtWordList setWordList={setWordList} setLen={setLen} setPromptMessage={setPromptMessage} setShowPrompt={setShowPrompt}
-        onlyLetters={onlyLetters} setWordListFreq={setWordListFreq} />
+        onlyLetters={onlyLetters} setWordListFreq={setWordListFreq} user={user} id={id} />
       {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} />)}
       <WordList words={wordList} onWordChange={changeRemove} wordListFreq={wordListFreq} />
     </>
