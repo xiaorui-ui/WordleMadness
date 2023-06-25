@@ -21,7 +21,6 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
                 var l = words.length;
                 var str = " Press the enter key or confirm to continue.";
                 for (let i = 0; i < l; i++) {
-                    // The prompt also look somewhat different, but can consider generalizing it?
                     if (!onlyLetters(words[i])) {
                         setPromptMessage(`Words to contain letters only, check word ${i}! ${str}`);
                         setShowPrompt(true);
@@ -30,19 +29,30 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
                         setPromptMessage(`Word ${i} has a different number of letters from word ${i + 1}! ${str}`);
                         setShowPrompt(true);
                         return;
-                    } else if (freq.hasOwnProperty(words[i])) {
-                        // for now, we disallow the addition of new words
-                        setPromptMessage(`Word ${i} has appeared in the list before.`);
-                        setShowPrompt(true);
-                        return;
                     }
-                    freq[words[i]] = 0;
-                    freq[words[i]] += 1;
+                    // else if (freq.hasOwnProperty(words[i])) {
+                    //     // for now, we disallow the addition of new words
+                    //     setPromptMessage(`Word ${i} has appeared in the list before.`);
+                    //     setShowPrompt(true);
+                    //     return;
+                    // }
+                    // freq[words[i]] = 0;
+                    // freq[words[i]] += 1;
+                    for (let j = 0; j < i; j++) {
+                        if (words[i] === words[j]) {
+                            setPromptMessage(`Word ${i} has appeared in the list before.`);
+                            setShowPrompt(true);
+                            return;
+                        }
+                    }
                     list.push({ word: words[i], remove: false });
                 }
-                console.log(freq);
-                setWordListFreq(freq);
+                // console.log(freq);
+                // setWordListFreq(freq);
                 setLen(list[l - 1].word.length);
+
+                // insert post request here, variable list
+
                 setWordList(list);
             };
             reader.readAsText(file);
