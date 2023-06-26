@@ -1,10 +1,8 @@
 import axios from 'axios';
+import { BACKEND_REMOVE_WORD, BACKEND_REMOVE_ALLOWED_WORD } from '../Constants';
 
 export default function RemoveWords({ wordList, setWordList, setLen, wordListFreq, setWordListFreq
     , user, id }) {
-
-    const BACKEND_REMOVE_WORD = "http://localhost:8080/backend/deleteWord";
-    const BACKEND_REMOVE_ALLOWED_WORD = "http://localhost:8080/backend/deleteAllowedWord";
 
     const handleRemoval = () => {
         // modify the frequency map

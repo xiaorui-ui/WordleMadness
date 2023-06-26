@@ -3,13 +3,11 @@ import axios from 'axios';
 import WordList from "./WordList.js";
 import CustomPrompt from "./CustomPrompt.js";
 import TxtWordList from "./TxtWordList.js";
+import { BACKEND_ADD_WORD, BACKEND_ADD_ALLOWED_WORD } from "../Constants.js";
 
 export default function AddWord({ wordList, setWordList, len, setLen,
   showPrompt, setShowPrompt, promptMessage, setPromptMessage,
   wordListFreq, setWordListFreq, user, id }) {
-
-  const BACKEND_ADD_WORD = "http://localhost:8080/backend/addWord";
-  const BACKEND_ADD_ALLOWED_WORD = "http://localhost:8080/backend/addAllowedWord";
 
   const [word, setWord] = useState('');
 
