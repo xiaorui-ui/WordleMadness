@@ -16,9 +16,34 @@ public class MainController {
 
     @CrossOrigin(origins=FRONTEND)
     @PatchMapping(path="/addWord")
-    public @ResponseBody String addNewWord (@RequestParam String username, @RequestParam String word) {
+    public @ResponseBody String addWord(@RequestParam String username, @RequestParam String word) {
         User currentUser = userRepository.findUserByName(username);
         currentUser.addWord(word);
+        userRepository.save(currentUser);
+        return "Success";
+    }
+    @CrossOrigin(origins=FRONTEND)
+    @PatchMapping(path="/addAllowedWord")
+    public @ResponseBody String addAllowedWord(@RequestParam String username, @RequestParam String word) {
+        User currentUser = userRepository.findUserByName(username);
+        currentUser.addAllowedWord(word);
+        userRepository.save(currentUser);
+        return "Success";
+    }
+    @CrossOrigin(origins=FRONTEND)
+    @PatchMapping(path="/deleteWord")
+    public @ResponseBody String deleteWord(@RequestParam String username, @RequestParam String word) {
+        User currentUser = userRepository.findUserByName(username);
+        currentUser.deleteWord(word);
+        userRepository.save(currentUser);
+        return "Success";
+    }
+    @CrossOrigin(origins=FRONTEND)
+    @PatchMapping(path="/deleteAllowedWord")
+    public @ResponseBody String deleteAllowedWord(@RequestParam String username, @RequestParam String word) {
+        User currentUser = userRepository.findUserByName(username);
+        currentUser.deleteAllowedWord(word);
+        userRepository.save(currentUser);
         return "Success";
     }
     @CrossOrigin(origins=FRONTEND)
@@ -29,11 +54,11 @@ public class MainController {
             User n = new User();
             n.setName(name);
             n.setPassword(password);
+            n.initialiseUser();
             userRepository.save(n);
             return "Logged in";
         }
         if (userRepository.existsUserByNameAndPassword(name, password)) {
-            User loggedInUser = userRepository.findUserByName(name);
             return "Logged in";
         }
         return "Invalid login details";

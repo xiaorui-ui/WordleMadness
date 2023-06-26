@@ -1,6 +1,10 @@
+import axios from 'axios';
 
 export default function RemoveWords({ wordList, setWordList, setLen, wordListFreq, setWordListFreq
     , user, id }) {
+
+    const BACKEND_REMOVE_WORD = "http://localhost:8080/backend/deleteWord";
+    const BACKEND_REMOVE_ALLOWED_WORD = "http://localhost:8080/backend/deleteAllowedWord";
 
     const handleRemoval = () => {
         // modify the frequency map
@@ -19,14 +23,28 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         console.log(wordListFreq);
         var newArr = [...wordList.filter(word => !word.remove)]
 
-        // insert ergo here, variable user
-        // placeholder code block
         if (user.loggedIn) {
             if (id === 1) {
-                // modify answerList
+                wordList.forEach(word => {
+                    axios.patch(BACKEND_REMOVE_WORD, {}, { params: { username: user.name, word: word.word } })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+                });
             }
             else if (id === 2) {
-                // modify allowedList
+                wordList.forEach(word => {
+                    axios.patch(BACKEND_REMOVE_ALLOWED_WORD, {}, { params: { username: user.name, word: word.word } })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+                });
             }
         }
 

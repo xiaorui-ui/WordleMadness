@@ -22,7 +22,9 @@ export default function Login({ setAns, setAllowed, setUser }) {
         axios.get(BACKEND_GET_WORD_LIST, { params: { username: username } })
                 .then((response) => {
                     console.log(response.data);
-                    setAns(response.data);
+                    const ansList = response.data.map(str => { return { word: str, remove: false } })
+                    console.log(ansList);
+                    setAns(ansList);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -33,7 +35,9 @@ export default function Login({ setAns, setAllowed, setUser }) {
         axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: username } })
                 .then((response) => {
                     console.log(response.data);
-                    setAllowed(response.data);
+                    const allowedList = response.data.map(str => { return { word: str, remove: false } })
+                    console.log(allowedList);
+                    setAllowed(allowedList);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -64,6 +68,9 @@ export default function Login({ setAns, setAllowed, setUser }) {
                         setUser({ name: username, loggedIn: true });
                         retrieveWordList();
                         retrieveAllowedWordList();
+                        destination = '/';
+                        navigate(destination);
+                        console.log("Successfully logged in");
                     } else {
                         handleInvalidLogin();
                     }
@@ -71,15 +78,10 @@ export default function Login({ setAns, setAllowed, setUser }) {
                 .catch((error) => {
                     console.log(error);
                 });
-            setUser({ name: username, loggedIn: true });
-            destination = '/';
         } else {
             setShowPrompt(true);
             setPromptMessage("Please enter a username and password with 10 or fewer characters");
         }
-
-        // Redirect to the destination page
-        navigate(destination);
     };
 
     const handleUsernameChange = (event) => {

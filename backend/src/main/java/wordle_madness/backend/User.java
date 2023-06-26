@@ -4,7 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 import java.util.ArrayList;
+
 @Entity
 public class User {
     @Id
@@ -15,9 +17,14 @@ public class User {
 
     private String password;
 
-    private ArrayList<String> wordList = new ArrayList<>();
+    private ArrayList<String> wordList;
 
-    private ArrayList<String> allowedList = new ArrayList<>();
+    private ArrayList<String> allowedList;
+
+    public void initialiseUser() {
+        this.wordList = new ArrayList<>();
+        this.allowedList = new ArrayList<>();
+    }
 
     public Integer getId() {
         return id;
@@ -40,12 +47,12 @@ public class User {
     }
 
     public ArrayList<String> getWordList() {
-        wordList.add("hello");
-        wordList.add("goodbye");
         return wordList;
     }
 
-    public void addWord(String word) { wordList.add(word); }
+    public void addWord(String word) {
+        wordList.add(word);
+    }
 
     public void deleteWord(String word) { wordList.remove(word); }
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from 'axios';
 import WordList from "./WordList.js";
 import CustomPrompt from "./CustomPrompt.js";
 import TxtWordList from "./TxtWordList.js";
@@ -6,6 +7,9 @@ import TxtWordList from "./TxtWordList.js";
 export default function AddWord({ wordList, setWordList, len, setLen,
   showPrompt, setShowPrompt, promptMessage, setPromptMessage,
   wordListFreq, setWordListFreq, user, id }) {
+
+  const BACKEND_ADD_WORD = "http://localhost:8080/backend/addWord";
+  const BACKEND_ADD_ALLOWED_WORD = "http://localhost:8080/backend/addAllowedWord";
 
   const [word, setWord] = useState('');
 
@@ -67,17 +71,27 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     wordList.push({ word: word, remove: false });
     setWordList(wordList);
 
-    // send the post request here
-    // the new word is pushed to the back of the list so perhaps you can do sth similar in the backend
-    // also to make it more efficient?
+    
 
     // placeholder code block, variable wordList
     if (user.loggedIn) {
       if (id === 1) {
-        // modify answerList
+        axios.patch(BACKEND_ADD_WORD, {}, { params: { username: user.name, word: word } })
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
       }
       else if (id === 2) {
-        // modify allowedList
+        axios.patch(BACKEND_ADD_ALLOWED_WORD, {}, { params: { username: user.name, word: word } })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
       }
     }
 
