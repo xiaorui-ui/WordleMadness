@@ -83,6 +83,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
 
         // Redirect to the destination page
         navigate(destination);
+        console.log("Successfully logged in");
     };
 
     const handleUsernameChange = (event) => {
