@@ -43,11 +43,9 @@ public class User {
     }
 
     public ArrayList<Pair<String, Boolean>> getWordList() {
-        wordList.add("1hello");
-        wordList.add("0goodbye");
         ArrayList<Pair<String, Boolean>> words = new ArrayList<>();
         wordList.forEach((word) -> {
-            boolean remove = word.charAt(0) == '0';
+            boolean remove = word.charAt(0) == '1';
             String wordString = word.substring(1);
             words.add(Pair.of(wordString, remove));
         });
@@ -61,7 +59,7 @@ public class User {
     public ArrayList<Pair<String, Boolean>> getAllowedList() {
         ArrayList<Pair<String, Boolean>> allowedWords = new ArrayList<>();
         allowedList.forEach((word) -> {
-            boolean remove = word.charAt(0) == '0';
+            boolean remove = word.charAt(0) == '1';
             String wordString = word.substring(1);
             allowedWords.add(Pair.of(wordString, remove));
         });

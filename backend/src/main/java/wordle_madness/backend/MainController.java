@@ -18,9 +18,42 @@ public class MainController {
 
     @CrossOrigin(origins=FRONTEND)
     @PatchMapping(path="/addWord")
-    public @ResponseBody String addNewWord (@RequestParam String username, @RequestParam String word) {
+    public @ResponseBody String addWord(@RequestParam String username, @RequestParam String word,
+                                         @RequestParam Boolean remove) {
         User currentUser = userRepository.findUserByName(username);
-        currentUser.addWord(word);
+        char removeCode = remove ? '1' : '0';
+        String addedWord = removeCode + word;
+        currentUser.addWord(addedWord);
+        return "Success";
+    }
+    @CrossOrigin(origins=FRONTEND)
+    @PatchMapping(path="/addAllowedWord")
+    public @ResponseBody String addAllowedWord(@RequestParam String username, @RequestParam String word,
+                                         @RequestParam Boolean remove) {
+        User currentUser = userRepository.findUserByName(username);
+        char removeCode = remove ? '1' : '0';
+        String addedWord = removeCode + word;
+        currentUser.addAllowedWord(addedWord);
+        return "Success";
+    }
+    @CrossOrigin(origins=FRONTEND)
+    @PatchMapping(path="/deleteWord")
+    public @ResponseBody String deleteWord(@RequestParam String username, @RequestParam String word,
+                                         @RequestParam Boolean remove) {
+        User currentUser = userRepository.findUserByName(username);
+        char removeCode = remove ? '1' : '0';
+        String deletedWord = removeCode + word;
+        currentUser.deleteWord(deletedWord);
+        return "Success";
+    }
+    @CrossOrigin(origins=FRONTEND)
+    @PatchMapping(path="/deleteAllowedWord")
+    public @ResponseBody String deleteAllowedWord(@RequestParam String username, @RequestParam String word,
+                                            @RequestParam Boolean remove) {
+        User currentUser = userRepository.findUserByName(username);
+        char removeCode = remove ? '1' : '0';
+        String deletedWord = removeCode + word;
+        currentUser.deleteAllowedWord(deletedWord);
         return "Success";
     }
     @CrossOrigin(origins=FRONTEND)

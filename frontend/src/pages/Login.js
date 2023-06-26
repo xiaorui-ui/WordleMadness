@@ -68,6 +68,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
                         setUser({ name: username, loggedIn: true });
                         retrieveWordList();
                         retrieveAllowedWordList();
+                        destination = '/';
                     } else {
                         handleInvalidLogin();
                     }
@@ -75,8 +76,6 @@ export default function Login({ setAns, setAllowed, setUser }) {
                 .catch((error) => {
                     console.log(error);
                 });
-            setUser({ name: username, loggedIn: true });
-            destination = '/';
         } else {
             setShowPrompt(true);
             setPromptMessage("Please enter a username and password with 10 or fewer characters");

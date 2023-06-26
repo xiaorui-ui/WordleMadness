@@ -31,7 +31,7 @@ export default function App() {
           <Route path="/" element={<Welcome answerList={answerList} setAnswerList={setAnswerList}
             allowedList={allowedList} setAllowedList={setAllowedList} user={user} />} />
 
-          <Route path="/login" element={<Login setAns={setAnswerList} setAllowedList={setAllowedList}
+          <Route path="/login" element={<Login setAns={setAnswerList} setAllowed={setAllowedList}
             setUser={setUser} />} />
 
           <Route path="/decisionTree" element={<DecisionTree answerList={answerList} allowedList={allowedList} />} />
