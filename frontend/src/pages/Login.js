@@ -69,6 +69,8 @@ export default function Login({ setAns, setAllowed, setUser }) {
                         retrieveWordList();
                         retrieveAllowedWordList();
                         destination = '/';
+                        navigate(destination);
+                        console.log("Successfully logged in");
                     } else {
                         handleInvalidLogin();
                     }
@@ -80,10 +82,6 @@ export default function Login({ setAns, setAllowed, setUser }) {
             setShowPrompt(true);
             setPromptMessage("Please enter a username and password with 10 or fewer characters");
         }
-
-        // Redirect to the destination page
-        navigate(destination);
-        console.log("Successfully logged in");
     };
 
     const handleUsernameChange = (event) => {
