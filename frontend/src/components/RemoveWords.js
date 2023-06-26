@@ -1,3 +1,4 @@
+import axios from 'axios';
 
 export default function RemoveWords({ wordList, setWordList, setLen, wordListFreq, setWordListFreq
     , user, id }) {
