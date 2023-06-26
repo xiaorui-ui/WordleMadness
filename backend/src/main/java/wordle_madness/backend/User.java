@@ -21,7 +21,7 @@ public class User {
 
     private ArrayList<String> allowedList;
 
-    public User() {
+    public void initialiseUser() {
         this.wordList = new ArrayList<>();
         this.allowedList = new ArrayList<>();
     }
@@ -46,9 +46,13 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<String> getWordList() { return wordList; }
+    public ArrayList<String> getWordList() {
+        return wordList;
+    }
 
-    public void addWord(String word) { wordList.add(word); }
+    public void addWord(String word) {
+        wordList.add(word);
+    }
 
     public void deleteWord(String word) { wordList.remove(word); }
 

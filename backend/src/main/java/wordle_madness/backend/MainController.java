@@ -19,6 +19,7 @@ public class MainController {
     public @ResponseBody String addWord(@RequestParam String username, @RequestParam String word) {
         User currentUser = userRepository.findUserByName(username);
         currentUser.addWord(word);
+        userRepository.save(currentUser);
         return "Success";
     }
     @CrossOrigin(origins=FRONTEND)
@@ -26,6 +27,7 @@ public class MainController {
     public @ResponseBody String addAllowedWord(@RequestParam String username, @RequestParam String word) {
         User currentUser = userRepository.findUserByName(username);
         currentUser.addAllowedWord(word);
+        userRepository.save(currentUser);
         return "Success";
     }
     @CrossOrigin(origins=FRONTEND)
@@ -33,6 +35,7 @@ public class MainController {
     public @ResponseBody String deleteWord(@RequestParam String username, @RequestParam String word) {
         User currentUser = userRepository.findUserByName(username);
         currentUser.deleteWord(word);
+        userRepository.save(currentUser);
         return "Success";
     }
     @CrossOrigin(origins=FRONTEND)
@@ -40,6 +43,7 @@ public class MainController {
     public @ResponseBody String deleteAllowedWord(@RequestParam String username, @RequestParam String word) {
         User currentUser = userRepository.findUserByName(username);
         currentUser.deleteAllowedWord(word);
+        userRepository.save(currentUser);
         return "Success";
     }
     @CrossOrigin(origins=FRONTEND)
@@ -50,11 +54,11 @@ public class MainController {
             User n = new User();
             n.setName(name);
             n.setPassword(password);
+            n.initialiseUser();
             userRepository.save(n);
             return "Logged in";
         }
         if (userRepository.existsUserByNameAndPassword(name, password)) {
-            User loggedInUser = userRepository.findUserByName(name);
             return "Logged in";
         }
         return "Invalid login details";

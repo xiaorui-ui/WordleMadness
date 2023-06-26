@@ -76,8 +76,6 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     // placeholder code block, variable wordList
     if (user.loggedIn) {
       if (id === 1) {
-        console.log(user.name);
-        console.log(word);
         axios.patch(BACKEND_ADD_WORD, {}, { params: { username: user.name, word: word } })
                 .then((response) => {
                     console.log(response.data);
@@ -87,8 +85,6 @@ export default function AddWord({ wordList, setWordList, len, setLen,
                 });
       }
       else if (id === 2) {
-        console.log(user.name);
-        console.log(word);
         axios.patch(BACKEND_ADD_ALLOWED_WORD, {}, { params: { username: user.name, word: word } })
         .then((response) => {
             console.log(response.data);
