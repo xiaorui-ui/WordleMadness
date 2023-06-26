@@ -26,7 +26,7 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         if (user.loggedIn) {
             if (id === 1) {
                 wordList.forEach(word => {
-                    axios.patch(BACKEND_REMOVE_WORD, {}, { params: { username: user.name, word: word.word, remove: false } })
+                    axios.patch(BACKEND_REMOVE_WORD, {}, { params: { username: user.name, word: word.word } })
         .then((response) => {
             console.log(response.data);
         })
@@ -37,7 +37,7 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
             }
             else if (id === 2) {
                 wordList.forEach(word => {
-                    axios.patch(BACKEND_REMOVE_ALLOWED_WORD, {}, { params: { username: user.name, word: word.word, remove: false } })
+                    axios.patch(BACKEND_REMOVE_ALLOWED_WORD, {}, { params: { username: user.name, word: word.word } })
         .then((response) => {
             console.log(response.data);
         })

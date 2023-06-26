@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @Controller
 @RequestMapping(path="/backend")
@@ -18,42 +17,30 @@ public class MainController {
 
     @CrossOrigin(origins=FRONTEND)
     @PatchMapping(path="/addWord")
-    public @ResponseBody String addWord(@RequestParam String username, @RequestParam String word,
-                                         @RequestParam Boolean remove) {
+    public @ResponseBody String addWord(@RequestParam String username, @RequestParam String word) {
         User currentUser = userRepository.findUserByName(username);
-        char removeCode = remove ? '1' : '0';
-        String addedWord = removeCode + word;
-        currentUser.addWord(addedWord);
+        currentUser.addWord(word);
         return "Success";
     }
     @CrossOrigin(origins=FRONTEND)
     @PatchMapping(path="/addAllowedWord")
-    public @ResponseBody String addAllowedWord(@RequestParam String username, @RequestParam String word,
-                                         @RequestParam Boolean remove) {
+    public @ResponseBody String addAllowedWord(@RequestParam String username, @RequestParam String word) {
         User currentUser = userRepository.findUserByName(username);
-        char removeCode = remove ? '1' : '0';
-        String addedWord = removeCode + word;
-        currentUser.addAllowedWord(addedWord);
+        currentUser.addAllowedWord(word);
         return "Success";
     }
     @CrossOrigin(origins=FRONTEND)
     @PatchMapping(path="/deleteWord")
-    public @ResponseBody String deleteWord(@RequestParam String username, @RequestParam String word,
-                                         @RequestParam Boolean remove) {
+    public @ResponseBody String deleteWord(@RequestParam String username, @RequestParam String word) {
         User currentUser = userRepository.findUserByName(username);
-        char removeCode = remove ? '1' : '0';
-        String deletedWord = removeCode + word;
-        currentUser.deleteWord(deletedWord);
+        currentUser.deleteWord(word);
         return "Success";
     }
     @CrossOrigin(origins=FRONTEND)
     @PatchMapping(path="/deleteAllowedWord")
-    public @ResponseBody String deleteAllowedWord(@RequestParam String username, @RequestParam String word,
-                                            @RequestParam Boolean remove) {
+    public @ResponseBody String deleteAllowedWord(@RequestParam String username, @RequestParam String word) {
         User currentUser = userRepository.findUserByName(username);
-        char removeCode = remove ? '1' : '0';
-        String deletedWord = removeCode + word;
-        currentUser.deleteAllowedWord(deletedWord);
+        currentUser.deleteAllowedWord(word);
         return "Success";
     }
     @CrossOrigin(origins=FRONTEND)
@@ -75,14 +62,14 @@ public class MainController {
     }
     @CrossOrigin(origins=FRONTEND)
     @GetMapping(path="/getWords")
-    public @ResponseBody ArrayList<Pair<String, Boolean>> getWordList (@RequestParam String username) {
+    public @ResponseBody ArrayList<String> getWordList (@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
         return currentUser.getWordList();
     }
 
     @CrossOrigin(origins=FRONTEND)
     @GetMapping(path="/getAllowedWords")
-    public @ResponseBody ArrayList<Pair<String, Boolean>> getAllowedList (@RequestParam String username) {
+    public @ResponseBody ArrayList<String> getAllowedList (@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
         return currentUser.getAllowedList();
     }
