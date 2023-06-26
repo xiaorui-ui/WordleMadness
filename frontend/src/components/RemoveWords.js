@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BACKEND_REMOVE_WORD, BACKEND_REMOVE_ALLOWED_WORD } from '../Constants';
+import { BACKEND_REMOVE_WORD, BACKEND_REMOVE_ALLOWED_WORD } from './Constants';
 
 export default function RemoveWords({ wordList, setWordList, setLen, wordListFreq, setWordListFreq
     , user, id }) {

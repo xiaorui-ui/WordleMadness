@@ -3,7 +3,7 @@ import axios from 'axios';
 import WordList from "./WordList.js";
 import CustomPrompt from "./CustomPrompt.js";
 import TxtWordList from "./TxtWordList.js";
-import { BACKEND_ADD_WORD, BACKEND_ADD_ALLOWED_WORD } from "../Constants.js";
+import { BACKEND_ADD_WORD, BACKEND_ADD_ALLOWED_WORD } from "./Constants.js";
 
 export default function AddWord({ wordList, setWordList, len, setLen,
   showPrompt, setShowPrompt, promptMessage, setPromptMessage,
