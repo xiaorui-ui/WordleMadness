@@ -22,7 +22,9 @@ export default function Login({ setAns, setAllowed, setUser }) {
         axios.get(BACKEND_GET_WORD_LIST, { params: { username: username } })
                 .then((response) => {
                     console.log(response.data);
-                    setAns(response.data.map(pair => { return { word: pair.first, remove: pair.second } }));
+                    const ansList = response.data.map(pair => { return { word: pair.first, remove: pair.second } })
+                    console.log(ansList);
+                    setAns(ansList);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -33,7 +35,9 @@ export default function Login({ setAns, setAllowed, setUser }) {
         axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: username } })
                 .then((response) => {
                     console.log(response.data);
-                    setAllowed(response.data.map(pair => { return { word: pair.first, remove: pair.second } }));
+                    const allowedList = response.data.map(pair => { return { word: pair.first, remove: pair.second } })
+                    console.log(allowedList);
+                    setAllowed(allowedList);
                 })
                 .catch((error) => {
                     console.log(error);
