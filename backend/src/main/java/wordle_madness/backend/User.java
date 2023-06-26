@@ -17,9 +17,14 @@ public class User {
 
     private String password;
 
-    private ArrayList<String> wordList = new ArrayList<>();
+    private ArrayList<String> wordList;
 
-    private ArrayList<String> allowedList = new ArrayList<>();
+    private ArrayList<String> allowedList;
+
+    public User() {
+        this.wordList = new ArrayList<>();
+        this.allowedList = new ArrayList<>();
+    }
 
     public Integer getId() {
         return id;
