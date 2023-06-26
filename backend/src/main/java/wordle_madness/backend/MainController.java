@@ -1,10 +1,12 @@
 package wordle_madness.backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Controller
 @RequestMapping(path="/backend")
@@ -40,14 +42,14 @@ public class MainController {
     }
     @CrossOrigin(origins=FRONTEND)
     @GetMapping(path="/getWords")
-    public @ResponseBody ArrayList<String> getWordList (@RequestParam String username) {
+    public @ResponseBody ArrayList<Pair<String, Boolean>> getWordList (@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
         return currentUser.getWordList();
     }
 
     @CrossOrigin(origins=FRONTEND)
     @GetMapping(path="/getAllowedWords")
-    public @ResponseBody ArrayList<String> getAllowedList (@RequestParam String username) {
+    public @ResponseBody ArrayList<Pair<String, Boolean>> getAllowedList (@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
         return currentUser.getAllowedList();
     }

@@ -4,7 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.data.util.Pair;
+
 import java.util.ArrayList;
+
 @Entity
 public class User {
     @Id
@@ -39,17 +42,31 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<String> getWordList() {
-        wordList.add("hello");
-        wordList.add("goodbye");
-        return wordList;
+    public ArrayList<Pair<String, Boolean>> getWordList() {
+        wordList.add("1hello");
+        wordList.add("0goodbye");
+        ArrayList<Pair<String, Boolean>> words = new ArrayList<>();
+        wordList.forEach((word) -> {
+            boolean remove = word.charAt(0) == '0';
+            String wordString = word.substring(1);
+            words.add(Pair.of(wordString, remove));
+        });
+        return words;
     }
 
     public void addWord(String word) { wordList.add(word); }
 
     public void deleteWord(String word) { wordList.remove(word); }
 
-    public ArrayList<String> getAllowedList() { return allowedList; }
+    public ArrayList<Pair<String, Boolean>> getAllowedList() {
+        ArrayList<Pair<String, Boolean>> allowedWords = new ArrayList<>();
+        allowedList.forEach((word) -> {
+            boolean remove = word.charAt(0) == '0';
+            String wordString = word.substring(1);
+            allowedWords.add(Pair.of(wordString, remove));
+        });
+        return allowedWords;
+    }
 
     public void addAllowedWord(String word) { allowedList.add(word); }
 
