@@ -3,15 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import CustomPrompt from '../components/CustomPrompt.js';
+import { BACKEND_LOGIN, BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST } from '../components/Constants.js';
 
 // to-do: redirect user to create an account as well?
 
 export default function Login({ setAns, setAllowed, setUser }) {
-
-    // to-do: store these backend urls as environment variables in another file
-    const BACKEND_LOGIN = "http://localhost:8080/backend/verify";
-    const BACKEND_GET_WORD_LIST = "http://localhost:8080/backend/getWords";
-    const BACKEND_GET_ALLOWED_WORD_LIST = "http://localhost:8080/backend/getAllowedWords";
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

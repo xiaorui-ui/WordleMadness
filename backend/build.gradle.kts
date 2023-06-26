@@ -2,9 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	java
+	id("com.google.cloud.tools.appengine") version "2.4.4"
 	id("org.springframework.boot") version "3.1.0"
 	id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version "1.9.0-RC"
+    war
 }
 
 group = "wordle_madness"
