@@ -1,4 +1,4 @@
-const BACKEND = "https://20230627t002430-dot-skilful-earth-388409.as.r.appspot.com/";
+const BACKEND = "https://skilful-earth-388409.as.r.appspot.com:8080/";
 const BACKEND_LOGIN = BACKEND + "verify";
 const BACKEND_GET_WORD_LIST = BACKEND + "getWords";
 const BACKEND_GET_ALLOWED_WORD_LIST = BACKEND + "getAllowedWords";
