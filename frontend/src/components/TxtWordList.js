@@ -32,6 +32,7 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                 const words = extractWords(contents);
                 var freq = {};
                 var l = words.length;
+                var list = [];
                 var str = " Press the enter key or confirm to continue.";
                 for (let i = 0; i < l; i++) {
                     if (!onlyLetters(words[i])) {
@@ -40,10 +41,6 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                         return;
                     } else if (len !== -1 && words[i].length !== len) {
                         setPromptMessage(`Word ${i} has a different number of letters from the current words in the list!`);
-                        setShowPrompt(true);
-                        return;
-                    } else if (i < l - 1 && words[i].length !== words[i + 1].length) {
-                        setPromptMessage(`Word ${i} has a different number of letters from word ${i + 1}! ${str}`);
                         setShowPrompt(true);
                         return;
                     }
@@ -55,14 +52,20 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                     // }
                     // freq[words[i]] = 0;
                     // freq[words[i]] += 1;
-                    for (let j = 0; j < i; j++) {
-                        if (words[i] === words[j]) {
-                            setPromptMessage(`Word ${i} has appeared in the list before.`);
+                    
+                    list.push({ word: words[i], remove: false });
+                }
+                for (let j = 0; j < wordList.length; j++) {
+                    list.push(wordList[j]);
+                }
+                for (let m = 0; m < list.length; m++) {
+                    for (let n = 0; n < m; n++) {
+                        if (list[m].word === list[n].word) {
+                            setPromptMessage(`Word ${list[n].word} is repeated!`);
                             setShowPrompt(true);
                             return;
                         }
                     }
-                    wordList.push({ word: words[i], remove: false });
                 }
                 // console.log(freq);
                 // setWordListFreq(freq);
@@ -76,7 +79,7 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                     }
                 }
 
-                setWordList(wordList);
+                setWordList(list);
                 if (len === -1) {
                     setLen(words[l - 1].length);
                 }
