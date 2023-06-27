@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { BACKEND_REMOVE_WORD, BACKEND_REMOVE_ALLOWED_WORD } from './Constants';
+import { BACKEND_REMOVE_WORDS, BACKEND_REMOVE_ALLOWED_WORDS } from './Constants';
 
 export default function RemoveWords({ wordList, setWordList, setLen, wordListFreq, setWordListFreq
     , user, id }) {
 
-    const removeWordFromBackendList = (word) => {
-        axios.patch(BACKEND_REMOVE_WORD, {}, { params: { username: user.name, word: word.word } })
+    const removeWordsFromBackendList = (words) => {
+        axios.patch(BACKEND_REMOVE_WORDS, {}, { params: { username: user.name, words: words.map(x => x.word) } })
         .then((response) => {
             console.log(response.data);
         })
@@ -14,8 +14,8 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         });
     }
 
-    const removeWordFromBackendAllowedList = (word) => {
-        axios.patch(BACKEND_REMOVE_ALLOWED_WORD, {}, { params: { username: user.name, word: word.word } })
+    const removeWordsFromBackendAllowedList = (words) => {
+        axios.patch(BACKEND_REMOVE_ALLOWED_WORDS, {}, { params: { username: user.name, words: words.map(x => x.word) } })
         .then((response) => {
             console.log(response.data);
         })
@@ -38,24 +38,15 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         //         }
         //     }
         // }
-        var newArr = [...wordList.filter(word => !word.remove)]
+        var newArr = [...wordList.filter(word => !word.remove)];
+        var removedArr = [...wordList.filter(word => word.remove)];
 
         if (user.loggedIn) {
             if (id === 1) {
-                for (let i = 0; i < wordList.length; i++) {
-                    let word = wordList[i];
-                    if (word.remove) {
-                        removeWordFromBackendList(word);
-                    }
-                }
+                removeWordsFromBackendList(removedArr);
             }
             else if (id === 2) {
-                for (let i = 0; i < wordList.length; i++) {
-                    let word = wordList[i];
-                    if (word.remove) {
-                        removeWordFromBackendAllowedList(word);
-                    }
-                }
+                removeWordsFromBackendAllowedList(removedArr);
             }
         }
 

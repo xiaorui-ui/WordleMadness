@@ -3,7 +3,7 @@ import axios from 'axios';
 import WordList from "./WordList.js";
 import CustomPrompt from "./CustomPrompt.js";
 import TxtWordList from "./TxtWordList.js";
-import { BACKEND_ADD_WORD, BACKEND_ADD_ALLOWED_WORD } from "./Constants.js";
+import { BACKEND_ADD_WORDS, BACKEND_ADD_ALLOWED_WORDS } from "./Constants.js";
 
 export default function AddWord({ wordList, setWordList, len, setLen,
   showPrompt, setShowPrompt, promptMessage, setPromptMessage,
@@ -12,7 +12,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
   const [word, setWord] = useState('');
 
   const addWordToBackendList = () => {
-    axios.patch(BACKEND_ADD_WORD, {}, { params: { username: user.name, word: word } })
+    axios.patch(BACKEND_ADD_WORDS, {}, { params: { username: user.name, words: [word] } })
                 .then((response) => {
                     console.log(response.data);
                 })
@@ -22,7 +22,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
   }
 
   const addWordToBackendAllowedList = () => {
-    axios.patch(BACKEND_ADD_ALLOWED_WORD, {}, { params: { username: user.name, word: word } })
+    axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, { params: { username: user.name, words: [word] } })
         .then((response) => {
             console.log(response.data);
         })

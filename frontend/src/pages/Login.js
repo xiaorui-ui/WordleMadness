@@ -53,10 +53,10 @@ export default function Login({ setAns, setAllowed, setUser }) {
         let destination = '';
 
         if (username.length <= 10 && password.length <= 10) {
-            setShowPrompt(true);
             axios.post(BACKEND_LOGIN, {}, { params: { name: username, password: password } })
                 .then((response) => {
                     if (response.data === "Logged in") {
+                        setShowPrompt(true);
                         setPromptMessage("Logging in...");
                         setUser({ name: username, loggedIn: true });
                         retrieveWordList();

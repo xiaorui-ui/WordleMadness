@@ -7,8 +7,8 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
 
     const [selectedFile, setSelectedFile] = useState(null);
 
-    const addWordToBackendList = (word) => {
-        axios.patch(BACKEND_ADD_WORD, {}, { params: { username: user.name, word: word } })
+    const addWordsToBackendList = (words) => {
+        axios.patch(BACKEND_ADD_WORD, {}, { params: { username: user.name, words: words } })
                     .then((response) => {
                         console.log(response.data);
                     })
@@ -17,8 +17,8 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
                     });
       }
     
-      const addWordToBackendAllowedList = (word) => {
-        axios.patch(BACKEND_ADD_ALLOWED_WORD, {}, { params: { username: user.name, word: word } })
+      const addWordsToBackendAllowedList = (words) => {
+        axios.patch(BACKEND_ADD_ALLOWED_WORD, {}, { params: { username: user.name, words: words } })
             .then((response) => {
                 console.log(response.data);
             })
@@ -74,14 +74,10 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
 
                 if (user.loggedIn) {
                     if (id === 1) {
-                        for (let i = 0; i < list.length; i++) {
-                            addWordToBackendList(list[i].word);
-                        }
+                        addWordsToBackendList(words);
                     }
                     else if (id === 2) {
-                        for (let i = 0; i < list.length; i++) {
-                            addWordToBackendAllowedList(list[i].word);
-                        }
+                        addWordsToBackendAllowedList(words);
                     }
                 }
 
