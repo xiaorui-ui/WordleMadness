@@ -1,8 +1,22 @@
 import axios from 'axios';
-import { BACKEND_REMOVE_WORD, BACKEND_REMOVE_ALLOWED_WORD } from './Constants';
+import { BACKEND_REMOVE_WORDS, BACKEND_REMOVE_ALLOWED_WORDS } from './Constants';
 
 export default function RemoveWords({ wordList, setWordList, setLen, wordListFreq, setWordListFreq
     , user, id }) {
+
+    const removeWordsFromBackendList = (words) => {
+        axios.patch(BACKEND_REMOVE_WORDS, {}, { params: { username: user.name, words: words.map(x => x.word).join(",") } })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    const removeWordsFromBackendAllowedList = (words) => {
+        axios.patch(BACKEND_REMOVE_ALLOWED_WORDS, {}, { params: { username: user.name, words: words.map(x => x.word).join(",") } })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
     const handleRemoval = () => {
         // modify the frequency map
@@ -18,31 +32,15 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         //         }
         //     }
         // }
-        console.log(wordListFreq);
-        var newArr = [...wordList.filter(word => !word.remove)]
+        var newArr = [...wordList.filter(word => !word.remove)];
+        var removedArr = [...wordList.filter(word => word.remove)];
 
         if (user.loggedIn) {
             if (id === 1) {
-                wordList.forEach(word => {
-                    axios.patch(BACKEND_REMOVE_WORD, {}, { params: { username: user.name, word: word.word } })
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-                });
+                removeWordsFromBackendList(removedArr);
             }
             else if (id === 2) {
-                wordList.forEach(word => {
-                    axios.patch(BACKEND_REMOVE_ALLOWED_WORD, {}, { params: { username: user.name, word: word.word } })
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-                });
+                removeWordsFromBackendAllowedList(removedArr);
             }
         }
 
@@ -53,21 +51,22 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
     }
 
     const removeAll = () => {
+
+        if (user.loggedIn) {
+            if (id === 1) {
+                removeWordsFromBackendList(wordList);
+            }
+            else if (id === 2) {
+                removeWordsFromBackendAllowedList(wordList);
+            }
+        }
+
         setWordList(
             []
         );
         setLen(-1);
         setWordListFreq({});
 
-        // ergo anywhere to set word list to []
-        if (user.loggedIn) {
-            if (id === 1) {
-                // modify answerList
-            }
-            else if (id === 2) {
-                // modify allowedList
-            }
-        }
     }
 
     return (

@@ -3,7 +3,7 @@ import axios from 'axios';
 import WordList from "./WordList.js";
 import CustomPrompt from "./CustomPrompt.js";
 import TxtWordList from "./TxtWordList.js";
-import { BACKEND_ADD_WORD, BACKEND_ADD_ALLOWED_WORD } from "./Constants.js";
+import { BACKEND_ADD_WORDS, BACKEND_ADD_ALLOWED_WORDS } from "./Constants.js";
 
 export default function AddWord({ wordList, setWordList, len, setLen,
   showPrompt, setShowPrompt, promptMessage, setPromptMessage,
@@ -11,6 +11,19 @@ export default function AddWord({ wordList, setWordList, len, setLen,
 
   const [word, setWord] = useState('');
 
+  const addWordToBackendList = () => {
+    axios.patch(BACKEND_ADD_WORDS, {}, { params: { username: user.name, words: word } })
+        .catch((error) => {
+            console.log(error);
+        });
+  }
+
+  const addWordToBackendAllowedList = () => {
+    axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, { params: { username: user.name, words: word } })
+        .catch((error) => {
+            console.log(error);
+        });
+  }
 
   const handleWordChange = (event) => {
     setWord(event.target.value);
@@ -39,13 +52,21 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     if (len === -1) {
       setWordList([{ word: word, remove: false }]);
       setLen(word.length);
+      if (user.loggedIn) {
+        if (id === 1) {
+          addWordToBackendList();
+        }
+        else if (id === 2) {
+          addWordToBackendAllowedList();
+        }
+      }
       setWord('');
       return;
     }
 
     if (word.length !== len) {
-      setPromptMessage(`Enter a word with ${len} letter(s)!${str}`);
       setShowPrompt(true);
+      setPromptMessage(`Enter a word with ${len} letter(s)!${str}`);
       return;
     }
 
@@ -68,34 +89,14 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     // wordListFreq[word] += 1;
     wordList.push({ word: word, remove: false });
     setWordList(wordList);
-
-    
-
-    // placeholder code block, variable wordList
     if (user.loggedIn) {
       if (id === 1) {
-        axios.patch(BACKEND_ADD_WORD, {}, { params: { username: user.name, word: word } })
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        addWordToBackendList();
       }
       else if (id === 2) {
-        axios.patch(BACKEND_ADD_ALLOWED_WORD, {}, { params: { username: user.name, word: word } })
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        addWordToBackendAllowedList();
       }
     }
-
-
-    console.log(`submission handled`);
-    console.log(wordListFreq);
     setWord('');
   }
 
@@ -119,7 +120,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
 
       <p>OR</p>
       <br />
-      <TxtWordList setWordList={setWordList} setLen={setLen} setPromptMessage={setPromptMessage} setShowPrompt={setShowPrompt}
+      <TxtWordList wordList={wordList} setWordList={setWordList} len={len} setLen={setLen} setPromptMessage={setPromptMessage} setShowPrompt={setShowPrompt}
         onlyLetters={onlyLetters} setWordListFreq={setWordListFreq} user={user} id={id} />
       {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} />)}
       <WordList words={wordList} onWordChange={changeRemove} wordListFreq={wordListFreq} />
