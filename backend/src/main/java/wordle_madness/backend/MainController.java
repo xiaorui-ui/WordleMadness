@@ -7,46 +7,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @Controller
+@CrossOrigin(origins="https://wordle-madness.vercel.app/")
 @RequestMapping(path="/backend")
 public class MainController {
-
-    private static final String FRONTEND = "https://wordle-madness.vercel.app";
     @Autowired
     private UserRepository userRepository;
 
-    @CrossOrigin(origins=FRONTEND)
-    @PatchMapping(path="/addWord")
-    public @ResponseBody String addWord(@RequestParam String username, @RequestParam String word) {
+    @PatchMapping(path="/addWords")
+    public @ResponseBody String addWords(@RequestParam String username, @RequestParam String[] words) {
         User currentUser = userRepository.findUserByName(username);
-        currentUser.addWord(word);
+        currentUser.addWords(words);
         userRepository.save(currentUser);
         return "Success";
     }
-    @CrossOrigin(origins=FRONTEND)
-    @PatchMapping(path="/addAllowedWord")
-    public @ResponseBody String addAllowedWord(@RequestParam String username, @RequestParam String word) {
+    @PatchMapping(path="/addAllowedWords")
+    public @ResponseBody String addAllowedWords(@RequestParam String username, @RequestParam String[] words) {
         User currentUser = userRepository.findUserByName(username);
-        currentUser.addAllowedWord(word);
+        currentUser.addAllowedWords(words);
         userRepository.save(currentUser);
         return "Success";
     }
-    @CrossOrigin(origins=FRONTEND)
-    @PatchMapping(path="/deleteWord")
-    public @ResponseBody String deleteWord(@RequestParam String username, @RequestParam String word) {
+    @PatchMapping(path="/deleteWords")
+    public @ResponseBody String deleteWords(@RequestParam String username, @RequestParam String[] words) {
         User currentUser = userRepository.findUserByName(username);
-        currentUser.deleteWord(word);
+        currentUser.deleteWords(words);
         userRepository.save(currentUser);
         return "Success";
     }
-    @CrossOrigin(origins=FRONTEND)
-    @PatchMapping(path="/deleteAllowedWord")
-    public @ResponseBody String deleteAllowedWord(@RequestParam String username, @RequestParam String word) {
+    @PatchMapping(path="/deleteAllowedWords")
+    public @ResponseBody String deleteAllowedWords(@RequestParam String username, @RequestParam String[] words) {
         User currentUser = userRepository.findUserByName(username);
-        currentUser.deleteAllowedWord(word);
+        currentUser.deleteAllowedWords(words);
         userRepository.save(currentUser);
         return "Success";
     }
-    @CrossOrigin(origins=FRONTEND)
     @RequestMapping(path="/verify")
     public @ResponseBody String conditionalLogin(@RequestParam String name
             , @RequestParam String password) {
@@ -63,14 +57,11 @@ public class MainController {
         }
         return "Invalid login details";
     }
-    @CrossOrigin(origins=FRONTEND)
     @GetMapping(path="/getWords")
     public @ResponseBody ArrayList<String> getWordList (@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
         return currentUser.getWordList();
     }
-
-    @CrossOrigin(origins=FRONTEND)
     @GetMapping(path="/getAllowedWords")
     public @ResponseBody ArrayList<String> getAllowedList (@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);

@@ -17,6 +17,10 @@ public class User {
 
     private String password;
 
+    private final String[] defaultWords = { "hello", "world" };
+
+    private final String[] defaultAllowedWords = { "hallo", "wrdle" };
+
     private ArrayList<String> wordList;
 
     private ArrayList<String> allowedList;
@@ -24,6 +28,8 @@ public class User {
     public void initialiseUser() {
         this.wordList = new ArrayList<>();
         this.allowedList = new ArrayList<>();
+        this.addWords(defaultWords);
+        this.addAllowedWords(defaultAllowedWords);
     }
 
     public Integer getId() {
@@ -50,15 +56,29 @@ public class User {
         return wordList;
     }
 
-    public void addWord(String word) {
-        wordList.add(word);
+    public void addWords(String[] words) {
+        for (String word : words) {
+            wordList.add(word);
+        }
     }
 
-    public void deleteWord(String word) { wordList.remove(word); }
+    public void deleteWords(String[] words) {
+        for (String word : words) {
+            wordList.remove(word);
+        }
+    }
 
     public ArrayList<String> getAllowedList() { return allowedList; }
 
-    public void addAllowedWord(String word) { allowedList.add(word); }
+    public void addAllowedWords(String[] words) {
+        for (String word : words) {
+            allowedList.add(word);
+        }
+    }
 
-    public void deleteAllowedWord(String word) { allowedList.remove(word); }
+    public void deleteAllowedWords(String[] words) {
+        for (String word : words) {
+            allowedList.remove(word);
+        }
+    }
 }
