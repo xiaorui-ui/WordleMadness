@@ -43,7 +43,7 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         if (user.loggedIn) {
             if (id === 1) {
                 for (let i = 0; i < wordList.length; i++) {
-                    word = wordList[i];
+                    let word = wordList[i];
                     if (word.remove) {
                         removeWordFromBackendList(word);
                     }
@@ -51,7 +51,7 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
             }
             else if (id === 2) {
                 for (let i = 0; i < wordList.length; i++) {
-                    word = wordList[i];
+                    let word = wordList[i];
                     if (word.remove) {
                         removeWordFromBackendAllowedList(word);
                     }
@@ -70,13 +70,13 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         if (user.loggedIn) {
             if (id === 1) {
                 for (let i = 0; i < wordList.length; i++) {
-                    word = wordList[i];
+                    let word = wordList[i];
                     removeWordFromBackendList(word);
                 }
             }
             else if (id === 2) {
                 for (let i = 0; i < wordList.length; i++) {
-                    word = wordList[i];
+                    let word = wordList[i];
                     removeWordFromBackendAllowedList(word);
                 }
             }
