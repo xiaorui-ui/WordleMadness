@@ -12,7 +12,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
   const [word, setWord] = useState('');
 
   const addWordToBackendList = () => {
-    axios.patch(BACKEND_ADD_WORDS, {}, { params: { username: user.name, words: [word] } })
+    axios.patch(BACKEND_ADD_WORDS, {}, { params: { username: user.name, words: word } })
                 .then((response) => {
                     console.log(response.data);
                 })
@@ -22,7 +22,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
   }
 
   const addWordToBackendAllowedList = () => {
-    axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, { params: { username: user.name, words: [word] } })
+    axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, { params: { username: user.name, words: word } })
         .then((response) => {
             console.log(response.data);
         })
