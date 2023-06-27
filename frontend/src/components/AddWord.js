@@ -87,7 +87,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     // wordListFreq[word] += 1;
     wordList.push({ word: word, remove: false });
     setWordList(wordList);
-
+    console.log(`sending to backend`);
     if (user.loggedIn) {
       if (id === 1) {
         addWordToBackendList();
