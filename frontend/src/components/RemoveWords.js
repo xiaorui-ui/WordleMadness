@@ -45,8 +45,8 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         if (user.loggedIn) {
             if (id === 1) {
                 wordList.forEach(word => {
-                    console.log(word.word);
-                    if (word.remove) { 
+                    if (word.remove) {
+                        console.log(word.word); 
                         removeWordFromBackendList(word);
                     }
                 });
