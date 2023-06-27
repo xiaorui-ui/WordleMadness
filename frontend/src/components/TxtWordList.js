@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from "react";
-import { BACKEND_ADD_WORD, BACKEND_ADD_ALLOWED_WORD } from "./Constants";
+import { BACKEND_ADD_WORDS, BACKEND_ADD_ALLOWED_WORDS } from "./Constants";
 
 export default function TxtWordList({ setWordList, setLen, setPromptMessage, setShowPrompt, onlyLetters,
     setWordListFreq, user, id }) {
@@ -8,7 +8,7 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
     const [selectedFile, setSelectedFile] = useState(null);
 
     const addWordsToBackendList = (words) => {
-        axios.patch(BACKEND_ADD_WORD, {}, { params: { username: user.name, words: words } })
+        axios.patch(BACKEND_ADD_WORDS, {}, { params: { username: user.name, words: words } })
                     .then((response) => {
                         console.log(response.data);
                     })
@@ -18,7 +18,7 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
       }
     
       const addWordsToBackendAllowedList = (words) => {
-        axios.patch(BACKEND_ADD_ALLOWED_WORD, {}, { params: { username: user.name, words: words } })
+        axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, { params: { username: user.name, words: words } })
             .then((response) => {
                 console.log(response.data);
             })
