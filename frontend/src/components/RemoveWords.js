@@ -60,16 +60,10 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
 
         if (user.loggedIn) {
             if (id === 1) {
-                for (let i = 0; i < wordList.length; i++) {
-                    let word = wordList[i];
-                    removeWordFromBackendList(word);
-                }
+                removeWordsFromBackendList(wordList);
             }
             else if (id === 2) {
-                for (let i = 0; i < wordList.length; i++) {
-                    let word = wordList[i];
-                    removeWordFromBackendAllowedList(word);
-                }
+                removeWordsFromBackendAllowedList(wordList);
             }
         }
 
