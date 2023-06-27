@@ -99,7 +99,6 @@ export default function AddWord({ wordList, setWordList, len, setLen,
 
 
     console.log(`submission handled`);
-    console.log(wordListFreq);
     setWord('');
   }
 

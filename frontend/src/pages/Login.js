@@ -17,9 +17,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
     const retrieveWordList = () => {
         axios.get(BACKEND_GET_WORD_LIST, { params: { username: username } })
                 .then((response) => {
-                    console.log(response.data);
                     const ansList = response.data.map(str => { return { word: str, remove: false } })
-                    console.log(ansList);
                     setAns(ansList);
                 })
                 .catch((error) => {
@@ -30,9 +28,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
     const retrieveAllowedWordList = () => {
         axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: username } })
                 .then((response) => {
-                    console.log(response.data);
                     const allowedList = response.data.map(str => { return { word: str, remove: false } })
-                    console.log(allowedList);
                     setAllowed(allowedList);
                 })
                 .catch((error) => {
@@ -58,11 +54,10 @@ export default function Login({ setAns, setAllowed, setUser }) {
 
         if (username.length <= 10 && password.length <= 10) {
             setShowPrompt(true);
-            setPromptMessage("Logging in...");
             axios.post(BACKEND_LOGIN, {}, { params: { name: username, password: password } })
                 .then((response) => {
-                    console.log(response.data);
                     if (response.data === "Logged in") {
+                        setPromptMessage("Logging in...");
                         setUser({ name: username, loggedIn: true });
                         retrieveWordList();
                         retrieveAllowedWordList();

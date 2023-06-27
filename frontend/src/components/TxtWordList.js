@@ -37,7 +37,6 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
             reader.onload = function (e) {
                 const contents = e.target.result;
                 const words = extractWords(contents);
-                console.log(words);
                 var list = []
                 var freq = {};
                 var l = words.length;

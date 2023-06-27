@@ -40,23 +40,22 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         // }
         var newArr = [...wordList.filter(word => !word.remove)]
 
-        console.log(newArr);
-
         if (user.loggedIn) {
             if (id === 1) {
-                wordList.forEach(word => {
+                for (let i = 0; i < wordList.length; i++) {
+                    word = wordList[i];
                     if (word.remove) {
-                        console.log(word.word); 
                         removeWordFromBackendList(word);
                     }
-                });
+                }
             }
             else if (id === 2) {
-                wordList.forEach(word => {
-                    if (word.remove) { 
+                for (let i = 0; i < wordList.length; i++) {
+                    word = wordList[i];
+                    if (word.remove) {
                         removeWordFromBackendAllowedList(word);
                     }
-                });
+                }
             }
         }
 
@@ -70,14 +69,16 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
 
         if (user.loggedIn) {
             if (id === 1) {
-                wordList.forEach(word => {
+                for (let i = 0; i < wordList.length; i++) {
+                    word = wordList[i];
                     removeWordFromBackendList(word);
-                });
+                }
             }
             else if (id === 2) {
-                wordList.forEach(word => {
+                for (let i = 0; i < wordList.length; i++) {
+                    word = wordList[i];
                     removeWordFromBackendAllowedList(word);
-                });
+                }
             }
         }
 
