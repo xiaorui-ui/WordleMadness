@@ -38,8 +38,9 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         //         }
         //     }
         // }
-        console.log(wordListFreq);
         var newArr = [...wordList.filter(word => !word.remove)]
+
+        console.log(newArr);
 
         if (user.loggedIn) {
             if (id === 1) {
