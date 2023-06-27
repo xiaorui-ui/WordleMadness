@@ -9,19 +9,13 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
 
     const addWordsToBackendList = (words) => {
         axios.patch(BACKEND_ADD_WORDS, {}, { params: { username: user.name, words: words.join(",") } })
-                    .then((response) => {
-                        console.log(response.data);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+            .catch((error) => {
+                console.log(error);
+            });
       }
     
       const addWordsToBackendAllowedList = (words) => {
         axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, { params: { username: user.name, words: words.join(",") } })
-            .then((response) => {
-                console.log(response.data);
-            })
             .catch((error) => {
                 console.log(error);
             });
@@ -30,7 +24,6 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setSelectedFile(file);
-        console.log("submitted");
 
         if (file) {
             const reader = new FileReader();

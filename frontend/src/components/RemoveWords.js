@@ -6,22 +6,16 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
 
     const removeWordsFromBackendList = (words) => {
         axios.patch(BACKEND_REMOVE_WORDS, {}, { params: { username: user.name, words: words.map(x => x.word).join(",") } })
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     const removeWordsFromBackendAllowedList = (words) => {
         axios.patch(BACKEND_REMOVE_ALLOWED_WORDS, {}, { params: { username: user.name, words: words.map(x => x.word).join(",") } })
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     const handleRemoval = () => {
