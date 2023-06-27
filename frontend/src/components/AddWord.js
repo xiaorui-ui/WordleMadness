@@ -120,7 +120,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
 
       <p>OR</p>
       <br />
-      <TxtWordList setWordList={setWordList} setLen={setLen} setPromptMessage={setPromptMessage} setShowPrompt={setShowPrompt}
+      <TxtWordList wordList={wordList} setWordList={setWordList} len={len} setLen={setLen} setPromptMessage={setPromptMessage} setShowPrompt={setShowPrompt}
         onlyLetters={onlyLetters} setWordListFreq={setWordListFreq} user={user} id={id} />
       {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} />)}
       <WordList words={wordList} onWordChange={changeRemove} wordListFreq={wordListFreq} />

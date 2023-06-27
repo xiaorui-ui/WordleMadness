@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from "react";
 import { BACKEND_ADD_WORDS, BACKEND_ADD_ALLOWED_WORDS } from "./Constants";
 
-export default function TxtWordList({ setWordList, setLen, setPromptMessage, setShowPrompt, onlyLetters,
+export default function TxtWordList({ wordList, setWordList, len, setLen, setPromptMessage, setShowPrompt, onlyLetters,
     setWordListFreq, user, id }) {
 
     const [selectedFile, setSelectedFile] = useState(null);
@@ -30,13 +30,16 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
             reader.onload = function (e) {
                 const contents = e.target.result;
                 const words = extractWords(contents);
-                var list = []
                 var freq = {};
                 var l = words.length;
                 var str = " Press the enter key or confirm to continue.";
                 for (let i = 0; i < l; i++) {
                     if (!onlyLetters(words[i])) {
                         setPromptMessage(`Words to contain letters only, check word ${i}! ${str}`);
+                        setShowPrompt(true);
+                        return;
+                    } else if (len !== -1 && words[i].length !== len) {
+                        setPromptMessage(`Word ${i} has a different number of letters from the current words in the list!`);
                         setShowPrompt(true);
                         return;
                     } else if (i < l - 1 && words[i].length !== words[i + 1].length) {
@@ -59,11 +62,10 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
                             return;
                         }
                     }
-                    list.push({ word: words[i], remove: false });
+                    wordList.push({ word: words[i], remove: false });
                 }
                 // console.log(freq);
                 // setWordListFreq(freq);
-                setLen(list[l - 1].word.length);
 
                 if (user.loggedIn) {
                     if (id === 1) {
@@ -74,7 +76,10 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
                     }
                 }
 
-                setWordList(list);
+                setWordList(wordList);
+                if (len === -1) {
+                    setLen(words[l - 1].length);
+                }
             };
             reader.readAsText(file);
         };
