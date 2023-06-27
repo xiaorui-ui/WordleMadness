@@ -60,8 +60,14 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                 }
                 for (let m = 0; m < list.length; m++) {
                     for (let n = 0; n < m; n++) {
-                        if (list[m].word === list[n].word) {
+                        const mstring = list[m].word;
+                        const nstring = list[n].word;
+                        if (mstring === nstring) {
                             setPromptMessage(`Word ${list[n].word} is repeated!`);
+                            setShowPrompt(true);
+                            return;
+                        } else if (mstring.length !== nstring.length) {
+                            setPromptMessage(`Words submitted have different length!`);
                             setShowPrompt(true);
                             return;
                         }
@@ -70,6 +76,7 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                 // console.log(freq);
                 // setWordListFreq(freq);
 
+                // Valid words submitted
                 if (user.loggedIn) {
                     if (id === 1) {
                         addWordsToBackendList(words);
