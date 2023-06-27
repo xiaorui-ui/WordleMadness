@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from "react";
 import { BACKEND_ADD_WORD, BACKEND_ADD_ALLOWED_WORD } from "./Constants";
 
