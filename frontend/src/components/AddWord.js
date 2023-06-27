@@ -11,6 +11,25 @@ export default function AddWord({ wordList, setWordList, len, setLen,
 
   const [word, setWord] = useState('');
 
+  const addWordToBackendList = () => {
+    axios.patch(BACKEND_ADD_WORD, {}, { params: { username: user.name, word: word } })
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+  }
+
+  const addWordToBackendAllowedList = () => {
+    axios.patch(BACKEND_ADD_ALLOWED_WORD, {}, { params: { username: user.name, word: word } })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+  }
 
   const handleWordChange = (event) => {
     setWord(event.target.value);
@@ -69,27 +88,12 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     wordList.push({ word: word, remove: false });
     setWordList(wordList);
 
-    
-
-    // placeholder code block, variable wordList
     if (user.loggedIn) {
       if (id === 1) {
-        axios.patch(BACKEND_ADD_WORD, {}, { params: { username: user.name, word: word } })
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        addWordToBackendList();
       }
       else if (id === 2) {
-        axios.patch(BACKEND_ADD_ALLOWED_WORD, {}, { params: { username: user.name, word: word } })
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        addWordToBackendAllowedList();
       }
     }
 

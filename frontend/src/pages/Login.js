@@ -57,6 +57,8 @@ export default function Login({ setAns, setAllowed, setUser }) {
         let destination = '';
 
         if (username.length <= 10 && password.length <= 10) {
+            setShowPrompt(true);
+            setPromptMessage("Logging in...");
             axios.post(BACKEND_LOGIN, {}, { params: { name: username, password: password } })
                 .then((response) => {
                     console.log(response.data);
@@ -66,7 +68,6 @@ export default function Login({ setAns, setAllowed, setUser }) {
                         retrieveAllowedWordList();
                         destination = '/';
                         navigate(destination);
-                        console.log("Successfully logged in");
                     } else {
                         handleInvalidLogin();
                     }

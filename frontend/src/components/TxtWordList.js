@@ -1,9 +1,30 @@
 import { useState } from "react";
+import { BACKEND_ADD_WORD, BACKEND_ADD_ALLOWED_WORD } from "./Constants";
 
 export default function TxtWordList({ setWordList, setLen, setPromptMessage, setShowPrompt, onlyLetters,
     setWordListFreq, user, id }) {
 
     const [selectedFile, setSelectedFile] = useState(null);
+
+    const addWordToBackendList = (word) => {
+        axios.patch(BACKEND_ADD_WORD, {}, { params: { username: user.name, word: word } })
+                    .then((response) => {
+                        console.log(response.data);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+      }
+    
+      const addWordToBackendAllowedList = (word) => {
+        axios.patch(BACKEND_ADD_ALLOWED_WORD, {}, { params: { username: user.name, word: word } })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+      }
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -51,14 +72,16 @@ export default function TxtWordList({ setWordList, setLen, setPromptMessage, set
                 // setWordListFreq(freq);
                 setLen(list[l - 1].word.length);
 
-                // insert post request here, variable list
-                // placeholder code block
                 if (user.loggedIn) {
                     if (id === 1) {
-                        // modify answerList
+                        for (let i = 0; i < list.length; i++) {
+                            addWordToBackendList(list[i].word);
+                        }
                     }
                     else if (id === 2) {
-                        // modify allowedList
+                        for (let i = 0; i < list.length; i++) {
+                            addWordToBackendAllowedList(list[i].word);
+                        }
                     }
                 }
 
