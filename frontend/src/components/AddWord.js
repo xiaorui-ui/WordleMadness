@@ -65,8 +65,8 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     }
 
     if (word.length !== len) {
-      setPromptMessage(`Enter a word with ${len} letter(s)!${str}`);
       setShowPrompt(true);
+      setPromptMessage(`Enter a word with ${len} letter(s)!${str}`);
       return;
     }
 
