@@ -35,7 +35,9 @@ In particular, for Constants.js, set the variable BACKEND to "https://localhost:
 
 To establish connectivity between the backend and the database, in the /backend/src/main/resources/application.properties file, set the following attributes:
 spring.datasource.url=jdbc:mysql://localhost:3306/wordle
+
 spring.datasource.username=backend
+
 spring.datasource.password=(the DB user password you set earlier)
 
 # Running the application
