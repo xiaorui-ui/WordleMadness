@@ -9,6 +9,6 @@ All the dependencies for the frontend should have been installed.
 
 Note: The environment variables must be configured during a local build. For the frontend, this is in the Constants.js file and for the backend, this is in the MainController.java file.
 
-In particular, for Constants.js, set the variable BACKEND to "https://localhost:8080" and for MainController.java under the @CrossOrigin annotation, set origins to be "https://localhost:3000" during a local build.
+In particular, for Constants.js, set the variable BACKEND to "https://localhost:8080/" and for MainController.java under the @CrossOrigin annotation, set origins to be "https://localhost:3000/" during a local build.
 
 The live version of the WordleMadness application can be accessed at "https://wordle-madness.vercel.app/".
