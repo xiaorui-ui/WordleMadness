@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @Controller
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = "https://localhost:3000/")
 // @CrossOrigin(origins="https://wordle-madness.vercel.app/")
 @RequestMapping(path = "/backend")
 public class MainController {
