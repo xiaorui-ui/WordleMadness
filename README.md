@@ -55,4 +55,4 @@ You will be able to access the local version of the application at https://local
 
 ## Production version
 
-The live version of the WordleMadness application can be accessed at "https://wordle-madness.vercel.app/".
+The live version of the WordleMadness application can be accessed at https://wordle-madness.vercel.app/.
