@@ -9,7 +9,7 @@ A web application that solves any [Wordle](). Input the answer and allowed lists
 
 ## Frontend
 
-To run this application locally, first clone the repository (git clone/zip). Then, install node and npm(insert links) on the machine, move to /frontend, then run (for Windows) 
+To run this application locally, first clone the repository (git clone/zip). Then, install node and npm(insert links) on the machine, move to /frontend, then run
 
 ```npm install```
 
@@ -31,7 +31,7 @@ Next, connect to the server using \connect backend@localhost:3306 and create a n
 
 The environment variables must be configured during a local build. For the frontend, this is in the Constants.js file and for the backend, this is in the MainController.java file.
 
-In particular, for Constants.js, set the variable BACKEND to "https://localhost:8080/" and for MainController.java under the @CrossOrigin annotation, set origins to be "https://localhost:3000/" during a local build. You can do so by changing the commmented out line for BACKEND and @CrossOrigin (// ... means the line is commented out).
+In particular, for Constants.js, set the variable BACKEND to "http://localhost:8080/backend/" and for MainController.java under the @CrossOrigin annotation, set origins to be "http://localhost:3000/" during a local build. You can do so by changing the commmented out line for BACKEND and @CrossOrigin (// ... means the line is commented out).
 
 To establish connectivity between the backend and the database, in the /backend/src/main/resources/application.properties file, set the following attributes:
 spring.datasource.url=jdbc:mysql://localhost:3306/wordle
@@ -48,9 +48,9 @@ To run the frontend, navigate to the "/frontend" directory, and run
 
 For the backend, similarly, 
 
-`mvnw spring-boot:run`
+`.\mvnw spring-boot:run`
 
-You will be able to access the local version of the application at https://localhost:3000/.
+You will be able to access the local version of the application at http://localhost:3000/.
 
 
 ## Production version
