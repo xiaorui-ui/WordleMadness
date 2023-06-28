@@ -1,32 +1,88 @@
+
+
 export default function UserGuide() {
+
     return (
         <div>
-            <header>
-                <h1>User Guide</h1>
-            </header>
-            <main>
-                <a href="/">Back to Welcome</a><div style={{ height: "30px" }}></div>
-                <a href="#decision-tree">Jump to Decision Tree</a><br />
-                <a href="#section-3">Jump to section 3</a><br />
-                <a href="#section-4">Jump to section 4</a><br />
+            <div class="sidebar">
+                <a href="#Logging-in">Logging In</a><br />
+                <a href="#Decision tree">Decision Tree</a><br />
+                <a href="#Welcome">Welcome</a><br />
+                <a href="#Section-3">Section 3</a><br />
+                <a href="#Section-4">Section 4</a><br />
+            </div>
 
-                <h2 id="section-2"> Decision Tree </h2>
-                <p>
-                    sample text
+            <div class="main-content">
+                <h1 id="Title">User Guide</h1>
+
+                <div style={{ height: "10px" }}></div>
+
+                <h2 id="Logging-in"> Logging in </h2>
+                <p class="break-after-characters">
+                    To log in, you can create a new user by logging in with a new username and password. The first time
+                    logging in with your new account will take quite a while, so please by patient :)
+                    If the username is already existing but the password is wrong, you will need to create one
+                    with another username.
+
+                    <div style={{ height: "30px" }}></div>
+
+                    To use a public account, use "cc" for both name and password.
+
+                    <div style={{ height: "30px" }}></div>
+
                 </p>
 
-                <h2 id="section-3">Section 3</h2>
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
-                </p>
-                <h2 id="section-4">Section 4</h2>
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
+                <h2 id="Welcome"> Welcome </h2>
+                <p class="break-after-characters">
+                    This is the default page when you first enter the web app. You can log in to save your data.
+
+                    <div style={{ height: "30px" }}></div>
+
+
+                    Users can edit two wordlists, the answer list and the allowed list. What are these?
+                    To find the best words to try in Wordle, you need two wordlists,
+                    a list of possible answers(answer list) and allowed words(allowed list),
+                    the former of which is a subset of the latter. The lists can be edited independently.
+
+                    <div style={{ height: "30px" }}></div>
+
+                    You can add words manually or via a .txt file(if it has many words). There are certain rules
+                    the new word added must fulfill, but what's the fun of spoiling them here when you can try
+                    it for yourself?
+
+                    <div style={{ height: "30px" }}></div>
+
                 </p>
 
-                <p>Go to the <a href="#section-1">top</a>.
+                <h2 id="Decision tree"> Decision Tree </h2>
+                <p class="break-after-characters">
+                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/"> this</a>
+
+                    <div style={{ height: "30px" }}></div>
+
                 </p>
-            </main>
+
+                <h2 id="Section-3"> Decision Tree </h2>
+                <p class="break-after-characters">
+                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/"> this</a>
+
+                    <div style={{ height: "30px" }}></div>
+
+                </p>
+                <h2 id="Section-4"> Decision Tree </h2>
+                <p class="break-after-characters">
+                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/"> this</a>
+
+                    <div style={{ height: "30px" }}></div>
+
+                </p>
+
+                <p>Go to <a href="#Title">top</a>.
+
+                    <div style={{ height: "30px" }}></div>
+                    <a href="/">Back to Welcome</a>
+                </p>
+            </div>
         </div>
 
     )

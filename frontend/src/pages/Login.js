@@ -16,24 +16,24 @@ export default function Login({ setAns, setAllowed, setUser }) {
 
     const retrieveWordList = () => {
         axios.get(BACKEND_GET_WORD_LIST, { params: { username: username } })
-                .then((response) => {
-                    const ansList = response.data.map(str => { return { word: str, remove: false } })
-                    setAns(ansList);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            .then((response) => {
+                const ansList = response.data.map(str => { return { word: str, remove: false } })
+                setAns(ansList);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     const retrieveAllowedWordList = () => {
         axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: username } })
-                .then((response) => {
-                    const allowedList = response.data.map(str => { return { word: str, remove: false } })
-                    setAllowed(allowedList);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            .then((response) => {
+                const allowedList = response.data.map(str => { return { word: str, remove: false } })
+                setAllowed(allowedList);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     const navigate = useNavigate();
@@ -104,6 +104,10 @@ export default function Login({ setAns, setAllowed, setUser }) {
                 <div style={{ height: "30px" }}></div>
 
                 <button type="submit">Submit</button>
+
+                <div style={{ height: "30px" }}></div>
+
+                <a href="/UserGuide">User Guide</a>
             </form>
         </div>
 

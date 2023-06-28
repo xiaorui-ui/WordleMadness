@@ -43,8 +43,16 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
 
     return (
         <>
-            <Header user={user} />
-            <main>
+            <div className="sidebar">
+                <a href="/Login">Login</a>
+                <br />
+                <a href="/UserGuide">User Guide</a>
+                <br />
+                <a href="/DecisionTree">Decision Tree</a>
+            </div>
+
+            <main className="main-content">
+                <Header user={user} />
                 <h2>Answer List</h2>
                 <ModifyWords wordList={answerList} setWordList={setAnswerList} len={len1} setLen={setLen1}
                     showPrompt={showPrompt} setShowPrompt={setShowPrompt}
@@ -70,10 +78,10 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                     </>)
                 }
 
-                <Compute wordList={answerList} />
+                <a href="./DecisionTree">Compute</a>
                 <div style={{ height: "30px" }}></div>
 
-                <a href="/userGuide">User Guide</a>
+                <a href="/UserGuide">User Guide</a>
                 <div style={{ height: "30px" }}></div>
 
                 <a href="/Login">Login to save your data</a>

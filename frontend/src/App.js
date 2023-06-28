@@ -31,12 +31,12 @@ export default function App() {
           <Route path="/" element={<Welcome answerList={answerList} setAnswerList={setAnswerList}
             allowedList={allowedList} setAllowedList={setAllowedList} user={user} />} />
 
-          <Route path="/login" element={<Login setAns={setAnswerList} setAllowed={setAllowedList}
+          <Route path="/Login" element={<Login setAns={setAnswerList} setAllowed={setAllowedList}
             setUser={setUser} />} />
 
-          <Route path="/decisionTree" element={<DecisionTree answerList={answerList} allowedList={allowedList} />} />
+          <Route path="/DecisionTree" element={<DecisionTree answerList={answerList} allowedList={allowedList} />} />
 
-          <Route path="/userGuide" element={<UserGuide />} />
+          <Route path="/UserGuide" element={<UserGuide />} />
         </Routes>
       </BrowserRouter>
     </div>

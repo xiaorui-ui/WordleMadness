@@ -6,7 +6,7 @@ export default function DecisionTree({ answerList, allowedList }) {
     // call on the algorithm here :)
     return (
         <div>
-            <p> Nothing here, come back later :p </p>
+            <p> salet, 7920 </p>
         </div>
     )
 
