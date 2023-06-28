@@ -23,7 +23,7 @@ For the backend, you will need to install Maven on your computer. Follow the gui
 
 To run the application, you will need a local instance of MySQL. Install MySQL Community Server at the following webpage: https://dev.mysql.com/downloads/installer/ (Note: When prompted, set connection type to TCP/IP and the server port to 3306 under "Type and Networking"). When prompted to add a user, add a user with role "DB Admin", username "backend" and set a password.
 
-Next, connect to the server in the SQL shell using \connect backend@localhost:3306 and create a new database called "wordle".
+Next, connect to the server in the MySQL shell using \connect backend@localhost:3306 and create a new database called "wordle".
 
 # Running and Deployment
 
