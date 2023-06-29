@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export default function WordList({ words, onWordChange }) {
 
     const handleChange = (i) => () => {

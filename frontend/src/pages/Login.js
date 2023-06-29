@@ -65,9 +65,6 @@ export default function Login({ setAns, setAllowed, setUser }) {
         // Determine the destination based on username and password
         let destination = '';
 
-        console.log(username.length);
-        console.log(passwordValues.password.length);
-
         if ((0 < username.length && username.length <= 10 &&
             3 <= passwordValues.password.length && passwordValues.password.length <= 10)) {
             setShowPrompt(true);
@@ -92,14 +89,14 @@ export default function Login({ setAns, setAllowed, setUser }) {
             setShowPrompt(true);
             setPromptMessage("Please set a username");
             // return;
-        } else if (passwordValues.password.length < 6) {
+        } else if (passwordValues.password.length < 3) {
             setShowPrompt(true);
-            setPromptMessage("Please set a password with at least 3 characters");
+            setPromptMessage("Please enter a password with at least 3 characters");
             // return;
         } else {
             // else statement may not be required if the previous statements return
             setShowPrompt(true);
-            setPromptMessage("Please set a username and password with at most 10 characters each");
+            setPromptMessage("Please enter a username and password with at most 10 characters each");
         }
 
     };
@@ -152,7 +149,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
 
                     <div style={{ height: "30px" }}></div>
 
-                    <a href="/Register">First time?</a>
+                    {/* <a href="/Register">First time?</a> */}
 
                 </form>
             </div>
