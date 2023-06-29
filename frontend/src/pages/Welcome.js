@@ -4,10 +4,11 @@ import Header from "../components/Header.js";
 import Compute from "../components/Compute.js";
 import ModifyWords from "../components/ModifyWords.js";
 
-// to do: create a pages bar on the left, like in nerdtree
+// To-do: Save Wordlist even when refreshed/re-directed
 
 
-export default function Welcome({ answerList, setAnswerList, allowedList, setAllowedList, user }) {
+export default function Welcome({ answerList, setAnswerList, allowedList, setAllowedList, user,
+    handleLogOut }) {
 
     function f(wordList) {
         if (wordList.length === 0) {
@@ -44,15 +45,26 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
     return (
         <>
             <div className="sidebar">
-                <a href="/Login">Login</a>
                 <br />
+                {!user.isLoggedIn ?
+                    <>
+                        <a href="/Login">Login to save your data</a>
+                        <br />
+                    </>
+                    :
+                    <>
+                        <span onClick={handleLogOut} style={{ cursor: "pointer" }}>Log Out</span>
+                        <br />
+                    </>
+                }
                 <a href="/UserGuide">User Guide</a>
                 <br />
                 <a href="/DecisionTree">Decision Tree</a>
             </div>
 
             <main className="main-content">
-                <Header user={user} />
+                {/* To implement firstTime */}
+                <Header user={user} firstTime={true} />
                 <h2>Answer List</h2>
                 <ModifyWords wordList={answerList} setWordList={setAnswerList} len={len1} setLen={setLen1}
                     showPrompt={showPrompt} setShowPrompt={setShowPrompt}
@@ -65,7 +77,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                 <button type="click" onClick={handleClick} data-testid="set-same-diff">
                     Set lists to {differentList ? 'same' : 'different'} </button>
 
-                <h2>Allowed List {differentList ? 'Different from' : 'Same as'} answer list</h2>
+                <h2>Allowed List ({differentList ? 'Different from' : 'Same as'} answer list)</h2>
 
 
                 {differentList &&
@@ -81,10 +93,6 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                 <a href="./DecisionTree">Compute</a>
                 <div style={{ height: "30px" }}></div>
 
-                <a href="/UserGuide">User Guide</a>
-                <div style={{ height: "30px" }}></div>
-
-                <a href="/Login">Login to save your data</a>
             </main>
         </>
     );

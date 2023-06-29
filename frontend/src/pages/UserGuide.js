@@ -1,32 +1,54 @@
 
 
-export default function UserGuide() {
+export default function UserGuide({ user, setUser, handleLogOut }) {
+
 
     return (
         <div>
-            <div class="sidebar">
+            <div id="sidebar" class="sidebar">
+                {
+                    user.isLoggedIn && <div>{`Hi, ${user.name}!`}</div>
+                }<br />
+                <h2 style={{ fontWeight: 'normal' }}>Sections</h2>
                 <a href="#Logging-in">Logging In</a><br />
-                <a href="#Decision tree">Decision Tree</a><br />
                 <a href="#Welcome">Welcome</a><br />
+                <a href="#Decision tree">Decision Tree</a><br />
                 <a href="#Section-3">Section 3</a><br />
                 <a href="#Section-4">Section 4</a><br />
+
+                <div style={{ height: "50px" }}></div>
+
+                <h2 style={{ fontWeight: 'normal' }}>Pages</h2>
+                <a href="/">Edit Word Lists</a> <br />
+                <a href="/DecisionTree">Decision Tree</a> <br />
+                {user.isLoggedIn ?
+                    <>
+                        <span onClick={handleLogOut} style={{ cursor: "pointer" }}>Log Out</span> <br />
+
+                    </> :
+                    <a href="/Login">Log in</a>
+                }
+
             </div>
 
-            <div class="main-content">
+            <div id="content" class="main-content">
                 <h1 id="Title">User Guide</h1>
 
                 <div style={{ height: "10px" }}></div>
 
+                We're here to help!
+
                 <h2 id="Logging-in"> Logging in </h2>
                 <p class="break-after-characters">
-                    To log in, you can create a new user by logging in with a new username and password. The first time
+                    To register log in, you can create a new user by logging in with a new username and password. The first time
                     logging in with your new account will take quite a while, so please by patient :)
                     If the username is already existing but the password is wrong, you will need to create one
                     with another username.
 
                     <div style={{ height: "30px" }}></div>
 
-                    To use a public account, use "cc" for both name and password.
+                    To use a public account, use "cc" for both name and password. Ignore the "First time?" link for now if you
+                    want to create a new account.
 
                     <div style={{ height: "30px" }}></div>
 
@@ -60,27 +82,28 @@ export default function UserGuide() {
 
                     <div style={{ height: "30px" }}></div>
 
+                    The algorithm is ready and will be integrated with the backend soon.
+
+                    <div style={{ height: "30px" }}></div>
+
                 </p>
 
                 <h2 id="Section-3"> Decision Tree </h2>
                 <p class="break-after-characters">
                     Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/"> this</a>
 
-                    <div style={{ height: "30px" }}></div>
+                    <div style={{ height: "300px" }}></div>
 
                 </p>
                 <h2 id="Section-4"> Decision Tree </h2>
                 <p class="break-after-characters">
                     Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/"> this</a>
 
-                    <div style={{ height: "30px" }}></div>
+                    <div style={{ height: "300px" }}></div>
 
                 </p>
 
                 <p>Go to <a href="#Title">top</a>.
-
-                    <div style={{ height: "30px" }}></div>
-                    <a href="/">Back to Welcome</a>
                 </p>
             </div>
         </div>

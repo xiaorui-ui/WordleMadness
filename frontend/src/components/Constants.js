@@ -1,5 +1,5 @@
-// const BACKEND = "https://localhost:8080/";
-const BACKEND = "https://skilful-earth-388409.as.r.appspot.com/backend/";
+const BACKEND = "https://localhost:8080/";
+// const BACKEND = "https://skilful-earth-388409.as.r.appspot.com/backend/";
 const BACKEND_LOGIN = BACKEND + "verify";
 const BACKEND_GET_WORD_LIST = BACKEND + "getWords";
 const BACKEND_GET_ALLOWED_WORD_LIST = BACKEND + "getAllowedWords";

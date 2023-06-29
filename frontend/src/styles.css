@@ -43,6 +43,21 @@ input {
   max-width: 800px;
 }
 
+button {
+  background-color: lightseagreen;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  /* Round the corners */
+  padding: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+/* Sidebar settings */
+
 .sidebar {
   height: 100%;
   /* 100% Full-height */
@@ -56,21 +71,28 @@ input {
   /* Stay at the top */
   left: 0;
   overflow-x: hidden;
-  padding-top: 60px;
+  padding-top: 30px;
   padding-left: 15px;
 
   background-color: #F0F8FF;
 
   transition: 0.5s;
   /* 0.5 second transition effect to slide in the sidebar */
+  text-decoration: none;
+  color: black
 }
 
 .sidebar a {
+  display: block;
+  /* or inline-block */
   text-decoration: none;
-  color: #111;
-  line-height: 30px;
+  color: black;
 }
 
+.sidebar span,
+a:hover {
+  color: red;
+}
 
 .main-content {
   flex: 1;

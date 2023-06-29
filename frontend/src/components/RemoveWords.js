@@ -35,7 +35,7 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         var newArr = [...wordList.filter(word => !word.remove)];
         var removedArr = [...wordList.filter(word => word.remove)];
 
-        if (user.loggedIn) {
+        if (user.isLoggedIn) {
             if (id === 1) {
                 removeWordsFromBackendList(removedArr);
             }
@@ -52,7 +52,7 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
 
     const removeAll = () => {
 
-        if (user.loggedIn) {
+        if (user.isLoggedIn) {
             if (id === 1) {
                 removeWordsFromBackendList(wordList);
             }

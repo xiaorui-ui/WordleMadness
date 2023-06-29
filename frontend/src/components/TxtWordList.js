@@ -12,14 +12,14 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
             .catch((error) => {
                 console.log(error);
             });
-      }
-    
-      const addWordsToBackendAllowedList = (words) => {
+    }
+
+    const addWordsToBackendAllowedList = (words) => {
         axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, { params: { username: user.name, words: words.join(",") } })
             .catch((error) => {
                 console.log(error);
             });
-      }
+    }
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -52,7 +52,7 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                     // }
                     // freq[words[i]] = 0;
                     // freq[words[i]] += 1;
-                    
+
                     list.push({ word: words[i], remove: false });
                 }
                 for (let j = 0; j < wordList.length; j++) {
@@ -77,7 +77,7 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                 // setWordListFreq(freq);
 
                 // Valid words submitted
-                if (user.loggedIn) {
+                if (user.isLoggedIn) {
                     if (id === 1) {
                         addWordsToBackendList(words);
                     }

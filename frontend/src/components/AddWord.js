@@ -13,16 +13,16 @@ export default function AddWord({ wordList, setWordList, len, setLen,
 
   const addWordToBackendList = () => {
     axios.patch(BACKEND_ADD_WORDS, {}, { params: { username: user.name, words: word } })
-        .catch((error) => {
-            console.log(error);
-        });
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   const addWordToBackendAllowedList = () => {
     axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, { params: { username: user.name, words: word } })
-        .catch((error) => {
-            console.log(error);
-        });
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   const handleWordChange = (event) => {
@@ -52,7 +52,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     if (len === -1) {
       setWordList([{ word: word, remove: false }]);
       setLen(word.length);
-      if (user.loggedIn) {
+      if (user.isLoggedIn) {
         if (id === 1) {
           addWordToBackendList();
         }
@@ -89,7 +89,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     // wordListFreq[word] += 1;
     wordList.push({ word: word, remove: false });
     setWordList(wordList);
-    if (user.loggedIn) {
+    if (user.isLoggedIn) {
       if (id === 1) {
         addWordToBackendList();
       }

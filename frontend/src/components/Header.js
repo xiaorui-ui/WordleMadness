@@ -1,9 +1,12 @@
-export default function Header({ user }) {
+export default function Header({ user, firstTime }) {
     return (
         <>
             <header>
                 <h1>Wordle Solver</h1>
-                <h3> {user.loggedIn && <>{`Hello there, ${user.name}!`}</>} </h3>
+                <h3 style={{ fontWeight: 'normal' }}>
+                    {user.isLoggedin && <>{`Hello there, ${user.name}!`}</>}
+                    {firstTime && <> First time here, isn't it?</>}
+                </h3>
             </header>
         </>
     )
