@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom"
 
 export default function UserGuide({ user, setUser, handleLogOut }) {
 
@@ -19,14 +19,14 @@ export default function UserGuide({ user, setUser, handleLogOut }) {
                 <div style={{ height: "50px" }}></div>
 
                 <h2 style={{ fontWeight: 'normal' }}>Pages</h2>
-                <a href="/">Edit Word Lists</a> <br />
-                <a href="/DecisionTree">Decision Tree</a> <br />
+                <Link to="/">Edit Word Lists</Link> <br />
+                <Link to="/DecisionTree">Decision Tree</Link> <br />
                 {user.isLoggedIn ?
                     <>
                         <span onClick={handleLogOut} style={{ cursor: "pointer" }}>Log Out</span> <br />
 
                     </> :
-                    <a href="/Login">Log in</a>
+                    <Link to="/Login">Log in</Link>
                 }
 
             </div>
@@ -78,7 +78,7 @@ export default function UserGuide({ user, setUser, handleLogOut }) {
 
                 <h2 id="Decision tree"> Decision Tree </h2>
                 <p class="break-after-characters">
-                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/"> this</a>
+                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank"> this</a>
 
                     <div style={{ height: "30px" }}></div>
 
@@ -90,14 +90,14 @@ export default function UserGuide({ user, setUser, handleLogOut }) {
 
                 <h2 id="Section-3"> Decision Tree </h2>
                 <p class="break-after-characters">
-                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/"> this</a>
+                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank"> this</a>
 
                     <div style={{ height: "300px" }}></div>
 
                 </p>
                 <h2 id="Section-4"> Decision Tree </h2>
                 <p class="break-after-characters">
-                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/"> this</a>
+                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank"> this</a>
 
                     <div style={{ height: "300px" }}></div>
 

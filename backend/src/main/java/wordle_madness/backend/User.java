@@ -10,16 +10,16 @@ import java.util.ArrayList;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
 
     private String password;
 
-    private final String[] defaultWords = { "hello", "world" };
+    private final String[] defaultWords = { "crane", "jazzy", "fjord", "found" };
 
-    private final String[] defaultAllowedWords = { "hallo", "wrdle" };
+    private final String[] defaultAllowedWords = { "crane", "jazzy", "fjord", "found" };
 
     private ArrayList<String> wordList;
 
@@ -68,7 +68,9 @@ public class User {
         }
     }
 
-    public ArrayList<String> getAllowedList() { return allowedList; }
+    public ArrayList<String> getAllowedList() {
+        return allowedList;
+    }
 
     public void addAllowedWords(String[] words) {
         for (String word : words) {

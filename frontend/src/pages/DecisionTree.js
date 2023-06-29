@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 
 export default function DecisionTree({ answerList, allowedList, user, handleLogOut }) {
@@ -11,7 +12,7 @@ export default function DecisionTree({ answerList, allowedList, user, handleLogO
                 <br />
                 {!user.isLoggedIn ?
                     <>
-                        <a href="/Login">Login to save your data</a>
+                        <Link to="/Login">Login to save your data</Link>
                         <br />
                     </>
                     :
@@ -20,9 +21,9 @@ export default function DecisionTree({ answerList, allowedList, user, handleLogO
                         <br />
                     </>
                 }
-                <a href="/UserGuide">User Guide</a>
+                <Link to="/UserGuide">User Guide</Link>
                 <br />
-                <a href="/">Edit Word Lists</a>
+                <Link to="/">Edit Word Lists</Link>
             </div>
 
             <p className="main-content" > salet, 7920 </p>

@@ -7,6 +7,8 @@ import { BACKEND_LOGIN, BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST } f
 
 // To-do: registration of new account
 
+// To-do: Refactor! It's getting pretty long. 
+
 export default function Login({ setAns, setAllowed, setUser }) {
 
     // implement showSidebar later

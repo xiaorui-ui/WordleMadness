@@ -79,17 +79,17 @@ button:hover {
   transition: 0.5s;
   /* 0.5 second transition effect to slide in the sidebar */
   text-decoration: none;
-  color: black
+
 }
 
-.sidebar a {
+.sidebar * {
   display: block;
   /* or inline-block */
   text-decoration: none;
   color: black;
 }
 
-.sidebar span,
+.sidebar span:hover,
 a:hover {
   color: red;
 }

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Header from "../components/Header.js";
 import Compute from "../components/Compute.js";
 import ModifyWords from "../components/ModifyWords.js";
+import { Link } from 'react-router-dom';
 
 // To-do: Save Wordlist even when refreshed/re-directed
 
@@ -48,7 +49,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                 <br />
                 {!user.isLoggedIn ?
                     <>
-                        <a href="/Login">Login to save your data</a>
+                        <Link to="/Login">Login to save your data</Link>
                         <br />
                     </>
                     :
@@ -57,9 +58,9 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                         <br />
                     </>
                 }
-                <a href="/UserGuide">User Guide</a>
+                <Link to="/UserGuide">User Guide</Link>
                 <br />
-                <a href="/DecisionTree">Decision Tree</a>
+                <Link to="/DecisionTree">Decision Tree</Link>
             </div>
 
             <main className="main-content">
@@ -90,7 +91,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                     </>)
                 }
 
-                <a href="./DecisionTree">Compute</a>
+                <Link to="./DecisionTree">Compute</Link>
                 <div style={{ height: "30px" }}></div>
 
             </main>

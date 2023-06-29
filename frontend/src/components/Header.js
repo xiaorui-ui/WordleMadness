@@ -4,7 +4,7 @@ export default function Header({ user, firstTime }) {
             <header>
                 <h1>Wordle Solver</h1>
                 <h3 style={{ fontWeight: 'normal' }}>
-                    {user.isLoggedin && <>{`Hello there, ${user.name}!`}</>}
+                    {user.isLoggedIn && <>{`Hello there, ${user.name}!`}</>}
                     {firstTime && <> First time here, isn't it?</>}
                 </h3>
             </header>
