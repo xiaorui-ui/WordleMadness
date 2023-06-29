@@ -30,7 +30,7 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
             reader.onload = function (e) {
                 const contents = e.target.result;
                 const words = extractWords(contents);
-                var freq = {};
+                // var freq = {};
                 var l = words.length;
                 var list = [];
                 var str = " Press the enter key or confirm to continue.";

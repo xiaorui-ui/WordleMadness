@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import "../prompt.css";
 
 const CustomPrompt = ({ message, onDismiss }) => {
-    const x = () => {
-        return 0;
-    }
 
     useEffect(() => {
         const handleKeyDown = (event) => {
