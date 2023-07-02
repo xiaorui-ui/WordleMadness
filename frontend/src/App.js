@@ -34,12 +34,17 @@ export default function App() {
 
   return (
     <div className="App">
+
       <BrowserRouter>
         <Routes>
+
           <Route path="/" element={<Welcome answerList={answerList} setAnswerList={setAnswerList}
             allowedList={allowedList} setAllowedList={setAllowedList} user={user} handleLogOut={handleLogOut} />} />
 
           <Route path="/Login" element={<Login setAns={setAnswerList} setAllowed={setAllowedList}
+            setUser={setUser} />} />
+
+          <Route path="/Register" element={<Register setAns={setAnswerList} setAllowed={setAllowedList}
             setUser={setUser} />} />
 
           <Route path="/DecisionTree" element={<DecisionTree answerList={answerList} allowedList={allowedList} user={user}

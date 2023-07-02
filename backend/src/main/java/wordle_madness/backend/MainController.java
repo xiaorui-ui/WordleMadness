@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 @Controller
 // Local frontend
-// @CrossOrigin(origins = "http://localhost:3000/")
+// @CrossOrigin(origins = "http://localhost:3000")
 // Production frontend
-@CrossOrigin(origins = "https://wordle-madness.vercel.app/")
+@CrossOrigin(origins = "https://wordle-madness.vercel.app")
 @RequestMapping(path = "/backend")
 public class MainController {
     @Autowired

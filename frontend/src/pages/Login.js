@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import CustomPrompt from '../components/CustomPrompt.js';
+import Username from '../components/Username.js';
+import Password from '../components/Password.js';
+import LoginLogic from '../components/LoginLogic.js';
 import { BACKEND_LOGIN, BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST } from '../components/Constants.js';
 
 // To-do: registration of new account
-
-// To-do: Refactor! It's getting pretty long. 
 
 export default function Login({ setAns, setAllowed, setUser }) {
 
@@ -21,16 +22,15 @@ export default function Login({ setAns, setAllowed, setUser }) {
     const [showPrompt, setShowPrompt] = useState(false);
     const [promptMessage, setPromptMessage] = useState("");
 
-
-
-    const handleClickShowPassword = () => {
-        setPasswordValues({ ...passwordValues, showPassword: !passwordValues.showPassword });
-    };
+    const handleDismiss = () => {
+        setShowPrompt(false);
+    }
 
     const retrieveWordList = () => {
         axios.get(BACKEND_GET_WORD_LIST, { params: { username: username } })
             .then((response) => {
-                const ansList = response.data.map(str => { return { word: str, remove: false } })
+                const ansList = response.data.
+                    map(str => { return { word: str, remove: false } });
                 setAns(ansList);
             })
             .catch((error) => {
@@ -41,7 +41,8 @@ export default function Login({ setAns, setAllowed, setUser }) {
     const retrieveAllowedWordList = () => {
         axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: username } })
             .then((response) => {
-                const allowedList = response.data.map(str => { return { word: str, remove: false } })
+                const allowedList = response.data.map
+                    (str => { return { word: str, remove: false } });
                 setAllowed(allowedList);
             })
             .catch((error) => {
@@ -51,10 +52,6 @@ export default function Login({ setAns, setAllowed, setUser }) {
 
     const navigate = useNavigate();
 
-    const handleDismiss = () => {
-        setShowPrompt(false);
-    }
-
     const handleInvalidLogin = () => {
         setShowPrompt(true);
         setPromptMessage("Wrong login details! Please try again.");
@@ -62,51 +59,10 @@ export default function Login({ setAns, setAllowed, setUser }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Determine the destination based on username and password
-        let destination = '';
-
-        if ((0 < username.length && username.length <= 10 &&
-            3 <= passwordValues.password.length && passwordValues.password.length <= 10)) {
-            setShowPrompt(true);
-            setPromptMessage("Logging in...");
-            axios.post(BACKEND_LOGIN, {}, { params: { name: username, password: passwordValues.password } })
-                .then((response) => {
-                    if (response.data === "Logged in") {
-                        setUser({ name: username, isLoggedIn: true });
-                        retrieveWordList();
-                        retrieveAllowedWordList();
-                        destination = '/';
-                        navigate(destination);
-                    } else {
-                        handleInvalidLogin();
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            // return;
-        } else if (username.length === 0) {
-            setShowPrompt(true);
-            setPromptMessage("Please set a username");
-            // return;
-        } else if (passwordValues.password.length < 3) {
-            setShowPrompt(true);
-            setPromptMessage("Please enter a password with at least 3 characters");
-            // return;
-        } else {
-            // else statement may not be required if the previous statements return
-            setShowPrompt(true);
-            setPromptMessage("Please enter a username and password with at most 10 characters each");
-        }
-
-    };
-
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
-    }
-
-    const handlePasswordChange = (event) => {
-        setPasswordValues({ ...passwordValues, password: event.target.value });
+        // LoginLogic(setAns, setAllowed, setUser, username, passwordValues,
+        //     setShowPrompt, setPromptMessage, "Login");
+        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, "Login",
+            retrieveWordList, retrieveAllowedWordList, navigate, handleInvalidLogin);
     }
 
     return (
@@ -125,22 +81,10 @@ export default function Login({ setAns, setAllowed, setUser }) {
 
                 <h1>Wordle Madness</h1>
                 <form id="Login" onSubmit={handleSubmit}>
-                    <label>Username:</label>
-                    <input type='text' value={username} onChange={handleUsernameChange}
-                        placeholder="e.g: Josh_Wordle" />
-                    {/*Line break */}
-                    <br />
 
-                    <label>Password:</label>
-                    <input type={passwordValues.showPassword ? "text" : "password"}
-                        value={passwordValues.password} onChange={handlePasswordChange}
-                        placeholder="e.g: 79salet20">
-                    </input>
+                    <Username username={username} setUsername={setUsername} />
 
-                    <button type="button" onClick={handleClickShowPassword}
-                        style={{ fontSize: "10px", marginLeft: "10px", backgroundColor: "black" }}>
-                        {passwordValues.showPassword ? "  Hide  " : "        Show  "}
-                    </button>
+                    <Password passwordValues={passwordValues} setPasswordValues={setPasswordValues} />
 
                     {/* Empty space between p/w and submit */}
                     <div style={{ height: "30px" }}></div>
@@ -149,7 +93,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
 
                     <div style={{ height: "30px" }}></div>
 
-                    {/* <a href="/Register">First time?</a> */}
+                    <a href="/Register">First time?</a>
 
                 </form>
             </div>
