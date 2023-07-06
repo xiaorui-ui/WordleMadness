@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 
 @Controller
-// Local frontend
-// @CrossOrigin(origins = "http://localhost:3000")
-// Production frontend
-@CrossOrigin(origins = "https://wordle-madness.vercel.app")
+@CrossOrigin(origins = "${spring.datasource.frontend}")
 @RequestMapping(path = "/backend")
 public class MainController {
     @Autowired
