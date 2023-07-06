@@ -1,7 +1,7 @@
 import "../styles.css";
 import { useState } from "react";
 import Header from "../components/Header.js";
-import Compute from "../components/Compute.js";
+// import Compute from "../components/Compute.js";
 import ModifyWords from "../components/ModifyWords.js";
 import { Link } from 'react-router-dom';
 
@@ -41,7 +41,6 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
     const handleClick = () => {
         setDifferentList(!differentList);
     }
-
 
     return (
         <>
