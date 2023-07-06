@@ -1,36 +1,65 @@
 import "./styles.css";
+import axios from 'axios';
 import Welcome from "./pages/Welcome.js";
 import Login from "./pages/Login.js";
 import UserGuide from "./pages/UserGuide.js";
 import DecisionTree from "./pages/DecisionTree.js";
 import Register from "./pages/Register.js"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST, DEFAULT_WORDS } from "./components/Constants";
 
 
 export default function App() {
 
-  const defaultWords = [
-    { word: "crane", remove: false },
-    { word: "jazzy", remove: true },
-    { word: "fjord", remove: false },
-    { word: "found", remove: false }
-  ];
-
   // answer before allowed, ALWAYS!!!
 
-  const [answerList, setAnswerList] = useState(defaultWords);
+  const savedUser = () => {
+    const cache = sessionStorage.getItem("user");
+    if (cache === null || cache === "") {
+      return { isLoggedIn: false, name: "" };
+    } else {
+      return { isLoggedIn: true, name: cache };
+    }
+  }
 
-  const [allowedList, setAllowedList] = useState(defaultWords);
+  const [answerList, setAnswerList] = useState(DEFAULT_WORDS);
 
-  const [user, setUser] = useState({ isLoggedIn: false, name: "" });
+  const [allowedList, setAllowedList] = useState(DEFAULT_WORDS);
+
+  const [user, setUser] = useState(savedUser());
 
   const handleLogOut = () => {
+    sessionStorage.removeItem("user");
     setUser({ name: "", isLoggedIn: false });
+    setAnswerList(DEFAULT_WORDS);
+    setAllowedList(DEFAULT_WORDS);
     alert("Logged out");
-    // reset the word lists to default
-    // should we do that?
   }
+
+  useEffect(() => {
+    if (!user || user.name === "") {
+      setAnswerList(DEFAULT_WORDS);
+      setAllowedList(DEFAULT_WORDS);
+      return;
+    }
+    axios.get(BACKEND_GET_WORD_LIST, { params: { username: user.name } })
+             .then((response) => {
+                const ansList = response.data.map(str => { return { word: str, remove: false } });
+                setAnswerList(ansList);
+             })
+             .catch((error) => {
+                console.log(error);
+             });
+    axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: user.name } })
+            .then((response) => {
+                const allowedList = response.data.map(str => { return { word: str, remove: false } });
+                setAllowedList(allowedList);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+  }, [user]);
 
   return (
     <div className="App">

@@ -45,20 +45,23 @@ public class MainController {
         return "Success";
     }
 
-    @RequestMapping(path = "/verify")
+    @GetMapping(path = "/verify")
     public @ResponseBody String conditionalLogin(@RequestParam String name, @RequestParam String password) {
-        if (!userRepository.existsUserByName(name)) {
-            User n = new User();
-            n.setName(name);
-            n.setPassword(password);
-            n.initialiseUser();
-            userRepository.save(n);
-            return "Logged in";
-        }
         if (userRepository.existsUserByNameAndPassword(name, password)) {
             return "Logged in";
         }
         return "Invalid login details";
+    }
+
+    @PostMapping(path = "/register")
+    public @ResponseBody String registerUser(@RequestParam String name, @RequestParam String password) {
+        if (userRepository.existsUserByName(name)) {
+            return "User already exists";
+        } else {
+            User newUser = new User(name, password);
+            userRepository.save(newUser);
+            return "Registered";
+        }
     }
 
     @GetMapping(path = "/getWords")

@@ -36,11 +36,11 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                 var str = " Press the enter key or confirm to continue.";
                 for (let i = 0; i < l; i++) {
                     if (!onlyLetters(words[i])) {
-                        setPromptMessage(`Words to contain letters only, check word ${i}! ${str}`);
+                        setPromptMessage(`Words to contain letters only, check word ${i + 1}! ${str}`);
                         setShowPrompt(true);
                         return;
                     } else if (len !== -1 && words[i].length !== len) {
-                        setPromptMessage(`Word ${i} has a different number of letters from the current words in the list!`);
+                        setPromptMessage(`Word ${i + 1}, "${words[i]}" has a different number of letters from the current words in the list!`);
                         setShowPrompt(true);
                         return;
                     }

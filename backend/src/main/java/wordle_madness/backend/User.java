@@ -25,19 +25,16 @@ public class User {
 
     private ArrayList<String> allowedList;
 
-    public void initialiseUser() {
+    // Default constructor
+    public User() {}
+
+    public User(String name, String password) {
+        setName(name);
+        setPassword(password);
         this.wordList = new ArrayList<>();
         this.allowedList = new ArrayList<>();
         this.addWords(defaultWords);
         this.addAllowedWords(defaultAllowedWords);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

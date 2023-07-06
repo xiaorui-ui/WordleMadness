@@ -19,24 +19,43 @@ export default function Register({ setAns, setAllowed, setUser }) {
         setShowPrompt(false);
     }
 
+    const navigate = useNavigate();
+
     const handleSubmit = (event) => {
+        event.preventDefault();
+        LoginLogic(setAns, setAllowed, setUser, username, passwordValues, setShowPrompt, setPromptMessage, "Register", 
+        navigate);
     }
 
     return (
-        <div className='login'>
-            <form id="Login" onSubmit={handleSubmit}>
+        <>
+            <div className="sidebar">
+                <br />
+                <a href="/">Continue without logging in</a>
+                <br />
+                <a href="/UserGuide">User guide</a>
+            </div>
 
-                <Username username={username} setUsername={setUsername} />
+            <div className='login'>
 
-                <Password passwordValues={passwordValues} setPasswordValues={setPasswordValues} />
 
-                {/* Empty space between p/w and submit */}
-                <div style={{ height: "30px" }}></div>
+                {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} />}
 
-                <button>Submit</button>
+                <h1>Wordle Madness</h1>
+                <form id="Login" onSubmit={handleSubmit}>
 
-            </form>
+                    <Username username={username} setUsername={setUsername} />
 
-        </div>
-    )
+                    <Password passwordValues={passwordValues} setPasswordValues={setPasswordValues} />
+
+                    {/* Empty space between p/w and submit */}
+                    <div style={{ height: "30px" }}></div>
+
+                    <button>Submit</button>
+
+                </form>
+
+            </div>
+        </>
+    );
 }
