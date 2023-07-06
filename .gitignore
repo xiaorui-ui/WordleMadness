@@ -25,3 +25,5 @@ replay_pid*
 
 # dep
 /.vscode
+backend/src/main/resources/application.properties
+frontend/src/components/Constants.js
