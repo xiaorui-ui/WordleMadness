@@ -7,13 +7,13 @@ export default function LoginLogic(setAns, setAllowed, setUser, username, passwo
 
     const retrieveWordList = () => {
         axios.get(BACKEND_GET_WORD_LIST, { params: { username: username } })
-             .then((response) => {
+            .then((response) => {
                 const ansList = response.data.map(str => { return { word: str, remove: false } });
                 setAns(ansList);
-             })
-             .catch((error) => {
+            })
+            .catch((error) => {
                 console.log(error);
-             });
+            });
     }
 
     const retrieveAllowedWordList = () => {
@@ -30,9 +30,9 @@ export default function LoginLogic(setAns, setAllowed, setUser, username, passwo
 
     // const navigate = useNavigate();
 
-    const handleInvalidLogin = () => {
+    const handleInvalidLogin = (data) => {
         setShowPrompt(true);
-        setPromptMessage("Wrong login details! Please try again.");
+        setPromptMessage(data);
     }
 
     const handleInvalidRegistration = () => {
@@ -45,11 +45,11 @@ export default function LoginLogic(setAns, setAllowed, setUser, username, passwo
     const handleLogin = () => {
         setShowPrompt(true);
         setPromptMessage("Logging in...");
-        axios.get(BACKEND_LOGIN, { 
-            params: { 
-                name: username, 
-                password: passwordValues.password 
-            } 
+        axios.get(BACKEND_LOGIN, {
+            params: {
+                name: username,
+                password: passwordValues.password
+            }
         })
             .then((response) => {
                 if (response.data === "Logged in") {
@@ -60,7 +60,7 @@ export default function LoginLogic(setAns, setAllowed, setUser, username, passwo
                     destination = '/';
                     navigate(destination);
                 } else {
-                    handleInvalidLogin();
+                    handleInvalidLogin(response.data);
                 }
             })
             .catch((error) => {

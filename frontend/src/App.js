@@ -14,6 +14,8 @@ export default function App() {
 
   // answer before allowed, ALWAYS!!!
 
+  // to implement: allow word list to be retained, even if the user is signed out
+
   const savedUser = () => {
     const cache = sessionStorage.getItem("user");
     if (cache === null || cache === "") {
@@ -39,26 +41,27 @@ export default function App() {
 
   useEffect(() => {
     if (!user || user.name === "") {
+      // use the sessionStorage here
       setAnswerList(DEFAULT_WORDS);
       setAllowedList(DEFAULT_WORDS);
       return;
     }
     axios.get(BACKEND_GET_WORD_LIST, { params: { username: user.name } })
-             .then((response) => {
-                const ansList = response.data.map(str => { return { word: str, remove: false } });
-                setAnswerList(ansList);
-             })
-             .catch((error) => {
-                console.log(error);
-             });
+      .then((response) => {
+        const ansList = response.data.map(str => { return { word: str, remove: false } });
+        setAnswerList(ansList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: user.name } })
-            .then((response) => {
-                const allowedList = response.data.map(str => { return { word: str, remove: false } });
-                setAllowedList(allowedList);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+      .then((response) => {
+        const allowedList = response.data.map(str => { return { word: str, remove: false } });
+        setAllowedList(allowedList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [user]);
 
   return (

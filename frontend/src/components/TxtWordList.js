@@ -34,6 +34,9 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                 var l = words.length;
                 var list = [];
                 var str = " Press the enter key or confirm to continue.";
+                for (let j = 0; j < wordList.length; j++) {
+                    list.push(wordList[j]);
+                }
                 for (let i = 0; i < l; i++) {
                     if (!onlyLetters(words[i])) {
                         setPromptMessage(`Words to contain letters only, check word ${i + 1}! ${str}`);
@@ -55,9 +58,9 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
 
                     list.push({ word: words[i], remove: false });
                 }
-                for (let j = 0; j < wordList.length; j++) {
-                    list.push(wordList[j]);
-                }
+                // for (let j = 0; j < wordList.length; j++) {
+                //     list.push(wordList[j]);
+                // }
                 for (let m = 0; m < list.length; m++) {
                     for (let n = 0; n < m; n++) {
                         const mstring = list[m].word;
@@ -109,6 +112,7 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                 id="file-upload"
                 type="file"
                 accept=".txt"
+                onClick={e => (e.target.value = null)}
                 onChange={handleFileChange}
             />
             {selectedFile && <p>Selected file: {selectedFile.name}</p>}

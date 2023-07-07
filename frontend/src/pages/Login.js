@@ -8,8 +8,6 @@ import LoginLogic from '../components/LoginLogic.js';
 
 export default function Login({ setAns, setAllowed, setUser }) {
 
-    // implement showSidebar later
-
     const [username, setUsername] = useState("");
     const [passwordValues, setPasswordValues] = useState({
         password: "",
@@ -27,7 +25,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         LoginLogic(setAns, setAllowed, setUser, username, passwordValues, setShowPrompt, setPromptMessage, "Login",
-        navigate);
+            navigate);
     }
 
     return (
@@ -58,7 +56,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
 
                     <div style={{ height: "30px" }}></div>
 
-                    <a href="/Register">First time?</a>
+                    <a href="/Register">Register here</a>
 
                 </form>
             </div>

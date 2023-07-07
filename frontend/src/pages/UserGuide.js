@@ -27,7 +27,7 @@ export default function UserGuide({ user, setUser, handleLogOut }) {
                         <span onClick={handleLogOut} style={{ cursor: "pointer" }}>Log Out</span> <br />
 
                     </> :
-                    <Link to="/Login">Log in</Link>
+                    <Link to="/Login">Log in to save your data</Link>
                 }
 
             </div>
@@ -71,12 +71,11 @@ export default function UserGuide({ user, setUser, handleLogOut }) {
 
                     You can add words manually or via a .txt file(if it has many words). If you're adding a .txt file, make sure
                     every word is in a new line, as per the example below, otherwise the behaviour may be unexpected. There are certain rules
-                    the new word added must fulfill, but what's the fun of spoiling them here when you can try
-                    it for yourself?
+                    the new word added must fulfill, why not try them out for yourself?
 
                     <div style={{ height: "30px" }}></div>
 
-                    <img src={textInput} alt="Logo" style={{ width: "300px", height: "150px" }} />
+                    <img src={textInput} alt="Logo" style={{ width: "300px", height: "350px" }} />
 
                 </p>
 

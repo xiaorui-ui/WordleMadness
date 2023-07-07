@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import wordle_madness.backend.algo.*;
+
 import java.util.ArrayList;
 
 @Controller
@@ -49,8 +51,10 @@ public class MainController {
     public @ResponseBody String conditionalLogin(@RequestParam String name, @RequestParam String password) {
         if (userRepository.existsUserByNameAndPassword(name, password)) {
             return "Logged in";
+        } else if (userRepository.existsUserByName(name)) {
+            return "Invalid password";
         }
-        return "Invalid login details";
+        return "Username does not exist, please register for a new account";
     }
 
     @PostMapping(path = "/register")
@@ -75,4 +79,15 @@ public class MainController {
         User currentUser = userRepository.findUserByName(username);
         return currentUser.getAllowedList();
     }
+
+    // @GetMapping(path = "/compute")
+    // public @ResponseBody Pair<?, Integer> leastTries(@RequestParam String
+    // username) {
+    // User currentUser = userRepository.findUserByName(username);
+    // ArrayList<String> allowed = currentUser.getAllowedList();
+    // ArrayList<String> ans = currentUser.getWordList();
+    // // Wordle(allowed, ans, len)
+    // return new Wordle(allowed, ans, allowed.get(0).length()).solve(ans, 5);
+    // }
+
 }
