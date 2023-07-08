@@ -80,14 +80,14 @@ public class MainController {
         return currentUser.getAllowedList();
     }
 
-    // @GetMapping(path = "/compute")
-    // public @ResponseBody Pair<?, Integer> leastTries(@RequestParam String
-    // username) {
-    // User currentUser = userRepository.findUserByName(username);
-    // ArrayList<String> allowed = currentUser.getAllowedList();
-    // ArrayList<String> ans = currentUser.getWordList();
-    // // Wordle(allowed, ans, len)
-    // return new Wordle(allowed, ans, allowed.get(0).length()).solve(ans, 5);
-    // }
+    @GetMapping(path = "/compute")
+    public @ResponseBody String leastTries(@RequestParam String username) {
+        User currentUser = userRepository.findUserByName(username);
+        ArrayList<String> allowed = currentUser.getAllowedList();
+        ArrayList<String> ans = currentUser.getWordList();
+        // Wordle(allowed, ans, len)
+        return new Wordle(allowed, ans, allowed.get(0).length())
+                .solve(ans, 5).toString();
+    }
 
 }

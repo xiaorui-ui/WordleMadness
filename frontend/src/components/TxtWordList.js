@@ -8,14 +8,18 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
     const [selectedFile, setSelectedFile] = useState(null);
 
     const addWordsToBackendList = (words) => {
-        axios.patch(BACKEND_ADD_WORDS, {}, { params: { username: user.name, words: words.join(",") } })
+        axios.patch(BACKEND_ADD_WORDS, {}, {
+            params: { username: user.name, words: words.join(',') },
+        })
             .catch((error) => {
                 console.log(error);
             });
     }
 
     const addWordsToBackendAllowedList = (words) => {
-        axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, { params: { username: user.name, words: words.join(",") } })
+        axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, {
+            params: { username: user.name, words: words.join(',') },
+        })
             .catch((error) => {
                 console.log(error);
             });
@@ -30,6 +34,7 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
             reader.onload = function (e) {
                 const contents = e.target.result;
                 const words = extractWords(contents);
+                console.log(words);
                 // var freq = {};
                 var l = words.length;
                 var list = [];
