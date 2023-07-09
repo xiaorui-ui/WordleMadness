@@ -6,7 +6,7 @@ import UserGuide from "./pages/UserGuide.js";
 import DecisionTree from "./pages/DecisionTree.js";
 import Register from "./pages/Register.js"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST, DEFAULT_WORDS } from "./components/Constants";
 
 
@@ -26,6 +26,20 @@ export default function App() {
   const [answerList, setAnswerList] = useState(DEFAULT_WORDS);
 
   const [allowedList, setAllowedList] = useState(DEFAULT_WORDS);
+
+  const answerLength = useMemo(() => {
+    if (answerList.length === 0) {
+        return -1;
+    }
+    return answerList[0].word.length;
+  }, [answerList]);
+
+  const allowedLength = useMemo(() => {
+    if (allowedList.length === 0) {
+        return -1;
+    }
+    return allowedList[0].word.length;
+  }, [allowedList]);
 
   const [user, setUser] = useState(savedUser());
 
@@ -68,7 +82,8 @@ export default function App() {
         <Routes>
 
           <Route path="/" element={<Welcome answerList={answerList} setAnswerList={setAnswerList}
-            allowedList={allowedList} setAllowedList={setAllowedList} user={user} handleLogOut={handleLogOut} />} />
+            answerLength={answerLength} allowedLength={allowedLength} allowedList={allowedList} setAllowedList={setAllowedList} 
+            user={user} handleLogOut={handleLogOut} />} />
 
           <Route path="/Login" element={<Login setUser={setUser} />} />
 

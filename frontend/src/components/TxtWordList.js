@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from "react";
 import { BACKEND_ADD_WORDS, BACKEND_ADD_ALLOWED_WORDS } from "./Constants";
 
-export default function TxtWordList({ wordList, setWordList, len, setLen, setPromptMessage, setShowPrompt, onlyLetters,
+export default function TxtWordList({ wordList, setWordList, len, setPromptMessage, setShowPrompt, onlyLetters,
     setWordListFreq, user, id }) {
 
     const [selectedFile, setSelectedFile] = useState(null);
@@ -94,9 +94,6 @@ export default function TxtWordList({ wordList, setWordList, len, setLen, setPro
                 }
 
                 setWordList(list);
-                if (len === -1) {
-                    setLen(words[l - 1].length);
-                }
             };
             reader.readAsText(file);
         };

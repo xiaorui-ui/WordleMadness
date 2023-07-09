@@ -8,21 +8,10 @@ import { Link } from 'react-router-dom';
 // To-do: Save Wordlist even when refreshed/re-directed
 
 
-export default function Welcome({ answerList, setAnswerList, allowedList, setAllowedList, user,
-    handleLogOut }) {
+export default function Welcome({ answerList, setAnswerList, allowedList, setAllowedList, answerLength, allowedLength,
+    user, handleLogOut }) {
 
-    function f(wordList) {
-        if (wordList.length === 0) {
-            return -1;
-        }
-        return wordList[0].word.length;
-    }
 
-    // All words in list must have length len
-
-    const [len1, setLen1] = useState(f(answerList));
-
-    const [len2, setLen2] = useState(f(allowedList));
 
     const [answerListFreq, setAnswerListFreq] = useState({
         "crane": 1, "jazzy": 1, "fjord": 1
@@ -66,7 +55,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                 {/* To implement firstTime */}
                 <Header user={user} firstTime={true} />
                 <h2>Answer List</h2>
-                <ModifyWords wordList={answerList} setWordList={setAnswerList} len={len1} setLen={setLen1}
+                <ModifyWords wordList={answerList} setWordList={setAnswerList} len={answerLength}
                     showPrompt={showPrompt} setShowPrompt={setShowPrompt}
                     promptMessage={promptMessage} setPromptMessage={setPromptMessage}
                     wordListFreq={answerListFreq} setWordListFreq={setAnswerListFreq}
@@ -82,7 +71,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
 
                 {differentList &&
                     (<>
-                        <ModifyWords wordList={allowedList} setWordList={setAllowedList} len={len2} setLen={setLen2}
+                        <ModifyWords wordList={allowedList} setWordList={setAllowedList} len={allowedLength}
                             showPrompt={showPrompt} setShowPrompt={setShowPrompt}
                             promptMessage={promptMessage} setPromptMessage={setPromptMessage}
                             wordListFreq={allowedListFreq} setWordListFreq={setAllowedListFreq}

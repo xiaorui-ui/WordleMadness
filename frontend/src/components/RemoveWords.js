@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { BACKEND_REMOVE_WORDS, BACKEND_REMOVE_ALLOWED_WORDS } from './Constants';
 
-export default function RemoveWords({ wordList, setWordList, setLen, wordListFreq, setWordListFreq
+export default function RemoveWords({ wordList, setWordList, wordListFreq, setWordListFreq
     , user, id }) {
 
     const removeWordsFromBackendList = (words) => {
@@ -45,9 +45,6 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         }
 
         setWordList(newArr);
-        if (newArr.length === 0) {
-            setLen(-1);
-        }
     }
 
     const removeAll = () => {
@@ -64,7 +61,6 @@ export default function RemoveWords({ wordList, setWordList, setLen, wordListFre
         setWordList(
             []
         );
-        setLen(-1);
         setWordListFreq({});
 
     }
