@@ -1,9 +1,6 @@
 package wordle_madness.backend;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 
@@ -21,8 +18,9 @@ public class User {
 
     private final String[] defaultAllowedWords = { "crane", "jazzy", "fjord", "found" };
 
+    @Column(length = Integer.MAX_VALUE)
     private ArrayList<String> wordList;
-
+    @Column(length = Integer.MAX_VALUE)
     private ArrayList<String> allowedList;
 
     // Default constructor

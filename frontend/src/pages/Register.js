@@ -5,7 +5,7 @@ import { useState } from 'react';
 import CustomPrompt from '../components/CustomPrompt.js';
 import LoginLogic from '../components/LoginLogic.js';
 
-export default function Register({ setAns, setAllowed, setUser }) {
+export default function Register({ setUser }) {
 
     const [username, setUsername] = useState("");
     const [passwordValues, setPasswordValues] = useState({
@@ -23,7 +23,7 @@ export default function Register({ setAns, setAllowed, setUser }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        LoginLogic(setAns, setAllowed, setUser, username, passwordValues, setShowPrompt, setPromptMessage, "Register", 
+        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, "Register", 
         navigate);
     }
 

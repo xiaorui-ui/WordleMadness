@@ -12,14 +12,16 @@ export default function AddWord({ wordList, setWordList, len, setLen,
   const [word, setWord] = useState('');
 
   const addWordToBackendList = () => {
-    axios.patch(BACKEND_ADD_WORDS, {}, { params: { username: user.name, words: word } })
+    const toArray = [word];
+    axios.post(BACKEND_ADD_WORDS, { words: toArray }, { params: { username: user.name } })
       .catch((error) => {
         console.log(error);
       });
   }
 
   const addWordToBackendAllowedList = () => {
-    axios.patch(BACKEND_ADD_ALLOWED_WORDS, {}, { params: { username: user.name, words: word } })
+    const toArray = [word];
+    axios.post(BACKEND_ADD_ALLOWED_WORDS, { words: toArray }, { params: { username: user.name } })
       .catch((error) => {
         console.log(error);
       });
