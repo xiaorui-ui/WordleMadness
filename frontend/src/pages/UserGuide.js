@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import textInput from '../txtInput.png';
 
-export default function UserGuide({ user, setUser, handleLogOut }) {
+export default function UserGuide({ user, handleLogOut }) {
 
 
     return (
@@ -81,7 +81,7 @@ export default function UserGuide({ user, setUser, handleLogOut }) {
 
                 <h2 id="Decision tree"> Decision Tree </h2>
                 <p className="break-after-characters">
-                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank"> this</a>
+                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank" rel="noreferrer"> this</a>
 
                     <div style={{ height: "30px" }}></div>
 
@@ -93,14 +93,14 @@ export default function UserGuide({ user, setUser, handleLogOut }) {
 
                 <h2 id="Section-3"> Decision Tree </h2>
                 <p className="break-after-characters">
-                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank"> this</a>
+                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank" rel="noreferrer"> this</a>
 
                     <div style={{ height: "300px" }}></div>
 
                 </p>
                 <h2 id="Section-4"> Decision Tree </h2>
                 <p className="break-after-characters">
-                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank"> this</a>
+                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank" rel="noreferrer"> this</a>
 
                     <div style={{ height: "300px" }}></div>
 

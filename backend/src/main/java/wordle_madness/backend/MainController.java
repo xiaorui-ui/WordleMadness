@@ -15,34 +15,34 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
 
-    @PatchMapping(path = "/addWords")
-    public @ResponseBody String addWords(@RequestParam String username, @RequestParam String[] words) {
+    @PostMapping(path = "/addWords")
+    public @ResponseBody String addWords(@RequestParam String username, @RequestBody WordArray words) {
         User currentUser = userRepository.findUserByName(username);
-        currentUser.addWords(words);
+        currentUser.addWords(words.getWords());
         userRepository.save(currentUser);
         return "Success";
     }
 
-    @PatchMapping(path = "/addAllowedWords")
-    public @ResponseBody String addAllowedWords(@RequestParam String username, @RequestParam String[] words) {
+    @PostMapping(path = "/addAllowedWords")
+    public @ResponseBody String addAllowedWords(@RequestParam String username, @RequestBody WordArray words) {
         User currentUser = userRepository.findUserByName(username);
-        currentUser.addAllowedWords(words);
+        currentUser.addAllowedWords(words.getWords());
         userRepository.save(currentUser);
         return "Success";
     }
 
     @PatchMapping(path = "/deleteWords")
-    public @ResponseBody String deleteWords(@RequestParam String username, @RequestParam String[] words) {
+    public @ResponseBody String deleteWords(@RequestParam String username, @RequestBody WordArray words) {
         User currentUser = userRepository.findUserByName(username);
-        currentUser.deleteWords(words);
+        currentUser.deleteWords(words.getWords());
         userRepository.save(currentUser);
         return "Success";
     }
 
     @PatchMapping(path = "/deleteAllowedWords")
-    public @ResponseBody String deleteAllowedWords(@RequestParam String username, @RequestParam String[] words) {
+    public @ResponseBody String deleteAllowedWords(@RequestParam String username, @RequestBody WordArray words) {
         User currentUser = userRepository.findUserByName(username);
-        currentUser.deleteAllowedWords(words);
+        currentUser.deleteAllowedWords(words.getWords());
         userRepository.save(currentUser);
         return "Success";
     }
@@ -52,7 +52,7 @@ public class MainController {
         if (userRepository.existsUserByNameAndPassword(name, password)) {
             return "Logged in";
         } else if (userRepository.existsUserByName(name)) {
-            return "Invalid password";
+            return "Wrong password";
         }
         return "Username does not exist, please register for a new account";
     }

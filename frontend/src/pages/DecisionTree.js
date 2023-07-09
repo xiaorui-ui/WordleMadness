@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { BACKEND_COMPUTE } from "../components/Constants.js";
-import Username from "../components/Username.js";
+// import Username from "../components/Username.js";
 import { useState } from "react";
 import axios from 'axios';
 import CustomPrompt from "../components/CustomPrompt.js";
@@ -32,7 +32,7 @@ export default function DecisionTree({ answerList, allowedList, user, handleLogO
         if (list1.length === 0 || list2.length === 0) {
             setShowPrompt(true);
             setPromptMessage("Lists cannot be empty!");
-        } else if (list1[0].word.length != list2[0].word.length) {
+        } else if (list1[0].word.length !== list2[0].word.length) {
             setShowPrompt(true);
             setPromptMessage("Words in lists need same number of letters!");
         } else if (!subset(list1, list2)) {

@@ -1,32 +1,9 @@
 // import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { BACKEND_LOGIN, BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST, BACKEND_REGISTER } from '../components/Constants.js';
+import { BACKEND_LOGIN, BACKEND_REGISTER } from '../components/Constants.js';
 
-export default function LoginLogic(setAns, setAllowed, setUser, username, passwordValues, setShowPrompt, setPromptMessage, type,
+export default function LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, type,
     navigate) {
-
-    const retrieveWordList = () => {
-        axios.get(BACKEND_GET_WORD_LIST, { params: { username: username } })
-            .then((response) => {
-                const ansList = response.data.map(str => { return { word: str, remove: false } });
-                setAns(ansList);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
-    const retrieveAllowedWordList = () => {
-        axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: username } })
-            .then((response) => {
-                const allowedList = response.data.map
-                    (str => { return { word: str, remove: false } });
-                setAllowed(allowedList);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
 
     // const navigate = useNavigate();
 
@@ -55,8 +32,6 @@ export default function LoginLogic(setAns, setAllowed, setUser, username, passwo
                 if (response.data === "Logged in") {
                     setUser({ name: username, isLoggedIn: true });
                     sessionStorage.setItem("user", username);
-                    retrieveWordList();
-                    retrieveAllowedWordList();
                     destination = '/';
                     navigate(destination);
                 } else {
@@ -83,8 +58,6 @@ export default function LoginLogic(setAns, setAllowed, setUser, username, passwo
                     if (response.data === "Registered") {
                         setUser({ name: username, isLoggedIn: true });
                         sessionStorage.setItem("user", username);
-                        retrieveWordList();
-                        retrieveAllowedWordList();
                         destination = '/';
                         navigate(destination);
                     } else {

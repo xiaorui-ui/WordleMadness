@@ -6,7 +6,7 @@ import Username from '../components/Username.js';
 import Password from '../components/Password.js';
 import LoginLogic from '../components/LoginLogic.js';
 
-export default function Login({ setAns, setAllowed, setUser }) {
+export default function Login({ setUser }) {
 
     const [username, setUsername] = useState("");
     const [passwordValues, setPasswordValues] = useState({
@@ -24,7 +24,7 @@ export default function Login({ setAns, setAllowed, setUser }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        LoginLogic(setAns, setAllowed, setUser, username, passwordValues, setShowPrompt, setPromptMessage, "Login",
+        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, "Login",
             navigate);
     }
 

@@ -23,7 +23,7 @@ const CustomPrompt = ({ message, onDismiss }) => {
             <div className="modal-content">
                 <p>{message}</p>
                 <div className='vertical-center'>
-                    <button onClick={onDismiss} data-testid="prompt-button">Confirm</button>
+                    <button onClick={onDismiss} data-testid="prompt-button">Close</button>
                 </div>
 
             </div >
