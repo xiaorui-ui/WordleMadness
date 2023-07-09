@@ -5,7 +5,7 @@ import CustomPrompt from "./CustomPrompt.js";
 import TxtWordList from "./TxtWordList.js";
 import { BACKEND_ADD_WORDS, BACKEND_ADD_ALLOWED_WORDS } from "./Constants.js";
 
-export default function AddWord({ wordList, setWordList, len, setLen,
+export default function AddWord({ wordList, setWordList, len,
   showPrompt, setShowPrompt, promptMessage, setPromptMessage,
   wordListFreq, setWordListFreq, user, id }) {
 
@@ -53,7 +53,6 @@ export default function AddWord({ wordList, setWordList, len, setLen,
     // wordList is empty
     if (len === -1) {
       setWordList([{ word: word, remove: false }]);
-      setLen(word.length);
       if (user.isLoggedIn) {
         if (id === 1) {
           addWordToBackendList();
@@ -122,7 +121,7 @@ export default function AddWord({ wordList, setWordList, len, setLen,
 
       <p>OR</p>
       <br />
-      <TxtWordList wordList={wordList} setWordList={setWordList} len={len} setLen={setLen} setPromptMessage={setPromptMessage} setShowPrompt={setShowPrompt}
+      <TxtWordList wordList={wordList} setWordList={setWordList} len={len} setPromptMessage={setPromptMessage} setShowPrompt={setShowPrompt}
         onlyLetters={onlyLetters} setWordListFreq={setWordListFreq} user={user} id={id} />
       {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} />)}
       <WordList words={wordList} onWordChange={changeRemove} wordListFreq={wordListFreq} />
