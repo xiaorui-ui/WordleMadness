@@ -2,26 +2,29 @@
 import axios from 'axios';
 import { BACKEND_LOGIN, BACKEND_REGISTER } from '../components/Constants.js';
 
-export default function LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, type,
+export default function LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, type,
     navigate) {
 
     // const navigate = useNavigate();
 
     const handleInvalidLogin = (data) => {
-        setShowPrompt(true);
+        setCloseable(true);
         setPromptMessage(data);
+        setShowPrompt(true);
     }
 
     const handleInvalidRegistration = () => {
-        setShowPrompt(true);
+        setCloseable(true);
         setPromptMessage("User already exists! Please register with a different username.");
+        setShowPrompt(true);
     }
 
     let destination = '';
 
     const handleLogin = () => {
-        setShowPrompt(true);
+        setCloseable(false);
         setPromptMessage("Logging in...");
+        setShowPrompt(true);
         axios.get(BACKEND_LOGIN, {
             params: {
                 name: username,
@@ -29,6 +32,7 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
             }
         })
             .then((response) => {
+                setShowPrompt(false);
                 if (response.data === "Logged in") {
                     setUser({ name: username, isLoggedIn: true });
                     sessionStorage.setItem("user", username);
@@ -46,8 +50,9 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
     const handleRegister = () => {
         if ((0 < username.length && username.length <= 10 &&
             3 <= passwordValues.password.length && passwordValues.password.length <= 10)) {
-            setShowPrompt(true);
+            setCloseable(false);
             setPromptMessage("Registering...");
+            setShowPrompt(true);
             axios.post(BACKEND_REGISTER, {}, {
                 params: {
                     name: username,
@@ -55,6 +60,7 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                 }
             })
                 .then((response) => {
+                    setShowPrompt(false);
                     if (response.data === "Registered") {
                         setUser({ name: username, isLoggedIn: true });
                         sessionStorage.setItem("user", username);
@@ -68,14 +74,17 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                     console.log(error);
                 });
         } else if (username.length === 0) {
-            setShowPrompt(true);
+            setCloseable(true);
             setPromptMessage("Please set a username");
+            setShowPrompt(true);
         } else if (passwordValues.password.length < 3) {
-            setShowPrompt(true);
+            setCloseable(true);
             setPromptMessage("Please enter a password with at least 3 characters");
-        } else {
             setShowPrompt(true);
+        } else {
+            setCloseable(true);
             setPromptMessage("Please enter a username and password with at most 10 characters each");
+            setShowPrompt(true);
         }
     }
 

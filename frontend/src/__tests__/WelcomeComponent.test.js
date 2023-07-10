@@ -34,7 +34,7 @@ test("submit word", () => {
     fireEvent.change(input, { target: { value: "45t" } });
     fireEvent.click(addButton);
     // html element contains the toMatch parameter
-    expect(screen.getAllByTestId("prompt")[0].textContent).toMatch(/only letters/);
+    expect(screen.getAllByTestId("")[0].textContent).toMatch(/only letters/);
 
 
     // remove prompt

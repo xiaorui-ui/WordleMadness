@@ -6,7 +6,7 @@ import TxtWordList from "./TxtWordList.js";
 import { BACKEND_ADD_WORDS, BACKEND_ADD_ALLOWED_WORDS } from "./Constants.js";
 
 export default function AddWord({ wordList, setWordList, len,
-  showPrompt, setShowPrompt, promptMessage, setPromptMessage,
+  showPrompt, setShowPrompt, promptMessage, setPromptMessage, closeable, setCloseable,
   wordListFreq, setWordListFreq, user, id }) {
 
   const [word, setWord] = useState('');
@@ -14,6 +14,9 @@ export default function AddWord({ wordList, setWordList, len,
   const addWordToBackendList = () => {
     const toArray = [word];
     axios.post(BACKEND_ADD_WORDS, { words: toArray }, { params: { username: user.name } })
+      .then((response) => {
+        setShowPrompt(false);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -22,6 +25,9 @@ export default function AddWord({ wordList, setWordList, len,
   const addWordToBackendAllowedList = () => {
     const toArray = [word];
     axios.post(BACKEND_ADD_ALLOWED_WORDS, { words: toArray }, { params: { username: user.name } })
+      .then((response) => {
+        setShowPrompt(false);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -32,6 +38,13 @@ export default function AddWord({ wordList, setWordList, len,
     // key in upper case in future
   }
 
+  const changeRemove = (i) => {
+    setWordList([
+      ...wordList.slice(0, i),
+      { word: wordList[i].word, remove: !wordList[i].remove },
+      ...wordList.slice(i + 1)
+    ]);
+  }
 
   function onlyLetters(str) {
     return /^[A-Za-z]*$/.test(str);
@@ -44,9 +57,15 @@ export default function AddWord({ wordList, setWordList, len,
   const handleSubmit = (event) => {
     var str = " Press the enter key or confirm to continue.";
     event.preventDefault();
+
+    setCloseable(false);
+    setPromptMessage("Adding word...")
+    setShowPrompt(true);
+    
     if (!onlyLetters(word)) {
-      setShowPrompt(true);
+      setCloseable(true);
       setPromptMessage("Enter only letters!" + str);
+      setShowPrompt(true);
       return;
     }
 
@@ -60,29 +79,34 @@ export default function AddWord({ wordList, setWordList, len,
         else if (id === 2) {
           addWordToBackendAllowedList();
         }
+      } else {
+        setShowPrompt(false);
       }
       setWord('');
       return;
     }
 
     if (word.length !== len) {
-      setShowPrompt(true);
+      setCloseable(true);
       setPromptMessage(`Enter a word with ${len} letter(s)!${str}`);
+      setShowPrompt(true);
       return;
     }
 
     // check for repeated words
     for (let i = 0; i < wordList.length; i++) {
       if (word === wordList[i].word) {
-        setShowPrompt(true);
+        setCloseable(true);
         setPromptMessage(`This word is already in the list. Enter a new word!${str}`);
+        setShowPrompt(true);
         return;
       }
     }
 
     // if (wordListFreq.hasOwnProperty(word)) {
-    //   setShowPrompt(true);
+    //   setCloseable(true);
     //   setPromptMessage(`This word is already in the list. Enter a new word!${str}`);
+    //   setShowPrompt(true);
     //   return;
     // }
 
@@ -97,16 +121,10 @@ export default function AddWord({ wordList, setWordList, len,
       else if (id === 2) {
         addWordToBackendAllowedList();
       }
+    } else {
+      setShowPrompt(false);
     }
     setWord('');
-  }
-
-  const changeRemove = (i) => {
-    setWordList([
-      ...wordList.slice(0, i),
-      { word: wordList[i].word, remove: !wordList[i].remove },
-      ...wordList.slice(i + 1)
-    ]);
   }
 
   return (
@@ -122,8 +140,8 @@ export default function AddWord({ wordList, setWordList, len,
       <p>OR</p>
       <br />
       <TxtWordList wordList={wordList} setWordList={setWordList} len={len} setPromptMessage={setPromptMessage} setShowPrompt={setShowPrompt}
-        onlyLetters={onlyLetters} setWordListFreq={setWordListFreq} user={user} id={id} />
-      {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} />)}
+        setCloseable={setCloseable} onlyLetters={onlyLetters} setWordListFreq={setWordListFreq} user={user} id={id} />
+      {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />)}
       <WordList words={wordList} onWordChange={changeRemove} wordListFreq={wordListFreq} />
     </>
   )
