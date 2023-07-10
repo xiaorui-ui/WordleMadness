@@ -58,7 +58,7 @@
                     <version>1</version>
                     <projectId>GCLOUD_CONFIG</projectId>
 					<jvmFlags>
-              			<jvmFlag>-Xmx16g</jvmFlag>
+              			<jvmFlag>-Xmx100g</jvmFlag>
             		</jvmFlags>
                 </configuration>
             </plugin>
