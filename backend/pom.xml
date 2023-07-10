@@ -49,9 +49,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-        			<jvmArguments>-Xmx4g</jvmArguments>
-    			</configuration>
 			</plugin>
 			<plugin>
                 <groupId>com.google.cloud.tools</groupId>
@@ -60,6 +57,9 @@
                 <configuration>
                     <version>1</version>
                     <projectId>GCLOUD_CONFIG</projectId>
+					<jvmFlags>
+              			<jvmFlag>-Xmx3g</jvmFlag>
+            		</jvmFlags>
                 </configuration>
             </plugin>
 		</plugins>
