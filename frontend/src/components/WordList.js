@@ -19,7 +19,7 @@ export default function WordList({ words, onWordChange }) {
                         words.map((word, i) => {
                             return (
                                 <tr key={i} height="30px">
-                                    <td>{i}</td>
+                                    <td>{i + 1}</td>
                                     <td data-testid="word">{word.word}</td>
                                     <td><input type="checkbox" checked={word.remove} onChange={handleChange(i)}
                                         data-testid="checkbox" /></td>

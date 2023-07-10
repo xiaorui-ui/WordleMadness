@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from "react";
 import { BACKEND_ADD_WORDS, BACKEND_ADD_ALLOWED_WORDS } from "./Constants";
 
-export default function TxtWordList({ wordList, setWordList, len, setPromptMessage, setShowPrompt, onlyLetters,
+export default function TxtWordList({ wordList, setWordList, len, setPromptMessage, setShowPrompt, setCloseable, onlyLetters,
     setWordListFreq, user, id }) {
 
     const [selectedFile, setSelectedFile] = useState(null);
@@ -11,6 +11,9 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
         axios.post(BACKEND_ADD_WORDS, { words: words }, {
             params: { username: user.name },
         })
+            .then((response) => {
+                setShowPrompt(false);
+            })
             .catch((error) => {
                 console.log(error);
             });
@@ -20,12 +23,18 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
         axios.post(BACKEND_ADD_ALLOWED_WORDS, { words: words }, {
             params: { username: user.name },
         })
+            .then((response) => {
+                setShowPrompt(false);
+            })
             .catch((error) => {
                 console.log(error);
             });
     }
 
     const handleFileChange = (event) => {
+        setCloseable(false);
+        setPromptMessage("Adding words...")
+        setShowPrompt(true);
         const file = event.target.files[0];
         setSelectedFile(file);
 
@@ -43,16 +52,19 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
                 }
                 for (let i = 0; i < l; i++) {
                     if (!onlyLetters(words[i])) {
+                        setCloseable(true);
                         setPromptMessage(`Words to contain letters only, check word ${i + 1}! ${str}`);
                         setShowPrompt(true);
                         return;
                     } else if (len !== -1 && words[i].length !== len) {
+                        setCloseable(true);
                         setPromptMessage(`Word ${i + 1}, "${words[i]}" has a different number of letters from the current words in the list!`);
                         setShowPrompt(true);
                         return;
                     }
                     // else if (freq.hasOwnProperty(words[i])) {
                     //     // for now, we disallow the addition of new words
+                    //     setCloseable(true);
                     //     setPromptMessage(`Word ${i} has appeared in the list before.`);
                     //     setShowPrompt(true);
                     //     return;
@@ -70,10 +82,12 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
                         const mstring = list[m].word;
                         const nstring = list[n].word;
                         if (mstring === nstring) {
+                            setCloseable(true);
                             setPromptMessage(`Word ${list[n].word} is repeated!`);
                             setShowPrompt(true);
                             return;
                         } else if (mstring.length !== nstring.length) {
+                            setCloseable(true);
                             setPromptMessage(`Words submitted have different length!`);
                             setShowPrompt(true);
                             return;
@@ -91,6 +105,8 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
                     else if (id === 2) {
                         addWordsToBackendAllowedList(words);
                     }
+                } else {
+                    setShowPrompt(false);
                 }
 
                 setWordList(list);
