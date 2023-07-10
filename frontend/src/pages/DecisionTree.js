@@ -58,6 +58,9 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
 
 
     const handleCompute = () => {
+        setCloseable(false);
+        setPromptMessage("Loading result...");
+        setShowPrompt(true);
         // implement checks here
         if (checkValid(answerList, allowedList)) {
             axios.get(BACKEND_COMPUTE, {
@@ -65,6 +68,7 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
                     username: user.name
                 }
             }).then((response) => {
+                setShowPrompt(false);
                 setBestWord(response.data);
             }).catch((error) => {
                 console.log(error);
