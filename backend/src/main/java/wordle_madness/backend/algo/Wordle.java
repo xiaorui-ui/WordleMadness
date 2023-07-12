@@ -101,11 +101,12 @@ public class Wordle {
                 }
             }
         }
-
+        arr2 = null;
         int ans = 0;
         for (int i = 0; i < l; i++) {
             ans += (int) arr1[i] * Math.pow(3, i);
         }
+        arr1 = null;
         return ans;
     }
 
