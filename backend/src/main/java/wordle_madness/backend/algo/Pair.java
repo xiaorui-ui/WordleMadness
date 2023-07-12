@@ -1,7 +1,5 @@
 package wordle_madness.backend.algo;
 
-import java.util.Objects;
-
 public class Pair<S, T> {
     private S s;
     private T t;
@@ -35,11 +33,6 @@ public class Pair<S, T> {
         Pair<?, ?> p = (Pair<?, ?>) o;
         // We ignore null case for now
         return this.s.equals(p.s) && this.t.equals(p.t);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(s, t);
     }
 
     @Override

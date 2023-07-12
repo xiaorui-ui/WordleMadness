@@ -29,7 +29,7 @@ public class Wordle {
     // Comparison table of words represented by a hashmap. key = allowed word, value
     // = (HashMap, key = answer word, value = comparison value)
 
-    protected final HashMap<Pair<String, String>, Integer> compare;
+    protected final HashMap<String, HashMap<String, Integer>> compare;
 
     public Wordle(List<String> allowed, List<String> ans, int l) {
         this.allowed = allowed;
@@ -41,14 +41,16 @@ public class Wordle {
 
     // choice 1 implementation
 
-    public static HashMap<Pair<String, String>, Integer> hash(List<String> allowed, List<String> ans, int l) {
-        HashMap<Pair<String, String>, Integer> h = new HashMap<>();
+    public static HashMap<String, HashMap<String, Integer>> hash(List<String> allowed, List<String> ans, int l) {
+        HashMap<String, HashMap<String, Integer>> h = new HashMap<>();
         for (int i = 0; i < allowed.size(); i++) {
             String s1 = allowed.get(i);
             for (int j = 0; j < ans.size(); j++) {
                 String s2 = ans.get(j);
-                Pair<String, String> combined = new Pair<>(s1, s2);
-                h.put(combined, Wordle.compare(s1, s2, l));
+                if (j == 0) {
+                    h.put(s1, new HashMap<String, Integer>());
+                }
+                h.get(s1).put(s2, Wordle.compare(s1, s2, l));
             }
         }
         return h;
@@ -117,7 +119,7 @@ public class Wordle {
         HashMap<Integer, List<String>> h = new HashMap<>();
         for (int j = 0; j < l.size(); j++) {
             String w2 = l.get(j);
-            int key = this.compare.get(new Pair<>(w, w2));
+            int key = this.compare.get(w).get(w2);
             if (!h.containsKey(key)) {
                 h.put(key, new ArrayList<String>());
             }
@@ -132,7 +134,7 @@ public class Wordle {
     public HashSet<Integer> checkSet(String w, List<String> l) {
         HashSet<Integer> h = new HashSet<>();
         for (int j = 0; j < l.size(); j++) {
-            int key = this.compare.get(new Pair<>(w, l.get(j)));
+            int key = this.compare.get(w).get(l.get(j));
             // Integer key = this.compare.get(word).get(l.get(j));
             if (!h.contains(key)) {
                 h.add(key);
