@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-// possible to use the Link function from the same library as well
 import { useState } from 'react';
 import CustomPrompt from '../components/CustomPrompt.js';
 import Username from '../components/Username.js';
 import Password from '../components/Password.js';
 import LoginLogic from '../components/LoginLogic.js';
+
+// to do: only allow one user to log in at once
 
 export default function Login({ setUser }) {
 
@@ -37,7 +38,8 @@ export default function Login({ setUser }) {
                 <a href="/UserGuide">User guide</a>
             </div>
 
-            <div className='login'>
+            {/* default font size = 16px */}
+            <div className='login' >
 
 
                 {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} />}
@@ -52,14 +54,14 @@ export default function Login({ setUser }) {
                     {/* Empty space between p/w and submit */}
                     <div style={{ height: "30px" }}></div>
 
-                    <button>Submit</button>
+                    <button style={{ fontSize: "18px" }}>Submit</button>
 
                     <div style={{ height: "30px" }}></div>
 
-                    <a href="/Register">Register here</a>
+                    <a href="/Register" style={{ fontSize: "18px" }}>Register here</a>
 
                 </form>
-            </div>
+            </div >
         </>
 
     );

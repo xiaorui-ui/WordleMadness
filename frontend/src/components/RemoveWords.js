@@ -67,9 +67,11 @@ export default function RemoveWords({ wordList, setWordList, wordListFreq, setWo
 
     return (
         <>
-            <button type="submit" onClick={handleRemoval} data-testid={"remove-selected"}> Remove Selected </button>
+            <button type="submit" onClick={handleRemoval} data-testid={"remove-selected"} className={id === 1 ? "button-1" : undefined}
+            > Remove Selected </button>
             <div style={{ height: "30px" }}></div>
-            <button type="submit" onClick={removeAll} data-testid={"remove-all"}> Remove ALL </button>
+            <button type="submit" onClick={removeAll} data-testid={"remove-all"} className={id === 1 ? "button-1" : undefined}
+            > Remove ALL </button>
         </>
     )
 }

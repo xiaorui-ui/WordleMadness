@@ -14,8 +14,6 @@ export default function UserGuide({ user, handleLogOut }) {
                 <a href="#Logging-in">Logging In</a><br />
                 <a href="#Welcome">Welcome</a><br />
                 <a href="#Decision tree">Decision Tree</a><br />
-                <a href="#Section-3">Section 3</a><br />
-                <a href="#Section-4">Section 4</a><br />
 
                 <div style={{ height: "50px" }}></div>
 
@@ -41,16 +39,14 @@ export default function UserGuide({ user, handleLogOut }) {
 
                 <h2 id="Logging-in"> Logging in </h2>
                 <p className="break-after-characters">
-                    To register log in, you can create a new user by logging in with a new username and password. The first time
+                    You can either log in to an existing account or register for a new account . The first time
                     logging in with your new account will take quite a while, so please by patient :)
                     If the username is already existing but the password is wrong, you will need to create one
-                    with another username.
+                    with another username, or try to recall your password.
 
                     <div style={{ height: "30px" }}></div>
 
-                    To use a public account, use "ccc" for both username and password. Ignore the "First time?" link for now if you
-                    want to create a new account.
-
+                    To use a public account, use "ccc" for both username and password.
                     <div style={{ height: "30px" }}></div>
 
                 </p>
@@ -70,41 +66,45 @@ export default function UserGuide({ user, handleLogOut }) {
                     <div style={{ height: "30px" }}></div>
 
                     You can add words manually or via a .txt file(if it has many words). If you're adding a .txt file, make sure
-                    every word is in a new line, as per the example below, otherwise the behaviour may be unexpected. There are certain rules
-                    the new word added must fulfill, why not try them out for yourself?
+                    every word is in a new line, as per the example below, otherwise the behaviour may be unexpected. There are
+                    certain rules the new word added must fulfill, why not try them out for yourself?
 
                     <div style={{ height: "30px" }}></div>
 
                     <img src={textInput} alt="Logo" style={{ width: "300px", height: "350px" }} />
 
+                    <div style={{ height: "30px" }}></div>
+
+                    Due to technical limitations, we can't handle lists that are too long at the moment. The web app can handle
+                    answer lists a few hundred words long and allowed lists a few thousand words long.
+
                 </p>
 
                 <h2 id="Decision tree"> Decision Tree </h2>
                 <p className="break-after-characters">
-                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank" rel="noreferrer"> this</a>
+                    At long last, after 2 months of hard work(amongst juggling other commitments), the decision tree is finally available!
 
                     <div style={{ height: "30px" }}></div>
 
-                    The algorithm is ready and will be integrated with the backend soon.
+                    In the decision tree page, click the "click me" button to get the tree(this is subjected to change).
+                    Do be patient as the algorithm is somewhat involved and involves tree search(pun intended)
+                    since there are no known simpler ways to solve Wordle fully;
+                    waiting times of up to a minute is normal for larger lists.
+                    To navigate into a branch of the decision tree, simply click on it. To hide it, click on it again.
 
                     <div style={{ height: "30px" }}></div>
 
+                    There's a line of text on top every time you click open a branch. "<i>x</i> words" means <i>x</i> words
+                    in the answer list belongs to the current branch of the decision tree."... tries total" means that number
+                    of tries is needed in total for all words in that branch. Observant users may notice that sum is not consistent.
+
+                    <div style={{ height: "30px" }}></div>
+
+                    Our inspiration: <a href="https://jonathanolson.net/wordle-solver/" target="_blank" rel="noreferrer">
+                        Johnathan Olson Wordle Solver</a>
                 </p>
 
-                <h2 id="Section-3"> Decision Tree </h2>
-                <p className="break-after-characters">
-                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank" rel="noreferrer"> this</a>
-
-                    <div style={{ height: "300px" }}></div>
-
-                </p>
-                <h2 id="Section-4"> Decision Tree </h2>
-                <p className="break-after-characters">
-                    Work in progress. Inspire to be like <a href="https://jonathanolson.net/wordle-solver/" target="_blank" rel="noreferrer"> this</a>
-
-                    <div style={{ height: "300px" }}></div>
-
-                </p>
+                <div style={{ height: "50px" }}></div>
 
                 <p>Go to <a href="#Title">top</a>.
                 </p>

@@ -14,6 +14,8 @@ public class User {
 
     private String password;
 
+    private boolean isLoggedIn;
+
     private final String[] defaultWords = { "crane", "jazzy", "fjord", "found" };
 
     private final String[] defaultAllowedWords = { "crane", "jazzy", "fjord", "found" };
@@ -24,7 +26,8 @@ public class User {
     private ArrayList<String> allowedList;
 
     // Default constructor
-    public User() {}
+    public User() {
+    }
 
     public User(String name, String password) {
         setName(name);
@@ -33,6 +36,7 @@ public class User {
         this.allowedList = new ArrayList<>();
         this.addWords(defaultWords);
         this.addAllowedWords(defaultAllowedWords);
+        this.isLoggedIn = true;
     }
 
     public String getName() {
@@ -77,5 +81,14 @@ public class User {
         for (String word : words) {
             allowedList.remove(word);
         }
+    }
+
+    // might be a better idea to have setters for both logging in and out
+    public void logIn() {
+        this.isLoggedIn = true;
+    }
+
+    public void logOut() {
+        this.isLoggedIn = false;
     }
 }

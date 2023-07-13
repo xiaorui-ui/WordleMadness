@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.*;
 
 import wordle_madness.backend.algo.*;
 
-import java.util.ArrayList;
+import java.util.*;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @CrossOrigin(origins = "${spring.datasource.frontend}")
@@ -81,13 +84,21 @@ public class MainController {
     }
 
     @GetMapping(path = "/compute")
-    public @ResponseBody String leastTries(@RequestParam String username) {
+    public @ResponseBody String leastTries(
+            @RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
         ArrayList<String> allowed = currentUser.getAllowedList();
         ArrayList<String> ans = currentUser.getWordList();
+        ObjectMapper objectMapper = new ObjectMapper();
         // Wordle(allowed, ans, len)
-        return new Wordle(allowed, ans, allowed.get(0).length())
-                .solve(ans, 5).toString();
+        NestedMap<Integer, String, List<String>> tree = new WordleMemo(allowed, ans,
+                allowed.get(0).length())
+                .solveMemo(ans, 5);
+        try {
+            return objectMapper.writeValueAsString(tree);
+        } catch (JsonProcessingException j) {
+            return "die";
+        }
     }
 
 }

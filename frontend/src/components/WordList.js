@@ -8,10 +8,10 @@ export default function WordList({ words, onWordChange }) {
         <>
             <table>
                 <thead>
-                    <tr height="100px">
-                        <th>No.</th>
-                        <th>word</th>
-                        <th>remove</th>
+                    <tr style={{ height: "80px", fontSize: "18px" }}>
+                        <th className="th-1">No.</th>
+                        <th className="th-2">Word</th>
+                        <th className="th-3">Remove</th>
                     </tr>
                 </thead>
                 <tbody data-testid="table-body">
@@ -19,10 +19,11 @@ export default function WordList({ words, onWordChange }) {
                         words.map((word, i) => {
                             return (
                                 <tr key={i} height="30px">
-                                    <td>{i}</td>
+                                    <td>{i + 1}</td>
                                     <td data-testid="word">{word.word}</td>
                                     <td><input type="checkbox" checked={word.remove} onChange={handleChange(i)}
-                                        data-testid="checkbox" /></td>
+                                        style={{ width: "25px" }}
+                                        id="cb1" data-testid="checkbox" /></td>
                                 </tr>
 
                             )

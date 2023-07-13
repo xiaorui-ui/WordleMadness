@@ -10,14 +10,15 @@ export default function Password({ passwordValues, setPasswordValues }) {
 
     return (
         <>
-            <label>Password:</label>
+            <label>Password</label>
+            <br />
             <input type={passwordValues.showPassword ? "text" : "password"}
                 value={passwordValues.password} onChange={handlePasswordChange}
-                placeholder="e.g: 79salet20">
+                style={{ width: "500px" }} placeholder="e.g: 79salet20">
             </input>
 
             <button type="button" onClick={handleClickShowPassword}
-                style={{ fontSize: "10px", marginLeft: "10px", backgroundColor: "black" }}>
+                style={{ fontSize: "14px", marginLeft: "10px", backgroundColor: "black" }}>
                 {passwordValues.showPassword ? "  Hide  " : "        Show  "}
             </button>
         </>

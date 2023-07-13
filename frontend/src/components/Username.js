@@ -6,9 +6,10 @@ export default function Username({ username, setUsername }) {
 
     return (
         <>
-            <label>Username:</label>
+            <label>Username</label>
+            <br />
             <input type='text' value={username} onChange={handleUsernameChange}
-                placeholder="e.g: Josh_Wordle" />
+                style={{ width: "500px" }} placeholder="e.g: Josh_Wordle" />
             {/*Line break */}
             <br />
         </>

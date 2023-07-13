@@ -63,7 +63,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                 {/* Id differentiates between lists 1 and 2 in the BE */}
 
 
-                <button type="click" onClick={handleClick} data-testid="set-same-diff">
+                <button type="click" onClick={handleClick} data-testid="set-same-diff" className="button-2">
                     Set lists to {differentList ? 'same' : 'different'} </button>
 
                 <h2>Allowed List ({differentList ? 'Different from' : 'Same as'} answer list)</h2>

@@ -29,14 +29,14 @@ export default function App() {
 
   const answerLength = useMemo(() => {
     if (answerList.length === 0) {
-        return -1;
+      return -1;
     }
     return answerList[0].word.length;
   }, [answerList]);
 
   const allowedLength = useMemo(() => {
     if (allowedList.length === 0) {
-        return -1;
+      return -1;
     }
     return allowedList[0].word.length;
   }, [allowedList]);
@@ -58,22 +58,34 @@ export default function App() {
       return;
     }
     axios.get(BACKEND_GET_WORD_LIST, { params: { username: user.name } })
-             .then((response) => {
-                const ansList = response.data.map(str => { return { word: str, remove: false } });
-                setAnswerList(ansList);
-             })
-             .catch((error) => {
-                console.log(error);
-             });
+      .then((response) => {
+        const ansList = response.data.map(str => { return { word: str, remove: false } });
+        setAnswerList(ansList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: user.name } })
-            .then((response) => {
-                const allowedList = response.data.map(str => { return { word: str, remove: false } });
-                setAllowedList(allowedList);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+      .then((response) => {
+        const allowedList = response.data.map(str => { return { word: str, remove: false } });
+        setAllowedList(allowedList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [user]);
+
+  const [bestTree, setBestTree] = useState(undefined);
+
+  // when the window closes
+  window.addEventListener('unload', function (event) {
+    // Perform logout action or update user status here
+    // For example, make an API request to log out the user
+    // or update their status to "logged out" in your server-side storage
+
+    // Customize the confirmation message displayed to the user
+    event.returnValue = 'Are you sure you want to leave this page?';
+  });
 
   return (
     <div className="App">
@@ -82,7 +94,7 @@ export default function App() {
         <Routes>
 
           <Route path="/" element={<Welcome answerList={answerList} setAnswerList={setAnswerList}
-            answerLength={answerLength} allowedLength={allowedLength} allowedList={allowedList} setAllowedList={setAllowedList} 
+            answerLength={answerLength} allowedLength={allowedLength} allowedList={allowedList} setAllowedList={setAllowedList}
             user={user} handleLogOut={handleLogOut} />} />
 
           <Route path="/Login" element={<Login setUser={setUser} />} />
@@ -90,7 +102,7 @@ export default function App() {
           <Route path="/Register" element={<Register setUser={setUser} />} />
 
           <Route path="/DecisionTree" element={<DecisionTree answerList={answerList} allowedList={allowedList} user={user}
-            handleLogOut={handleLogOut} />} />
+            handleLogOut={handleLogOut} bestTree={bestTree} setBestTree={setBestTree} />} />
 
           <Route path="/UserGuide" element={<UserGuide user={user} handleLogOut={handleLogOut} />} />
 

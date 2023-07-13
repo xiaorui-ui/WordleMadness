@@ -111,12 +111,12 @@ export default function AddWord({ wordList, setWordList, len,
 
   return (
     <>
-      <p>Add a word you want in your word list.</p>
+      <p>Add a word you want to your word list:</p>
 
       <form id="addWordForm" onSubmit={handleSubmit} data-testid="add-word-form">
-        <input type="text" value={word} onChange={handleWordChange} data-testid="add-word-input" />
+        <input type="text" value={word} onChange={handleWordChange} data-testid="add-word-input" className="line-input" />
         <br />
-        <button type="submit" data-testid="add-button">Add</button>
+        <button className={(id === 1) ? "button-1" : undefined} type="submit" data-testid="add-button">Add</button>
       </form >
 
       <p>OR</p>

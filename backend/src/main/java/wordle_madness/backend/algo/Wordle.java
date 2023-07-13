@@ -179,7 +179,7 @@ public class Wordle {
     // total number of trials across all words in ans. e.g. If ans has 100 words,
     // and the average number of tries is 3.46, the function returns 100*3.46=346.
 
-    public Pair<?, Integer> solve(List<String> ans, int t) {
+    public Pair<String, Integer> solve(List<String> ans, int t) {
         int y = ans.size();
 
         if (y < 3) {

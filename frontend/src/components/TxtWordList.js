@@ -115,6 +115,7 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
                 accept=".txt"
                 onClick={e => (e.target.value = null)}
                 onChange={handleFileChange}
+                style={{ fontSize: "14px" }}
             />
             {selectedFile && <p>Selected file: {selectedFile.name}</p>}
         </div>
