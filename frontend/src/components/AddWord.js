@@ -13,7 +13,10 @@ export default function AddWord({ wordList, setWordList, len,
 
   const addWordToBackendList = () => {
     const toArray = [word];
-    axios.post(BACKEND_ADD_WORDS, { words: toArray }, { params: { username: user.name } })
+    axios.post(BACKEND_ADD_WORDS, { words: toArray }, { params: { username: user.name },
+    httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }) })
       .then((response) => {
         setShowPrompt(false);
       })
@@ -24,7 +27,10 @@ export default function AddWord({ wordList, setWordList, len,
 
   const addWordToBackendAllowedList = () => {
     const toArray = [word];
-    axios.post(BACKEND_ADD_ALLOWED_WORDS, { words: toArray }, { params: { username: user.name } })
+    axios.post(BACKEND_ADD_ALLOWED_WORDS, { words: toArray }, { params: { username: user.name },
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }) })
       .then((response) => {
         setShowPrompt(false);
       })

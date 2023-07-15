@@ -30,7 +30,10 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
             setAllowedList(DEFAULT_WORDS);
             setShowPrompt(false);
           } else {
-            axios.get(BACKEND_GET_WORD_LIST, { params: { username: user.name } })
+            axios.get(BACKEND_GET_WORD_LIST, { params: { username: user.name },
+                httpsAgent: new https.Agent({
+                    rejectUnauthorized: false
+                  }) })
                    .then((response) => {
                       const ansList = response.data.map(str => { return { word: str, remove: false } });
                       setAnswerList(ansList);
@@ -39,7 +42,10 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
                    .catch((error) => {
                       console.log(error);
                    });
-          axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: user.name } })
+          axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: user.name },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false
+              }) })
                   .then((response) => {
                       const allowedList = response.data.map(str => { return { word: str, remove: false } });
                       setAllowedList(allowedList);

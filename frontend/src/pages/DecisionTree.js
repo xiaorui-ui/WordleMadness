@@ -66,7 +66,10 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
             axios.get(BACKEND_COMPUTE, {
                 params: {
                     username: user.name
-                }
+                },
+                httpsAgent: new https.Agent({
+                    rejectUnauthorized: false
+                  })
             }).then((response) => {
                 setShowPrompt(false);
                 setBestWord(response.data);

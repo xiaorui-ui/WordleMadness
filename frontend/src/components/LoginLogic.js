@@ -29,7 +29,10 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
             params: {
                 name: username,
                 password: passwordValues.password
-            }
+            },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false
+              })
         })
             .then((response) => {
                 setShowPrompt(false);
@@ -57,7 +60,10 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                 params: {
                     name: username,
                     password: passwordValues.password
-                }
+                },
+                httpsAgent: new https.Agent({
+                    rejectUnauthorized: false
+                  })
             })
                 .then((response) => {
                     setShowPrompt(false);
