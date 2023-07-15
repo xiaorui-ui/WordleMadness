@@ -1,4 +1,5 @@
 import axios from 'axios';
+import https from 'https';
 import { useState } from "react";
 import { BACKEND_ADD_WORDS, BACKEND_ADD_ALLOWED_WORDS } from "./Constants";
 

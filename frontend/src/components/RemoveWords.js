@@ -1,4 +1,5 @@
 import axios from 'axios';
+import https from 'https';
 import CustomPrompt from './CustomPrompt';
 import { BACKEND_REMOVE_WORDS, BACKEND_REMOVE_ALLOWED_WORDS } from './Constants';
 
