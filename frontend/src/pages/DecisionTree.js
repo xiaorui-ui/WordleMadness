@@ -3,14 +3,17 @@ import { BACKEND_COMPUTE } from "../components/Constants.js";
 // import Username from "../components/Username.js";
 import { useState } from "react";
 import axios from 'axios';
+import LoadWords from "../components/LoadWords.js";
 import CustomPrompt from "../components/CustomPrompt.js";
 import Tree from "../components/Tree.js"
 
 
-export default function DecisionTree({ answerList, allowedList, user, handleLogOut, bestTree, setBestTree }) {
+export default function DecisionTree({ answerList, setAnswerList, allowedList, setAllowedList,
+    user, handleLogOut, bestTree, setBestTree }) {
 
     const [showPrompt, setShowPrompt] = useState(false);
     const [promptMessage, setPromptMessage] = useState("");
+    const [closeable, setCloseable] = useState(true);
 
     const handleDismiss = () => {
         setShowPrompt(false);
@@ -30,21 +33,34 @@ export default function DecisionTree({ answerList, allowedList, user, handleLogO
     }
 
     function checkValid(list1, list2) {
-        if (list1.length === 0 || list2.length === 0) {
+        if (!user.isLoggedIn) {
+            setCloseable(true);
+            setPromptMessage("Please login to use the decision tree!");
             setShowPrompt(true);
-            setPromptMessage(`Lists cannot be empty!`);
+            return false;
+        } else if (list1.length === 0 || list2.length === 0) {
+            setCloseable(true);
+            setPromptMessage("Lists cannot be empty!");
+            setShowPrompt(true);
             return false;
         } else if (list1[0].word.length !== list2[0].word.length) {
+            setCloseable(true);
+            setPromptMessage("Words in lists need same number of letters!");
             setShowPrompt(true);
-            setPromptMessage(`Words in answer and allowed lists have different number of letters!`);
             return false;
         } else if (!subset(list1, list2)) {
+            setCloseable(true);
+            setPromptMessage("Answer needs to be subset of allowed!");
+            setShowPrompt(true);
             return false;
         }
         return true;
     }
 
     const handleCompute = () => {
+        setCloseable(false);
+        setPromptMessage("Loading result...");
+        setShowPrompt(true);
         // implement checks here
         if (!checkValid(answerList, allowedList)) {
             return;
@@ -64,6 +80,7 @@ export default function DecisionTree({ answerList, allowedList, user, handleLogO
                 console.log(key);
                 console.log(dict[key]);
             }
+            setShowPrompt(false);
         }).catch((error) => {
             console.log(error);
         });
@@ -96,12 +113,15 @@ export default function DecisionTree({ answerList, allowedList, user, handleLogO
             </div>
 
             <div className="main-content" >
+                <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
+                    setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
+                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
                 <button className="button-3" onClick={handleCompute}>click me</button>
                 <br />
                 {(bestTree === undefined) ? <>boi</> : <Tree bestTree={bestTree} len={answerList[0].word.length} />}
             </div>
 
-            {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} />}
+            {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />}
         </>
     )
 

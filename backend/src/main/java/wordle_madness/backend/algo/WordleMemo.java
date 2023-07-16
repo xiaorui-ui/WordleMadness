@@ -33,7 +33,7 @@ public class WordleMemo extends Wordle {
                 return nm;
             }
             NestedMap<Integer, String, List<String>> nm2 = new NestedMap<>(ans.get(1), ans, 3);
-            nm2.put(this.compare.get(ans.get(1)).get(ans.get(0)),
+            nm2.put(this.compare.get(new Pair<>(ans.get(1), ans.get(0))),
                     nm);
             nm2.put(c, null);
             return nm2;

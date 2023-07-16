@@ -1,10 +1,14 @@
 package wordle_madness.backend.algo;
 
+// import org.springframework.util.StopWatch;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 public class Wordle {
 
@@ -29,7 +33,7 @@ public class Wordle {
     // Comparison table of words represented by a hashmap. key = allowed word, value
     // = (HashMap, key = answer word, value = comparison value)
 
-    protected final HashMap<String, HashMap<String, Integer>> compare;
+    protected final ConcurrentHashMap<Pair<String, String>, Integer> compare;
 
     public Wordle(List<String> allowed, List<String> ans, int l) {
         this.allowed = allowed;
@@ -41,18 +45,17 @@ public class Wordle {
 
     // choice 1 implementation
 
-    public static HashMap<String, HashMap<String, Integer>> hash(List<String> allowed, List<String> ans, int l) {
-        HashMap<String, HashMap<String, Integer>> h = new HashMap<>();
-        for (int i = 0; i < allowed.size(); i++) {
-            String s1 = allowed.get(i);
-            for (int j = 0; j < ans.size(); j++) {
-                String s2 = ans.get(j);
-                if (j == 0) {
-                    h.put(s1, new HashMap<String, Integer>());
-                }
-                h.get(s1).put(s2, Wordle.compare(s1, s2, l));
-            }
-        }
+    public static ConcurrentHashMap<Pair<String, String>, Integer> hash(List<String> allowed, List<String> ans, int l) {
+        ConcurrentHashMap<Pair<String, String>, Integer> h = new ConcurrentHashMap<>(50000000, 0.75F);
+        int allowedSize = allowed.size();
+        int ansSize = ans.size();
+        Stream<Pair<String, String>> s = Stream.iterate(0, x -> x < allowedSize, x -> x + 1)
+                .map(x -> allowed.get(x))
+                .flatMap(x -> Stream.iterate(0, y -> y < ansSize, y -> y + 1)
+                        .map(y -> new Pair<>(x, ans.get(y))));
+        s.parallel().forEach(pair -> {
+            h.put(pair, compare(pair.getFst(), pair.getSnd(), l));
+        });
         return h;
     }
 
@@ -101,11 +104,12 @@ public class Wordle {
                 }
             }
         }
-
         int ans = 0;
         for (int i = 0; i < l; i++) {
             ans += (int) arr1[i] * Math.pow(3, i);
         }
+        arr2 = null;
+        arr1 = null;
         return ans;
     }
 
@@ -119,7 +123,7 @@ public class Wordle {
         HashMap<Integer, List<String>> h = new HashMap<>();
         for (int j = 0; j < l.size(); j++) {
             String w2 = l.get(j);
-            int key = this.compare.get(w).get(w2);
+            int key = this.compare.get(new Pair<>(w, w2));
             if (!h.containsKey(key)) {
                 h.put(key, new ArrayList<String>());
             }
@@ -134,7 +138,7 @@ public class Wordle {
     public HashSet<Integer> checkSet(String w, List<String> l) {
         HashSet<Integer> h = new HashSet<>();
         for (int j = 0; j < l.size(); j++) {
-            int key = this.compare.get(w).get(l.get(j));
+            int key = this.compare.get(new Pair<>(w, l.get(j)));
             // Integer key = this.compare.get(word).get(l.get(j));
             if (!h.contains(key)) {
                 h.add(key);

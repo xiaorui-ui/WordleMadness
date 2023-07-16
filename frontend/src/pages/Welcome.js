@@ -3,6 +3,7 @@ import { useState } from "react";
 import Header from "../components/Header.js";
 // import Compute from "../components/Compute.js";
 import ModifyWords from "../components/ModifyWords.js";
+import LoadWords from "../components/LoadWords.js";
 import { Link } from 'react-router-dom';
 
 // To-do: Save Wordlist even when refreshed/re-directed
@@ -26,6 +27,8 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
     const [promptMessage, setPromptMessage] = useState('');
 
     const [showPrompt, setShowPrompt] = useState(false);
+
+    const [closeable, setCloseable] = useState(true);
 
     const handleClick = () => {
         setDifferentList(!differentList);
@@ -52,12 +55,16 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
             </div>
 
             <main className="main-content">
+                <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage} 
+                setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable} 
+                setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
                 {/* To implement firstTime */}
                 <Header user={user} firstTime={true} />
                 <h2>Answer List</h2>
                 <ModifyWords wordList={answerList} setWordList={setAnswerList} len={answerLength}
                     showPrompt={showPrompt} setShowPrompt={setShowPrompt}
                     promptMessage={promptMessage} setPromptMessage={setPromptMessage}
+                    closeable={closeable} setCloseable={setCloseable}
                     wordListFreq={answerListFreq} setWordListFreq={setAnswerListFreq}
                     user={user} id={1} />
                 {/* Id differentiates between lists 1 and 2 in the BE */}
@@ -74,6 +81,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                         <ModifyWords wordList={allowedList} setWordList={setAllowedList} len={allowedLength}
                             showPrompt={showPrompt} setShowPrompt={setShowPrompt}
                             promptMessage={promptMessage} setPromptMessage={setPromptMessage}
+                            closeable={closeable} setCloseable={setCloseable}
                             wordListFreq={allowedListFreq} setWordListFreq={setAllowedListFreq}
                             user={user} id={2} />
                     </>)

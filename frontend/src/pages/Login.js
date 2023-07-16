@@ -16,6 +16,7 @@ export default function Login({ setUser }) {
     });
     const [showPrompt, setShowPrompt] = useState(false);
     const [promptMessage, setPromptMessage] = useState("");
+    const [closeable, setCloseable] = useState(true);
 
     const handleDismiss = () => {
         setShowPrompt(false);
@@ -25,8 +26,8 @@ export default function Login({ setUser }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, "Login",
-            navigate);
+        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, "Login",
+        navigate);
     }
 
     return (
@@ -42,7 +43,7 @@ export default function Login({ setUser }) {
             <div className='login' >
 
 
-                {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} />}
+                {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />}
 
                 <h1>Wordle Madness</h1>
                 <form id="Login" onSubmit={handleSubmit}>

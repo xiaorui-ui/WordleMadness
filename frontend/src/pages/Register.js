@@ -14,6 +14,7 @@ export default function Register({ setUser }) {
     });
     const [showPrompt, setShowPrompt] = useState(false);
     const [promptMessage, setPromptMessage] = useState("");
+    const [closeable, setCloseable] = useState(true);
 
     const handleDismiss = () => {
         setShowPrompt(false);
@@ -23,7 +24,7 @@ export default function Register({ setUser }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, "Register", 
+        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, "Register", 
         navigate);
     }
 
@@ -39,7 +40,7 @@ export default function Register({ setUser }) {
             <div className='login'>
 
 
-                {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} />}
+                {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />}
 
                 <h1>Wordle Madness</h1>
                 <form id="Login" onSubmit={handleSubmit}>
