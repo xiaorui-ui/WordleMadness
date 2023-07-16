@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import CustomPrompt from "./CustomPrompt.js";
 import axios from 'axios';
-import https from 'https';
 import { BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST, DEFAULT_WORDS } from "./Constants";
 
 export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessage, setPromptMessage, closeable, setCloseable, 
