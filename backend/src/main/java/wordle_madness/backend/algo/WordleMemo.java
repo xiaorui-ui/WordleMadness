@@ -46,7 +46,7 @@ public class WordleMemo extends Wordle {
             for (int i = 0; i < y; i++) {
                 HashMap<Integer, List<String>> h = this.check(ans.get(i), ans);
                 if (h.size() == y) {
-                    NestedMap<Integer, String, List<String>> nm = new NestedMap<>(ans.get(i), null, 2 * y - 1);
+                    NestedMap<Integer, String, List<String>> nm = new NestedMap<>(ans.get(i), ans, 2 * y - 1);
                     for (int j : h.keySet()) {
                         nm.put(j, this.solveMemo(h.get(j), x));
                     }
@@ -60,7 +60,7 @@ public class WordleMemo extends Wordle {
                 }
             }
             if (max == y - 1) {
-                NestedMap<Integer, String, List<String>> nm = new NestedMap<>(ans.get(n), null, 2 * y);
+                NestedMap<Integer, String, List<String>> nm = new NestedMap<>(ans.get(n), ans, 2 * y);
                 for (int j : g.keySet()) {
                     nm.put(j, this.solveMemo(g.get(j), x));
                 }
@@ -91,18 +91,17 @@ public class WordleMemo extends Wordle {
         // String s = p.getFst();
         // HashMap<Integer, List<String>> h = p.getSnd(); // alt
 
-        NestedMap<Integer, String, List<String>> nm = new NestedMap<>(s, null);
-        nm.setW(l);
+        NestedMap<Integer, String, List<String>> nm = new NestedMap<>(s, l);
 
         if (h.size() == 1) {
             return new NestedMap<>(null, null, Integer.MAX_VALUE);
         }
         for (int j : h.keySet()) {
-            NestedMap<Integer, String, List<String>> p1 = this.solveMemo(h.get(j), x);
-            sum += p1.getTries();
-            nm.put(j, p1);
+            NestedMap<Integer, String, List<String>> nm1 = this.solveMemo(h.get(j), x);
+            sum += nm1.getTries();
+            nm.put(j, nm1);
             // initialise the lists for everything
-            nm.get(j).setW(h.get(j));
+            // nm.get(j).setW(h.get(j));
         }
 
         sum += l.size();

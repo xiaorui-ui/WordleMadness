@@ -71,7 +71,9 @@ input {
 
 .break-after-characters {
   word-wrap: break-word;
-  max-width: 800px;
+  max-width: 600px;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 button {

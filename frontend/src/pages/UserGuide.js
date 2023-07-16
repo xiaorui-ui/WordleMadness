@@ -96,7 +96,18 @@ export default function UserGuide({ user, handleLogOut }) {
 
                     There's a line of text on top every time you click open a branch. "<i>x</i> words" means <i>x</i> words
                     in the answer list belongs to the current branch of the decision tree."... tries total" means that number
-                    of tries is needed in total for all words in that branch. Observant users may notice that sum is not consistent.
+                    of tries is needed in total for all words in that branch. Observant users may notice that the number of
+                    tries in the sub-branches doesn't sum up to number of tries of that branch. Rather, the relationship is
+                    actually the following:
+                    <div style={{ height: "20px" }}></div>
+
+                    <i>(# tries in branch) = <i style={{ fontSize: "20px" }}>Σ</i>(# tries in sub-branch) + (# words in branch)</i>
+
+                    <div style={{ height: "20px" }}></div>
+
+                    Best word and number of colourings should be self-explanatory. An important caveat is that is the best word
+                    is often not unique, especially for smaller answer lists or branches. Fun fact: Due to the use of parallelism
+                    in the algorithm, the answer may not always be consistent across different tries, especially for larger lists!
 
                     <div style={{ height: "30px" }}></div>
 

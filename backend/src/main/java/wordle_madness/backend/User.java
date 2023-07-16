@@ -91,4 +91,8 @@ public class User {
     public void logOut() {
         this.isLoggedIn = false;
     }
+
+    public boolean getLogInStatus() {
+        return this.isLoggedIn;
+    }
 }

@@ -5,6 +5,6 @@ export default function IntToColorArray(x, len) {
         ans.push(colors[x % 3]);
         x = Math.floor(x / 3);
     }
-    console.log(ans);
+    // console.log(ans);
     return ans;
 }

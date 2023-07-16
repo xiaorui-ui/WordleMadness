@@ -16,7 +16,7 @@ export default function Tree({ bestTree, len }) {
             !render[i],
             ...render.slice(i + 1)
         ]);
-        console.log(render);
+        // console.log(render);
     }
 
 
