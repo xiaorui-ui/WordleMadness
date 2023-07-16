@@ -7,12 +7,7 @@ export default function RemoveWords({ wordList, setWordList, showPrompt, setShow
     setPromptMessage, closeable, setCloseable,wordListFreq, setWordListFreq, user, id }) {
 
     const removeWordsFromBackendList = (words) => {
-        axios.patch(BACKEND_REMOVE_WORDS, { words: words.map(x => x.word) }, { 
-            params: { username: user.name },
-            httpsAgent: new https.Agent({
-                rejectUnauthorized: false
-              }) 
-        })
+        axios.patch(BACKEND_REMOVE_WORDS, { words: words.map(x => x.word) }, { params: { username: user.name } })
             .then((response) => {
                 setShowPrompt(false);
             })
@@ -22,12 +17,7 @@ export default function RemoveWords({ wordList, setWordList, showPrompt, setShow
     }
 
     const removeWordsFromBackendAllowedList = (words) => {
-        axios.patch(BACKEND_REMOVE_ALLOWED_WORDS, { words: words.map(x => x.word) }, { 
-            params: { username: user.name },
-            httpsAgent: new https.Agent({
-                rejectUnauthorized: false
-            }) 
-        })
+        axios.patch(BACKEND_REMOVE_ALLOWED_WORDS, { words: words.map(x => x.word) }, { params: { username: user.name } })
             .then((response) => {
                 setShowPrompt(false);
             })

@@ -11,9 +11,6 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
     const addWordsToBackendList = (words) => {
         axios.post(BACKEND_ADD_WORDS, { words: words }, {
             params: { username: user.name },
-            httpsAgent: new https.Agent({
-                rejectUnauthorized: false
-              })
         })
             .then((response) => {
                 setShowPrompt(false);
@@ -26,9 +23,6 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
     const addWordsToBackendAllowedList = (words) => {
         axios.post(BACKEND_ADD_ALLOWED_WORDS, { words: words }, {
             params: { username: user.name },
-            httpsAgent: new https.Agent({
-                rejectUnauthorized: false
-              })
         })
             .then((response) => {
                 setShowPrompt(false);
