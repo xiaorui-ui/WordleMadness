@@ -83,7 +83,6 @@ public class User {
         }
     }
 
-    // might be a better idea to have setters for both logging in and out
     public void logIn() {
         this.isLoggedIn = true;
     }
@@ -92,7 +91,7 @@ public class User {
         this.isLoggedIn = false;
     }
 
-    public boolean getLogInStatus() {
+    public boolean isLoggedIn() {
         return this.isLoggedIn;
     }
 }

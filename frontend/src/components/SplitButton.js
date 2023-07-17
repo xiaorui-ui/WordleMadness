@@ -1,8 +1,7 @@
-import { useSearchParams } from "react-router-dom";
 import IntToColorArray from "./IntToColorArray";
-import { useState } from "react";
 
-export default function SplitButton({ changeStatus, index, int, len }) {
+
+export default function SplitButton({ changeStatus, index, int, len, word }) {
     const blockWidth = 100 / len; // Calculate width of each color block
 
     const buttonStyle = {
@@ -20,27 +19,20 @@ export default function SplitButton({ changeStatus, index, int, len }) {
         flexBasis: `${blockWidth}%`,
         height: '100%',
         border: '1px solid white',
-    };
-
-    const textStyle = {
-        position: 'absolute', // Add position absolute to overlay the text
-        top: '50%', // Position the text vertically in the center
-        left: '50%', // Position the text horizontally in the center
-        transform: 'translate(-50%, -50%)', // Center the text precisely
-        color: 'white',
+        // fontFamily: 'HelveticaNeue',
+        fontFamily: 'Cambria',
         fontWeight: 'bold',
+        fontSize: '18px',
+        display: 'flex', // Add flex display
+        justifyContent: 'center', // Center the content horizontally
+        alignItems: 'center', // Center the content vertically
     };
-
-    // const [colorOrder, setColorOrder] = useState([]);
-
-    // setColorOrder(IntToColorArray(int, len));
 
     return (
         <button style={buttonStyle} onClick={changeStatus(index)}>
-            {IntToColorArray(int, len).map((color, index) => (
-                <div key={index} style={{ ...blockStyles, backgroundColor: color }}></div>
+            {IntToColorArray(int, len).map((color, i) => (
+                <div key={i} style={{ ...blockStyles, backgroundColor: color }}>{word[i].toUpperCase()}</div>
             ))}
-            <span style={textStyle}>{int}</span>
         </button>
     );
 }

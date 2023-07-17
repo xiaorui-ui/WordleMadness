@@ -50,14 +50,35 @@ public class MainController {
         return "Success";
     }
 
-    @GetMapping(path = "/verify")
+    @PatchMapping(path = "/verify")
     public @ResponseBody String conditionalLogin(@RequestParam String name, @RequestParam String password) {
         if (userRepository.existsUserByNameAndPassword(name, password)) {
+            User currentUser = userRepository.findUserByName(name);
+            if (currentUser.isLoggedIn()) {
+                return "User is already logged in";
+            }
+            currentUser.logIn();
+            userRepository.save(currentUser);
             return "Logged in";
         } else if (userRepository.existsUserByName(name)) {
             return "Wrong password";
         }
         return "Username does not exist, please register for a new account";
+    }
+
+    // log out function
+    @PatchMapping(path = "/logOut")
+    public @ResponseBody String conditionalLogOut(@RequestParam String name) {
+        if (userRepository.existsUserByName(name)) {
+            User currentUser = userRepository.findUserByName(name);
+            if (!currentUser.isLoggedIn()) {
+                return "User is already logged out";
+            }
+            currentUser.logOut();
+            userRepository.save(currentUser);
+            return "Logged out";
+        }
+        return "User does not exist";
     }
 
     @PostMapping(path = "/register")

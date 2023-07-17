@@ -25,15 +25,17 @@ export default function Tree({ bestTree, len }) {
     }
 
     return (
-        <div style={{ paddingLeft: "100px" }}>
+        <div style={{ paddingLeft: "150px" }}>
             <br />
-            <>{bestTree.w.length} words, best word: {bestTree.v}, {keyList.length} colourings, {bestTree.tries} tries total</>
+            <>{bestTree.w.length} words,
+                {/* best word: {bestTree.v}, */}
+                {keyList.length} colourings, {bestTree.tries} tries total</>
             <div style={{ height: "10px" }}></div>
             {keyList.map(
                 (x, i) => {
                     return (
                         <div key={i}>
-                            <SplitButton changeStatus={renderSubtree} index={i} int={x} len={len} />
+                            <SplitButton changeStatus={renderSubtree} index={i} int={x} len={len} word={bestTree.v} />
                             {render[i] && <Tree bestTree={bestTree.child[x]} len={len} />}
                             <br />
                         </div >
