@@ -69,6 +69,19 @@ export default function App() {
       });
   }
 
+  const handleLogOutOnClose = async () => {
+    if (document.visibilityState === 'hidden') {
+      await axios.patch(BACKEND_LOGOUT, null, {
+        params: {
+          name: user.name
+        }
+      })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
   const handleInvalidLogOut = (data) => {
     // setCloseable(true);
     // setPromptMessage(data);
@@ -79,10 +92,7 @@ export default function App() {
   const [bestTree, setBestTree] = useState(null);
 
   // when the window closes
-  window.addEventListener('beforeunload', function (event) {
-    event.preventDefault();
-    handleLogOut();
-  });
+  window.addEventListener('visibilitychange', handleLogOutOnClose);
 
   return (
     <div className="App">

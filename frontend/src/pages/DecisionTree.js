@@ -116,6 +116,7 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
                 <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
                     setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
                     setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
+
                 <button className="button-3" onClick={handleCompute}>click me</button>
                 <br />
                 {(bestTree === undefined) ? <>boi</> : <Tree bestTree={bestTree} len={answerList[0].word.length} />}

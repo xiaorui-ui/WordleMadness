@@ -171,8 +171,12 @@ public class Wordle {
         int threshold = groups.get(Math.min(t, groups.size() - 1)).getSnd();
         List<String> li = new ArrayList<>();
         int i = 0;
-        // To add: Failsafe protection for a, b, c,..., z
-        while (i < x && groups.get(i).getSnd() >= threshold) {
+        // If everything is a 2-partition any answer will do
+        if (groups.get(0).getSnd() == 2) {
+            return l.subList(0, 1);
+        }
+        // filter away all the 2-partitions
+        while (i < x && groups.get(i).getSnd() >= Math.max(threshold, 3)) {
             li.add(groups.get(i).getFst());
             i++;
         }

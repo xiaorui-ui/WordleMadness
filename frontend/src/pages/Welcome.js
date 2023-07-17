@@ -55,9 +55,9 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
             </div>
 
             <main className="main-content">
-                <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage} 
-                setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable} 
-                setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
+                <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
+                    setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
+                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
                 {/* To implement firstTime */}
                 <Header user={user} firstTime={true} />
                 <h2>Answer List</h2>
@@ -86,6 +86,8 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                             user={user} id={2} />
                     </>)
                 }
+
+                {/* Consider letting the compute happen here instead of in DecisionTree */}
 
                 <Link to="./DecisionTree">Compute</Link>
                 <div style={{ height: "30px" }}></div>

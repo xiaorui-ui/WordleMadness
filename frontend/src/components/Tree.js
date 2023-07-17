@@ -25,7 +25,7 @@ export default function Tree({ bestTree, len }) {
     }
 
     return (
-        <div style={{ paddingLeft: "150px" }}>
+        <div style={{ paddingLeft: "100px" }}>
             <br />
             <>{bestTree.w.length} words,
                 {/* best word: {bestTree.v}, */}
