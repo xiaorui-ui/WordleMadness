@@ -97,7 +97,7 @@ public class MainController {
         try {
             return objectMapper.writeValueAsString(tree);
         } catch (JsonProcessingException j) {
-            return "die";
+            throw new Error("Error occurred when processing list!");
         }
     }
 

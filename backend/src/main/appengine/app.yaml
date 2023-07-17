@@ -1,4 +1,23 @@
-runtime: java17
-instance_class: F4_1G
+runtime: java
+env: flex
+runtime_config:
+    operating_system: "ubuntu22"
+    runtime_version: "17"
+
+resources:
+  cpu: 4
+  memory_gb: 12
+  disk_size_gb: 10
+
+readiness_check:
+  check_interval_sec: "300"
+  timeout_sec: "300"
+  failure_threshold: 10
+  success_threshold: 1
+  app_start_timeout_sec: "300"
+
 automatic_scaling:
-  target_cpu_utilization: 0.95
+  min_num_instances: 1
+  max_num_instances: 2
+  cpu_utilization:
+    target_utilization: 0.8
