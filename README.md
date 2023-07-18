@@ -29,11 +29,11 @@ Next, connect to the server in the MySQL shell using \connect backend@localhost:
 
 ## Environment Variables
 
-The environment variables must be configured during a local build. For the frontend, this is in the Constants.js file and for the backend, this is in the MainController.java file.
+The environment variables must be configured during a local build. For the frontend, this is in the Constants.js file and for the backend, this is in the /backend/src/main/resources/application.properties file.
 
-In particular, for Constants.js, set the variable BACKEND to "http://localhost:8080/backend/" and for MainController.java under the @CrossOrigin annotation, set origins to be "http://localhost:3000/" during a local build. You can do so by changing the commmented out line for BACKEND and @CrossOrigin (// ... means the line is commented out).
+In particular, for Constants.js, set the variable BACKEND to "http://localhost:8080/backend/" and for application.properties, set spring.datasource.frontend to be "http://localhost:3000". You can do so by changing the commmented out line for BACKEND and spring.datasource.frontend (// ... in Constants.js or # ... in application.properties means the line is commented out).
 
-To establish connectivity between the backend and the database, in the /backend/src/main/resources/application.properties file, set the following attributes:
+To establish connectivity between the backend and the database, in the application.properties file, set the following attributes:
 spring.datasource.url=jdbc:mysql://localhost:3306/wordle
 
 spring.datasource.username=backend
