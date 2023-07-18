@@ -50,6 +50,14 @@ public class MainController {
         return "Success";
     }
 
+    @PatchMapping(path = "/setListsToSame")
+    public @ResponseBody String setListsToSame(@RequestParam String username) {
+        User currentUser = userRepository.findUserByName(username);
+        currentUser.setListsToSame();
+        userRepository.save(currentUser);
+        return "Success";
+    }
+
     @GetMapping(path = "/verify")
     public @ResponseBody String conditionalLogin(@RequestParam String name, @RequestParam String password) {
         if (userRepository.existsUserByNameAndPassword(name, password)) {

@@ -11,7 +11,9 @@ export default function RemoveWords({ wordList, setWordList, showPrompt, setShow
                 setShowPrompt(false);
             })
             .catch((error) => {
-                console.log(error);
+                setCloseable(true);
+                setPromptMessage("Error syncing to backend! Please try again later.");
+                setShowPrompt(true);
             });
     }
 
@@ -21,7 +23,9 @@ export default function RemoveWords({ wordList, setWordList, showPrompt, setShow
                 setShowPrompt(false);
             })
             .catch((error) => {
-                console.log(error);
+                setCloseable(true);
+                setPromptMessage("Error syncing to backend! Please try again later.");
+                setShowPrompt(true);
             });
     }
 
