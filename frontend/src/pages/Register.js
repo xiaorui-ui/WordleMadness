@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import Username from '../components/Username.js';
-import Password from '../components/Password.js';
+import Username from '../components/LoginRegister/Username.js';
+import Password from '../components/LoginRegister/Password.js';
 import { useState } from 'react';
 import CustomPrompt from '../components/CustomPrompt.js';
-import LoginLogic from '../components/LoginLogic.js';
+import LoginLogic from '../components/LoginRegister/LoginLogic.js';
 
 export default function Register({ setUser }) {
 
@@ -24,8 +24,8 @@ export default function Register({ setUser }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, "Register", 
-        navigate);
+        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, "Register",
+            navigate);
     }
 
     return (

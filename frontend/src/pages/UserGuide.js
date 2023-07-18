@@ -35,7 +35,7 @@ export default function UserGuide({ user, handleLogOut }) {
 
                 <div style={{ height: "10px" }}></div>
 
-                We're here to help!
+                We solve Wordles and we're here to help!
 
                 <h2 id="Logging-in"> Logging in </h2>
                 <p className="break-after-characters">
@@ -59,7 +59,8 @@ export default function UserGuide({ user, handleLogOut }) {
 
 
                     Users can edit two wordlists, the answer list and the allowed list. What are these?
-                    To find the best words to try in Wordle, you need two wordlists,
+                    To find the best words to try in <a href="https://www.nytimes.com/games/wordle/index.html"
+                        target="_blank" rel="noreferrer"> Wordle</a>, you need two wordlists,
                     a list of possible answers(answer list) and allowed words(allowed list),
                     the former of which is a subset of the latter. The lists can be edited independently.
 

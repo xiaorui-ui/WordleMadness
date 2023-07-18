@@ -18,7 +18,9 @@ export default function AddWord({ wordList, setWordList, len,
         setShowPrompt(false);
       })
       .catch((error) => {
-        console.log(error);
+        setCloseable(true);
+        setPromptMessage("Error syncing to backend! Please try again later.");
+        setShowPrompt(true);
       });
   }
 
@@ -29,7 +31,9 @@ export default function AddWord({ wordList, setWordList, len,
         setShowPrompt(false);
       })
       .catch((error) => {
-        console.log(error);
+        setCloseable(true);
+        setPromptMessage("Error syncing to backend! Please try again later.");
+        setShowPrompt(true);
       });
   }
 

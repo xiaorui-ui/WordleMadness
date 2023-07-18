@@ -25,7 +25,7 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
     }, [wordListLoaded, allowedListLoaded, setCloseable, setPromptMessage, setShowPrompt]);
 
     useEffect(() => {
-        if (!user || user.name === "") {
+        if (!user.isLoggedIn) {
             setAnswerList(DEFAULT_WORDS);
             setAllowedList(DEFAULT_WORDS);
             setShowPrompt(false);
@@ -37,7 +37,9 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
                       setWordListLoaded(true);
                    })
                    .catch((error) => {
-                      console.log(error);
+                    setCloseable(true);
+                    setPromptMessage("Error syncing to backend! Please try again later.");
+                    setShowPrompt(true);
                    });
           axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: user.name } })
                   .then((response) => {
@@ -46,10 +48,12 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
                       setAllowedListLoaded(true);
                   })
                   .catch((error) => {
-                      console.log(error);
+                    setCloseable(true);
+                    setPromptMessage("Error syncing to backend! Please try again later.");
+                    setShowPrompt(true);
                   });
           } 
-    }, [user, setAnswerList, setAllowedList, setShowPrompt]);
+    }, [user, setAnswerList, setAllowedList, setShowPrompt, setCloseable, setPromptMessage]);
     return (
         <>
             {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />)}

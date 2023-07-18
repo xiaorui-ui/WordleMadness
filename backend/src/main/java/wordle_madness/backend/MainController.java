@@ -50,6 +50,14 @@ public class MainController {
         return "Success";
     }
 
+    @PatchMapping(path = "/setListsToSame")
+    public @ResponseBody String setListsToSame(@RequestParam String username) {
+        User currentUser = userRepository.findUserByName(username);
+        currentUser.setListsToSame();
+        userRepository.save(currentUser);
+        return "Success";
+    }
+
     @PatchMapping(path = "/verify")
     public @ResponseBody String conditionalLogin(@RequestParam String name, @RequestParam String password) {
         if (userRepository.existsUserByNameAndPassword(name, password)) {
@@ -104,6 +112,10 @@ public class MainController {
         return currentUser.getAllowedList();
     }
 
+    // to-do: add in functions to get and modify tree(rep as string)
+
+    // to-do: set tree width as a parameter
+
     @GetMapping(path = "/compute")
     public @ResponseBody String leastTries(
             @RequestParam String username) {
@@ -118,7 +130,7 @@ public class MainController {
         try {
             return objectMapper.writeValueAsString(tree);
         } catch (JsonProcessingException j) {
-            return "die";
+            throw new Error("Error occurred when processing list!");
         }
     }
 

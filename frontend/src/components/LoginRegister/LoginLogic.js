@@ -1,11 +1,8 @@
-// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { BACKEND_LOGIN, BACKEND_REGISTER } from '../components/Constants.js';
+import { BACKEND_LOGIN, BACKEND_REGISTER } from '../Constants.js';
 
 export default function LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, type,
     navigate) {
-
-    // const navigate = useNavigate();
 
     const handleInvalidLogin = (data) => {
         setCloseable(true);
@@ -43,7 +40,9 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                 }
             })
             .catch((error) => {
-                console.log(error);
+                setCloseable(true);
+                setPromptMessage("Error logging in! Please try again later.");
+                setShowPrompt(true);
             });
     }
 
@@ -71,7 +70,9 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
+                    setCloseable(true);
+                    setPromptMessage("Error registering user! Please try again later.");
+                    setShowPrompt(true);
                 });
         } else if (username.length === 0) {
             setCloseable(true);

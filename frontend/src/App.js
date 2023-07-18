@@ -89,7 +89,7 @@ export default function App() {
     console.log(data);
   }
 
-  const [bestTree, setBestTree] = useState(null);
+  const [bestTree, setBestTree] = useState(undefined);
 
   // when the window closes
   window.addEventListener('visibilitychange', handleLogOutOnClose);
@@ -102,7 +102,7 @@ export default function App() {
 
           <Route path="/" element={<Welcome answerList={answerList} setAnswerList={setAnswerList}
             answerLength={answerLength} allowedLength={allowedLength} allowedList={allowedList} setAllowedList={setAllowedList}
-            user={user} handleLogOut={handleLogOut} />} />
+            user={user} setBestTree={setBestTree} handleLogOut={handleLogOut} />} />
 
           <Route path="/Login" element={<Login setUser={setUser} />} />
 

@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import CustomPrompt from '../components/CustomPrompt.js';
-import Username from '../components/Username.js';
-import Password from '../components/Password.js';
-import LoginLogic from '../components/LoginLogic.js';
+import Username from '../components/LoginRegister/Username.js';
+import Password from '../components/LoginRegister/Password.js';
+import LoginLogic from '../components/LoginRegister/LoginLogic.js';
 
 // to do: only allow one user to log in at once
 
@@ -27,7 +27,7 @@ export default function Login({ setUser }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, "Login",
-        navigate);
+            navigate);
     }
 
     return (

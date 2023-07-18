@@ -83,6 +83,12 @@ public class User {
         }
     }
 
+    public void setListsToSame() {
+        // allowedList = wordList;
+        allowedList = new ArrayList<>(wordList);
+    }
+
+    // might be a better idea to have setters for both logging in and out
     public void logIn() {
         this.isLoggedIn = true;
     }
