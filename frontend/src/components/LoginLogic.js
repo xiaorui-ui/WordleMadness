@@ -43,7 +43,9 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                 }
             })
             .catch((error) => {
-                console.log(error);
+                setCloseable(true);
+                setPromptMessage("Error logging in! Please try again later.");
+                setShowPrompt(true);
             });
     }
 
@@ -71,7 +73,9 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
+                    setCloseable(true);
+                    setPromptMessage("Error registering user! Please try again later.");
+                    setShowPrompt(true);
                 });
         } else if (username.length === 0) {
             setCloseable(true);

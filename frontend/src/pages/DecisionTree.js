@@ -21,7 +21,6 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
 
     function subset(list1, list2) {
         let set = new Set(list2.map(element => element.word));
-        console.log("Set:" + JSON.stringify([...set]));
         for (let i = 0; i < list1.length; i++) {
             if (!set.has(list1[i].word)) {
                 setShowPrompt(true);
@@ -70,19 +69,15 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
                 username: user.name
             }
         }).then((response) => {
-            console.log(response.data);
             setBestTree(response.data);
-            console.log(response.data.w)
             var dict = response.data.child;
-            console.log(dict);
-            console.log(Object.keys(dict));
             for (let key in dict) {
-                console.log(key);
-                console.log(dict[key]);
             }
             setShowPrompt(false);
         }).catch((error) => {
-            console.log(error);
+            setCloseable(true);
+            setPromptMessage("Error syncing to backend! Please try again later.");
+            setShowPrompt(true);
         });
     }
 
