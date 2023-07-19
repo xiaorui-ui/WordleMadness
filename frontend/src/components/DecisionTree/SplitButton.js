@@ -27,7 +27,7 @@ export default function SplitButton({ changeStatus, index, int, len, word }) {
 
     // consider splitting this function into its own file
     function IntToColorArray(x, len) {
-        const colors = ["grey", "goldenrod", "green"];
+        const colors = ["#707070", "goldenrod", "green"];
         var ans = [];
         for (let i = 0; i < len; i++) {
             ans.unshift(colors[x % 3]);

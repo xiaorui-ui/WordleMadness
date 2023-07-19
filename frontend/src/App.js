@@ -63,6 +63,7 @@ export default function App() {
         }
         setAnswerList(DEFAULT_WORDS);
         setAllowedList(DEFAULT_WORDS);
+        setBestTree(null);
       })
       .catch((error) => {
         console.log(error);
@@ -89,7 +90,7 @@ export default function App() {
     console.log(data);
   }
 
-  const [bestTree, setBestTree] = useState(undefined);
+  const [bestTree, setBestTree] = useState(null);
 
   // when the window closes
   window.addEventListener('visibilitychange', handleLogOutOnClose);

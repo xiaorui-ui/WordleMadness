@@ -62,7 +62,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
             <main className="main-content">
                 <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
                     setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
-                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
+                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} setBestTree={setBestTree} />
                 {/* To implement firstTime */}
                 <Header user={user} firstTime={true} />
                 <h2>Answer List</h2>

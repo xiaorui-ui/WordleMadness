@@ -49,7 +49,7 @@ export default function BestTree(answerList, allowedList, setBestTree, user,
     if (!checkValid(answerList, allowedList)) {
         return;
     }
-    axios.get(BACKEND_COMPUTE, {
+    axios.patch(BACKEND_COMPUTE, null, {
         params: {
             username: user.name
         }
@@ -57,9 +57,9 @@ export default function BestTree(answerList, allowedList, setBestTree, user,
         console.log(response.data);
         setBestTree(response.data);
         var dict = response.data.child;
-        // for (let key in dict) {
-        //     console.log(dict[key]);
-        // }
+        for (let key in dict) {
+            console.log(dict[key]);
+        }
         setShowPrompt(false);
         destination = '/DecisionTree';
         navigate(destination);

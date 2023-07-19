@@ -46,13 +46,14 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
             </div>
 
             <div className="main-content" >
-                <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
+                {/* <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
                     setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
-                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
+                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} /> */}
 
-                <p>Note: This tree is updated the last time compute was pressed, and does not auto-update upon logging in.</p>
+                <p>Note: This tree is updated the last time compute was pressed within your account,
+                    and <i>does not</i> auto-update upon logging in.</p>
                 <br />
-                {(bestTree === undefined) ? <>boi</> : <Tree bestTree={bestTree} len={answerList[0].word.length} />}
+                {(bestTree === null) ? <>Compute to get tree!</> : <Tree bestTree={bestTree} len={answerList[0].word.length} />}
             </div>
 
             {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />}
