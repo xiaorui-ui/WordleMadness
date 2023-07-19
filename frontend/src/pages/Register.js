@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import Username from '../components/LoginRegister/Username.js';
 import Password from '../components/LoginRegister/Password.js';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import CustomPrompt from '../components/CustomPrompt.js';
 import LoginLogic from '../components/LoginRegister/LoginLogic.js';
 
-export default function Register({ setUser }) {
+export default function Register({ user, setUser }) {
 
     const [username, setUsername] = useState("");
     const [passwordValues, setPasswordValues] = useState({
@@ -16,11 +16,18 @@ export default function Register({ setUser }) {
     const [promptMessage, setPromptMessage] = useState("");
     const [closeable, setCloseable] = useState(true);
 
-    const handleDismiss = () => {
+    const handleDismiss = useCallback(() => {
         setShowPrompt(false);
-    }
+    }, [setShowPrompt]);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user.isLoggedIn) {
+            let destination = '/';
+            navigate(destination);
+        }
+    }, [user, navigate]);
 
     const handleSubmit = (event) => {
         event.preventDefault();

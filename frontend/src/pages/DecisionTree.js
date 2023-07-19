@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
-import { BACKEND_COMPUTE } from "../components/Constants.js";
 // import Username from "../components/Username.js";
 import { useState } from "react";
-import axios from 'axios';
 import LoadWords from "../components/LoadWords.js";
 import CustomPrompt from "../components/CustomPrompt.js";
 import Tree from "../components/DecisionTree/Tree.js";
 
 
 export default function DecisionTree({ answerList, setAnswerList, allowedList, setAllowedList,
-    user, handleLogOut, bestTree, setBestTree }) {
+    user, handleLogOut, bestTree, setBestTree, loadingPrompt, setLoadingPrompt }) {
 
     const [showPrompt, setShowPrompt] = useState(false);
     const [promptMessage, setPromptMessage] = useState("");
@@ -18,7 +16,6 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
     const handleDismiss = () => {
         setShowPrompt(false);
     }
-
 
     return (
         <>
@@ -48,7 +45,8 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
             <div className="main-content" >
                 <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
                     setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
-                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
+                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} loadingPrompt={loadingPrompt}
+                    setLoadingPrompt={setLoadingPrompt} />
 
                 <p>Note: This tree is updated the last time compute was pressed, and does not auto-update upon logging in.</p>
                 <br />

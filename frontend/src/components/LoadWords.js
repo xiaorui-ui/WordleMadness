@@ -4,27 +4,28 @@ import axios from 'axios';
 import { BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST, DEFAULT_WORDS } from "./Constants";
 
 export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessage, setPromptMessage, closeable, setCloseable, 
-    setAnswerList, setAllowedList }) {
+    setAnswerList, setAllowedList, loadingPrompt, setLoadingPrompt }) {
     
     const handleDismiss = () => {
         setShowPrompt(false);
     }
     
     const [wordListLoaded, setWordListLoaded] = useState(false);
-    const [allowedListLoaded, setAllowedListLoaded] = useState(false);
-    
+    const [allowedListLoaded, setAllowedListLoaded] = useState(false);  
 
     useEffect(() => {
         if (wordListLoaded && allowedListLoaded) {
             setShowPrompt(false);
-        } else {
-            setCloseable(false);
-            setPromptMessage("Loading words");
-            setShowPrompt(true);
         }
-    }, [wordListLoaded, allowedListLoaded, setCloseable, setPromptMessage, setShowPrompt]);
+    }, [wordListLoaded, allowedListLoaded, setShowPrompt]);
 
     useEffect(() => {
+        if (user.isLoggedIn && loadingPrompt) {
+            setLoadingPrompt(false);
+        }
+        setPromptMessage("Loading words...");
+        setCloseable(false);
+        setShowPrompt(true);
         if (!user.isLoggedIn) {
             setAnswerList(DEFAULT_WORDS);
             setAllowedList(DEFAULT_WORDS);
@@ -53,7 +54,7 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
                     setShowPrompt(true);
                   });
           } 
-    }, [user, setAnswerList, setAllowedList, setShowPrompt, setCloseable, setPromptMessage]);
+    }, [user, setAnswerList, setAllowedList, setShowPrompt, setCloseable, setPromptMessage, loadingPrompt, setLoadingPrompt]);
     return (
         <>
             {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />)}
