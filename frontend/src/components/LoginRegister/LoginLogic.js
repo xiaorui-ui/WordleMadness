@@ -22,7 +22,7 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
         setCloseable(false);
         setPromptMessage("Logging in...");
         setShowPrompt(true);
-        axios.patch(BACKEND_LOGIN, null, {
+        axios.patch(BACKEND_LOGIN, {}, {
             params: {
                 name: username,
                 password: passwordValues.password
