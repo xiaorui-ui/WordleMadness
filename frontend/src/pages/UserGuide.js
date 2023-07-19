@@ -35,7 +35,7 @@ export default function UserGuide({ user, handleLogOut }) {
 
                 <div style={{ height: "10px" }}></div>
 
-                We're here to help!
+                We solve Wordles and we're here to help!
 
                 <h2 id="Logging-in"> Logging in </h2>
                 <p className="break-after-characters">
@@ -59,7 +59,8 @@ export default function UserGuide({ user, handleLogOut }) {
 
 
                     Users can edit two wordlists, the answer list and the allowed list. What are these?
-                    To find the best words to try in Wordle, you need two wordlists,
+                    To find the best words to try in <a href="https://www.nytimes.com/games/wordle/index.html"
+                        target="_blank" rel="noreferrer"> Wordle</a>, you need two wordlists,
                     a list of possible answers(answer list) and allowed words(allowed list),
                     the former of which is a subset of the latter. The lists can be edited independently.
 
@@ -83,25 +84,23 @@ export default function UserGuide({ user, handleLogOut }) {
                 <h2 id="Decision tree"> Decision Tree </h2>
                 <p className="break-after-characters">
                     At long last, after 2 months of hard work(amongst juggling other commitments), the decision tree is finally available!
+                    To use this feature, you have to be logged in.
 
                     <div style={{ height: "30px" }}></div>
 
                     In the decision tree page, click the "click me" button to get the tree(this is subjected to change).
                     Do be patient as the algorithm is somewhat involved and involves tree search(pun intended)
                     since there are no known simpler ways to solve Wordle fully;
-                    waiting times of up to a minute is normal for larger lists.
+                    waiting times of up to a few minutes is perfectly normal for larger lists.
                     To navigate into a branch of the decision tree, simply click on it. To hide it, click on it again.
 
                     <div style={{ height: "30px" }}></div>
 
                     There's a line of text on top every time you click open a branch. "<i>x</i> words" means <i>x</i> words
                     in the answer list belongs to the current branch of the decision tree."... tries total" means that number
-                    of tries is needed in total for all words in that branch. Observant users may notice that the number of
-                    tries in the sub-branches doesn't sum up to number of tries of that branch. Rather, the relationship is
-                    actually the following:
-                    <div style={{ height: "20px" }}></div>
-
-                    <i>(# tries in branch) = <i style={{ fontSize: "20px" }}>Σ</i>(# tries in sub-branch) + (# words in branch)</i>
+                    of tries is needed in total for all words in that branch from the given point onwards. Notice that the
+                    colourings are sorted in order of grey, gold, green, from the first to the last letter, so that it is easier
+                    for you to search for your desired colouring!
 
                     <div style={{ height: "20px" }}></div>
 

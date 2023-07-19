@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BACKEND_SET_LISTS_TO_SAME } from "./Constants";
 import CustomPrompt from "./CustomPrompt";
 
-export default function SetListsToSame({ answerList, setAllowedList, showWarningPrompt, setShowWarningPrompt, 
+export default function SetListsToSame({ answerList, setAllowedList, showWarningPrompt, setShowWarningPrompt,
     warningPromptMessage, setWarningPromptMessage, showPrompt, setShowPrompt, promptMessage, setPromptMessage,
     closeable, setCloseable, user }) {
 
@@ -12,7 +12,7 @@ export default function SetListsToSame({ answerList, setAllowedList, showWarning
         setPromptMessage("Settng word lists to be the same...")
         setCloseable(false);
         setShowPrompt(true);
-        setAllowedList(answerList);
+        setAllowedList(answerList.slice());
         if (user.isLoggedIn) {
             axios.patch(BACKEND_SET_LISTS_TO_SAME, {}, { params: { username: user.name } })
                 .then((response) => {
@@ -44,10 +44,10 @@ export default function SetListsToSame({ answerList, setAllowedList, showWarning
 
     return (
         <>
-        {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />)}
-        {showWarningPrompt && (<WarningPrompt message={warningPromptMessage} onDismiss={handleDismissWarning} onSave={handleSave} />)}
-        <button type="click" onClick={handleClick} data-testid="set-same-diff" className="button-2">
-            Set lists to same </button>
+            {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />)}
+            {showWarningPrompt && (<WarningPrompt message={warningPromptMessage} onDismiss={handleDismissWarning} onSave={handleSave} />)}
+            <button type="click" onClick={handleClick} data-testid="set-same-diff" className="button-2">
+                Set lists to same </button>
         </>
     );
 }

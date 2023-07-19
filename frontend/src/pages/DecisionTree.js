@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios from 'axios';
 import LoadWords from "../components/LoadWords.js";
 import CustomPrompt from "../components/CustomPrompt.js";
-import Tree from "../components/Tree.js"
+import Tree from "../components/DecisionTree/Tree.js";
 
 
 export default function DecisionTree({ answerList, setAnswerList, allowedList, setAllowedList,
@@ -17,68 +17,6 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
 
     const handleDismiss = () => {
         setShowPrompt(false);
-    }
-
-    function subset(list1, list2) {
-        let set = new Set(list2.map(element => element.word));
-        for (let i = 0; i < list1.length; i++) {
-            if (!set.has(list1[i].word)) {
-                setShowPrompt(true);
-                setPromptMessage(`Word ${i + 1} of answer, ${list1[i].word}, is not present in allowed!`);
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function checkValid(list1, list2) {
-        if (!user.isLoggedIn) {
-            setCloseable(true);
-            setPromptMessage("Please login to use the decision tree!");
-            setShowPrompt(true);
-            return false;
-        } else if (list1.length === 0 || list2.length === 0) {
-            setCloseable(true);
-            setPromptMessage("Lists cannot be empty!");
-            setShowPrompt(true);
-            return false;
-        } else if (list1[0].word.length !== list2[0].word.length) {
-            setCloseable(true);
-            setPromptMessage("Words in lists need same number of letters!");
-            setShowPrompt(true);
-            return false;
-        } else if (!subset(list1, list2)) {
-            setCloseable(true);
-            setPromptMessage("Answer needs to be subset of allowed!");
-            setShowPrompt(true);
-            return false;
-        }
-        return true;
-    }
-
-    const handleCompute = () => {
-        setCloseable(false);
-        setPromptMessage("Loading result...");
-        setShowPrompt(true);
-        // implement checks here
-        if (!checkValid(answerList, allowedList)) {
-            return;
-        }
-        axios.get(BACKEND_COMPUTE, {
-            params: {
-                username: user.name
-            }
-        }).then((response) => {
-            setBestTree(response.data);
-            var dict = response.data.child;
-            for (let key in dict) {
-            }
-            setShowPrompt(false);
-        }).catch((error) => {
-            setCloseable(true);
-            setPromptMessage("Error syncing to backend! Please try again later.");
-            setShowPrompt(true);
-        });
     }
 
 
@@ -111,7 +49,8 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
                 <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
                     setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
                     setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
-                <button className="button-3" onClick={handleCompute}>click me</button>
+
+                <p>Note: This tree is updated the last time compute was pressed, and does not auto-update upon logging in.</p>
                 <br />
                 {(bestTree === undefined) ? <>boi</> : <Tree bestTree={bestTree} len={answerList[0].word.length} />}
             </div>

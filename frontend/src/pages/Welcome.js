@@ -1,17 +1,16 @@
 import "../styles.css";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header.js";
 // import Compute from "../components/Compute.js";
 import ModifyWords from "../components/ModifyWords.js";
 import LoadWords from "../components/LoadWords.js";
 import { Link } from 'react-router-dom';
 import SetListsToSame from "../components/SetListsToSame";
-
-// To-do: Save Wordlist even when refreshed/re-directed
-
+import BestTree from "../components/BestTree";
 
 export default function Welcome({ answerList, setAnswerList, allowedList, setAllowedList, answerLength, allowedLength,
-    user, handleLogOut }) {
+    user, setBestTree, handleLogOut }) {
 
 
 
@@ -32,6 +31,13 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
     const [showWarningPrompt, setShowWarningPrompt] = useState(false);
 
     const [warningPromptMessage, setWarningPromptMessage] = useState('');
+
+    const navigate = useNavigate();
+
+    const evaluateTree = (event) => {
+        event.preventDefault();
+        BestTree(answerList, allowedList, setBestTree, user, setPromptMessage, setShowPrompt, setCloseable, navigate);
+    }
 
     return (
         <>
@@ -54,9 +60,9 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
             </div>
 
             <main className="main-content">
-                <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage} 
-                setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable} 
-                setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
+                <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
+                    setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
+                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
                 {/* To implement firstTime */}
                 <Header user={user} firstTime={true} />
                 <h2>Answer List</h2>
@@ -70,7 +76,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
 
                 <SetListsToSame answerList={answerList} setAllowedList={setAllowedList} showWarningPrompt={showWarningPrompt}
                     setShowWarningPrompt={setShowWarningPrompt} warningPromptMessage={warningPromptMessage}
-                    setWarningPromptMessage={setWarningPromptMessage} showPrompt={showPrompt} setShowPrompt={setShowPrompt} 
+                    setWarningPromptMessage={setWarningPromptMessage} showPrompt={showPrompt} setShowPrompt={setShowPrompt}
                     promptMessage={promptMessage} setPromptMessage={setPromptMessage} closeable={closeable}
                     setCloseable={setCloseable} user={user} />
 
@@ -82,7 +88,10 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                     wordListFreq={allowedListFreq} setWordListFreq={setAllowedListFreq}
                     user={user} id={2} />
 
-                <Link to="./DecisionTree">Compute</Link>
+                {/* Insert search parameters here */}
+
+                <button onClick={evaluateTree}>Click me</button>
+                {/* <a href="./DecisionTree" onClick={evaluateTree}>Compute</a> */}
                 <div style={{ height: "30px" }}></div>
 
             </main>

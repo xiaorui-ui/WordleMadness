@@ -81,20 +81,20 @@ public class Wordle {
     // Note: The function is not commutative, interchanging a and b can give a
     // different answer. Order matters!
 
-    public static int compare(String a, String b, int l) {
-        assert (a.length() == l && b.length() == l);
-        int[] arr1 = new int[l];
-        int[] arr2 = new int[l];
+    public static int compare(String a, String b, int length) {
+        assert (a.length() == length && b.length() == length);
+        int[] arr1 = new int[length];
+        int[] arr2 = new int[length];
 
-        for (int i = 0; i < l; i++) {
+        for (int i = 0; i < length; i++) {
             if (a.charAt(i) == b.charAt(i)) {
                 arr1[i] = 2;
                 arr2[i] = 2;
             }
         }
 
-        for (int i = 0; i < l; i++) {
-            for (int j = 0; j < l; j++) {
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
                 if (a.charAt(i) == b.charAt(j)) {
                     if (arr1[i] == 0 && arr2[j] == 0) {
                         arr1[i] = 1;
@@ -105,8 +105,8 @@ public class Wordle {
             }
         }
         int ans = 0;
-        for (int i = 0; i < l; i++) {
-            ans += (int) arr1[i] * Math.pow(3, i);
+        for (int i = 0; i < length; i++) {
+            ans += (int) arr1[i] * Math.pow(3, length - 1 - i);
         }
         arr2 = null;
         arr1 = null;
@@ -171,7 +171,12 @@ public class Wordle {
         int threshold = groups.get(Math.min(t, groups.size() - 1)).getSnd();
         List<String> li = new ArrayList<>();
         int i = 0;
-        while (i < x && groups.get(i).getSnd() >= threshold) {
+        // If everything is a 2-partition any answer will do
+        if (groups.get(0).getSnd() == 2) {
+            return l.subList(0, 1);
+        }
+        // filter away all the 2-partitions
+        while (i < x && groups.get(i).getSnd() >= Math.max(threshold, 3)) {
             li.add(groups.get(i).getFst());
             i++;
         }

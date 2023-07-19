@@ -1,12 +1,13 @@
 import "./styles.css";
+import axios from 'axios';
 import Welcome from "./pages/Welcome.js";
 import Login from "./pages/Login.js";
 import UserGuide from "./pages/UserGuide.js";
 import DecisionTree from "./pages/DecisionTree.js";
-import Register from "./pages/Register.js"
+import Register from "./pages/Register.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState, useMemo } from 'react';
-import { DEFAULT_WORDS } from "./components/Constants";
+import { BACKEND_LOGOUT, DEFAULT_WORDS } from "./components/Constants";
 
 
 export default function App() {
@@ -42,15 +43,56 @@ export default function App() {
 
   const [user, setUser] = useState(savedUser());
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
+    // setCloseable(false);
+    // setPromptMessage("Logging out...");
+    // setShowPrompt(true);
     sessionStorage.removeItem("user");
     setUser({ name: "", isLoggedIn: false });
-    setAnswerList(DEFAULT_WORDS);
-    setAllowedList(DEFAULT_WORDS);
-    alert("Logged out");
+    await axios.patch(BACKEND_LOGOUT, null, {
+      params: {
+        name: user.name
+      }
+    })
+      .then((response) => {
+        // setShowPrompt(false);
+        if (response.data === "Logged out") {
+          alert("Logged out");
+        } else {
+          handleInvalidLogOut(response.data);
+        }
+        setAnswerList(DEFAULT_WORDS);
+        setAllowedList(DEFAULT_WORDS);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  const [bestTree, setBestTree] = useState(null);
+  const handleLogOutOnClose = async () => {
+    if (document.visibilityState === 'hidden') {
+      await axios.patch(BACKEND_LOGOUT, null, {
+        params: {
+          name: user.name
+        }
+      })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
+  const handleInvalidLogOut = (data) => {
+    // setCloseable(true);
+    // setPromptMessage(data);
+    // setShowPrompt(true);
+    console.log(data);
+  }
+
+  const [bestTree, setBestTree] = useState(undefined);
+
+  // when the window closes
+  window.addEventListener('visibilitychange', handleLogOutOnClose);
 
   return (
     <div className="App">
@@ -60,7 +102,7 @@ export default function App() {
 
           <Route path="/" element={<Welcome answerList={answerList} setAnswerList={setAnswerList}
             answerLength={answerLength} allowedLength={allowedLength} allowedList={allowedList} setAllowedList={setAllowedList}
-            user={user} handleLogOut={handleLogOut} />} />
+            user={user} setBestTree={setBestTree} handleLogOut={handleLogOut} />} />
 
           <Route path="/Login" element={<Login setUser={setUser} />} />
 

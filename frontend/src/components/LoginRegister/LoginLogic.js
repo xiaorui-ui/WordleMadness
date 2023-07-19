@@ -1,11 +1,8 @@
-// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { BACKEND_LOGIN, BACKEND_REGISTER } from '../components/Constants.js';
+import { BACKEND_LOGIN, BACKEND_REGISTER } from '../Constants.js';
 
 export default function LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, type,
     navigate) {
-
-    // const navigate = useNavigate();
 
     const handleInvalidLogin = (data) => {
         setCloseable(true);
@@ -25,7 +22,7 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
         setCloseable(false);
         setPromptMessage("Logging in...");
         setShowPrompt(true);
-        axios.get(BACKEND_LOGIN, {
+        axios.patch(BACKEND_LOGIN, null, {
             params: {
                 name: username,
                 password: passwordValues.password
