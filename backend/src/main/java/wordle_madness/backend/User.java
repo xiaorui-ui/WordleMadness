@@ -1,8 +1,9 @@
 package wordle_madness.backend;
 
 import jakarta.persistence.*;
+import wordle_madness.backend.algo.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 @Entity
 public class User {
@@ -13,6 +14,9 @@ public class User {
     private String name;
 
     private String password;
+
+    private NestedMap<Integer, String, List<String>> tree;
+    // private String tree;
 
     private boolean isLoggedIn;
 
@@ -37,6 +41,7 @@ public class User {
         this.addWords(defaultWords);
         this.addAllowedWords(defaultAllowedWords);
         this.isLoggedIn = true;
+        this.tree = null;
     }
 
     public String getName() {
@@ -100,4 +105,21 @@ public class User {
     public boolean isLoggedIn() {
         return this.isLoggedIn;
     }
+
+    // public void setTree(String tree) {
+    // this.tree = tree;
+    // }
+
+    // public String getTree() {
+    // return this.tree;
+    // }
+
+    public void setTree(NestedMap<Integer, String, List<String>> tree) {
+        this.tree = tree;
+    }
+
+    public NestedMap<Integer, String, List<String>> getTree() {
+        return this.tree;
+    }
+
 }

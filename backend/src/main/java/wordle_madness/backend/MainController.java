@@ -112,11 +112,23 @@ public class MainController {
         return currentUser.getAllowedList();
     }
 
-    // to-do: add in functions to get and modify tree(rep as string)
+    // to-do: add in functions to get tree(rep as string)
+    @GetMapping(path = "/getTree")
+    public @ResponseBody String getTree(@RequestParam String username) {
+        User currentUser = userRepository.findUserByName(username);
+        // return currentUser.getTree();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(currentUser.getTree());
+        } catch (JsonProcessingException j) {
+            throw new Error("Error occurred when processing tree!");
+        }
+    }
 
     // to-do: set tree width as a parameter
 
-    @GetMapping(path = "/compute")
+    @PatchMapping(path = "/compute")
     public @ResponseBody String leastTries(
             @RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
@@ -127,8 +139,14 @@ public class MainController {
         NestedMap<Integer, String, List<String>> tree = new WordleMemo(allowed, ans,
                 allowed.get(0).length())
                 .solveMemo(ans, 5);
+        currentUser.setTree(tree);
         try {
-            return objectMapper.writeValueAsString(tree);
+            String treeString = objectMapper.writeValueAsString(tree);
+            // cannot support long strings!
+            // wrap treeString in another object, just like wordArray
+            // currentUser.setTree(treeString);
+            userRepository.save(currentUser);
+            return treeString;
         } catch (JsonProcessingException j) {
             throw new Error("Error occurred when processing list!");
         }
