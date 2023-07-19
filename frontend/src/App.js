@@ -7,22 +7,13 @@ import DecisionTree from "./pages/DecisionTree.js";
 import Register from "./pages/Register.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import { BACKEND_LOGOUT, DEFAULT_WORDS } from "./components/Constants";
+import { BACKEND_CACHED_LOGIN, BACKEND_LOGOUT, DEFAULT_WORDS } from "./components/Constants";
 import CustomPrompt from "./components/CustomPrompt";
 
 
 export default function App() {
 
   // answer before allowed, ALWAYS!!!
-
-  const savedUser = () => {
-    const cache = sessionStorage.getItem("user");
-    if (cache === null || cache === "") {
-      return { isLoggedIn: false, name: "" };
-    } else {
-      return { isLoggedIn: true, name: cache };
-    }
-  }
 
   const [answerList, setAnswerList] = useState(DEFAULT_WORDS);
 
@@ -35,6 +26,8 @@ export default function App() {
   const [closeable, setCloseable] = useState(true);
 
   const [bestTree, setBestTree] = useState(undefined);
+
+  const [user, setUser] = useState({ isLoggedIn: false, name: "" });
 
   const handleDismiss = useCallback(() => {
     setShowPrompt(false);
@@ -54,40 +47,87 @@ export default function App() {
     return allowedList[0].word.length;
   }, [allowedList]);
 
-  const [user, setUser] = useState(savedUser());
-
   const handleLogOut = useCallback(() => {
-    setCloseable(false);
-    setPromptMessage("Logging out...");
-    setShowPrompt(true);
-    sessionStorage.removeItem("user");
-    setUser({ name: "", isLoggedIn: false });
-    axios.patch(BACKEND_LOGOUT, {}, {
-      params: {
-        name: user.name
-      }
-    })
-      .then((response) => {
-        setShowPrompt(false);
-        if (response.data === "Logged out") {
-          alert("Logged out");
-        } else {
-          handleInvalidLogOut(response.data);
+    if (user.isLoggedIn) {
+      setCloseable(false);
+      setPromptMessage("Logging out...");
+      setShowPrompt(true);
+      sessionStorage.removeItem("user");
+      setUser({ name: "", isLoggedIn: false });
+      axios.patch(BACKEND_LOGOUT, {}, {
+        params: {
+          name: user.name
         }
-        setAnswerList(DEFAULT_WORDS);
-        setAllowedList(DEFAULT_WORDS);
       })
-      .catch((error) => {
-        setCloseable(true);
-        setPromptMessage("Error communicating with backend! Please try again later");
-        setShowPrompt(true);
+          .then((response) => {
+            setShowPrompt(false);
+            if (response.data === "Logged out") {
+              alert("Logged out");
+            } else {
+              handleInvalidLogOut(response.data);
+            }
+            setAnswerList(DEFAULT_WORDS);
+            setAllowedList(DEFAULT_WORDS);
+      })
+          .catch((error) => {
+            setCloseable(true);
+            setPromptMessage("Error communicating with backend! Please try again later");
+            setShowPrompt(true);
       });
+    }
   }, [user]);
 
+  const handleAbruptLogOut = useCallback(() => {
+    if (user.isLoggedIn) {
+      axios.patch(BACKEND_LOGOUT, {}, {
+        params: {
+          name: user.name
+        }
+      })
+    }
+  }, [user]);
+
+  const handleInvalidLogOut = (data) => {
+    setCloseable(true);
+    setPromptMessage(data);
+    setShowPrompt(true);
+  }
+
+  // Initial login if user has been saved in cache
+  useEffect(() => {
+    const cache = sessionStorage.getItem("user");
+    if (cache !== null && cache !== "") {
+      setPromptMessage("Loading saved user details...")
+      setCloseable(false);
+      setShowPrompt(true);
+      axios.patch(BACKEND_CACHED_LOGIN, {}, {
+        params: {
+          name: cache
+        }
+      })
+          .then((response) => {
+            if (response.data === "Logged in") {
+              setUser({ isLoggedIn: true, name: cache });
+            } else {
+              setCloseable(true);
+              setPromptMessage(response.data);
+              setShowPrompt(true);
+            }
+        })
+        .catch((error) => {
+          setCloseable(true);
+          setPromptMessage("Error communicating with backend! Please try again later");
+          setShowPrompt(true);
+        });
+    }
+  }, []);
+
+
+  // Logging out the user upon closing the tab
   useEffect(() => {
     const handleLogOutOnClose = (event) => {
       event.preventDefault();
-      handleLogOut();
+      handleAbruptLogOut();
       return;
     };
 
@@ -96,13 +136,7 @@ export default function App() {
     return () => {
       window.removeEventListener('beforeunload', handleLogOutOnClose);
     };
-  }, [handleLogOut]);
-
-  const handleInvalidLogOut = (data) => {
-    setCloseable(true);
-    setPromptMessage(data);
-    setShowPrompt(true);
-  }
+  }, [handleAbruptLogOut]);
 
   return (
     <div className="App">
@@ -114,17 +148,20 @@ export default function App() {
 
           <Route path="/" element={<Welcome answerList={answerList} setAnswerList={setAnswerList}
             answerLength={answerLength} allowedLength={allowedLength} allowedList={allowedList} setAllowedList={setAllowedList}
-            user={user} setBestTree={setBestTree} handleLogOut={handleLogOut} />} />
+            user={user} setBestTree={setBestTree} handleLogOut={handleLogOut} loadingPrompt={showPrompt}
+            setLoadingPrompt={setShowPrompt} />} />
 
-          <Route path="/Login" element={<Login setUser={setUser} />} />
+          <Route path="/Login" element={<Login user={user} setUser={setUser} />} />
 
-          <Route path="/Register" element={<Register setUser={setUser} />} />
+          <Route path="/Register" element={<Register user={user} setUser={setUser} />} />
 
           <Route path="/DecisionTree" element={<DecisionTree answerList={answerList} setAnswerList={setAnswerList}
             allowedList={allowedList} setAllowedList={setAllowedList} user={user}
-            handleLogOut={handleLogOut} bestTree={bestTree} setBestTree={setBestTree} />} />
+            handleLogOut={handleLogOut} bestTree={bestTree} setBestTree={setBestTree} loadingPrompt={showPrompt}
+            setLoadingPrompt={setShowPrompt} />} />
 
-          <Route path="/UserGuide" element={<UserGuide user={user} handleLogOut={handleLogOut} />} />
+          <Route path="/UserGuide" element={<UserGuide user={user} handleLogOut={handleLogOut} loadingPrompt={showPrompt}
+          setLoadingPrompt={setShowPrompt} />} />
 
         </Routes>
       </BrowserRouter>

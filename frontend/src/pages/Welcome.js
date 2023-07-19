@@ -10,7 +10,7 @@ import SetListsToSame from "../components/SetListsToSame";
 import BestTree from "../components/BestTree";
 
 export default function Welcome({ answerList, setAnswerList, allowedList, setAllowedList, answerLength, allowedLength,
-    user, setBestTree, handleLogOut }) {
+    user, setBestTree, handleLogOut, loadingPrompt, setLoadingPrompt }) {
 
 
 
@@ -62,7 +62,8 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
             <main className="main-content">
                 <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
                     setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
-                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} />
+                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} loadingPrompt={loadingPrompt}
+                    setLoadingPrompt={setLoadingPrompt} />
                 {/* To implement firstTime */}
                 <Header user={user} firstTime={true} />
                 <h2>Answer List</h2>

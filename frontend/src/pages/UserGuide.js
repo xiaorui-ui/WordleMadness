@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
 import textInput from '../txtInput.png';
+import { useEffect } from "react";
 
-export default function UserGuide({ user, handleLogOut }) {
+export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadingPrompt }) {
 
+    useEffect(() => {
+        if (user.isLoggedIn && loadingPrompt) {
+            setLoadingPrompt(false);
+        }
+    }, [user, loadingPrompt, setLoadingPrompt]);
 
     return (
         <div>
