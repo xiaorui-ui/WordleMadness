@@ -63,7 +63,7 @@ public class MainController {
         if (userRepository.existsUserByNameAndPassword(name, password)) {
             User currentUser = userRepository.findUserByName(name);
             if (currentUser.isLoggedIn()) {
-                return "User is already logged in";
+                return "This user is already logged in. Please check that you have logged out of all other sessions";
             }
             currentUser.logIn();
             userRepository.save(currentUser);

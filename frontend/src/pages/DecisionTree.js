@@ -52,7 +52,8 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
 
                 <p>Note: This tree is updated the last time compute was pressed, and does not auto-update upon logging in.</p>
                 <br />
-                {(bestTree === undefined) ? <>boi</> : <Tree bestTree={bestTree} len={answerList[0].word.length} />}
+                {(bestTree === undefined || answerList.length === 0) 
+                    ? <></> : <Tree bestTree={bestTree} len={answerList[0].word.length} />}
             </div>
 
             {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />}

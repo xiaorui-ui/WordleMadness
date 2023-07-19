@@ -6,8 +6,9 @@ import UserGuide from "./pages/UserGuide.js";
 import DecisionTree from "./pages/DecisionTree.js";
 import Register from "./pages/Register.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState, useMemo } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { BACKEND_LOGOUT, DEFAULT_WORDS } from "./components/Constants";
+import CustomPrompt from "./components/CustomPrompt";
 
 
 export default function App() {
@@ -27,6 +28,18 @@ export default function App() {
 
   const [allowedList, setAllowedList] = useState(DEFAULT_WORDS);
 
+  const [showPrompt, setShowPrompt] = useState(false);
+  
+  const [promptMessage, setPromptMessage] = useState('');
+  
+  const [closeable, setCloseable] = useState(true);
+
+  const [bestTree, setBestTree] = useState(undefined);
+
+  const handleDismiss = useCallback(() => {
+    setShowPrompt(false);
+  }, []);
+
   const answerLength = useMemo(() => {
     if (answerList.length === 0) {
       return -1;
@@ -43,19 +56,19 @@ export default function App() {
 
   const [user, setUser] = useState(savedUser());
 
-  const handleLogOut = async () => {
-    // setCloseable(false);
-    // setPromptMessage("Logging out...");
-    // setShowPrompt(true);
+  const handleLogOut = useCallback(() => {
+    setCloseable(false);
+    setPromptMessage("Logging out...");
+    setShowPrompt(true);
     sessionStorage.removeItem("user");
     setUser({ name: "", isLoggedIn: false });
-    await axios.patch(BACKEND_LOGOUT, null, {
+    axios.patch(BACKEND_LOGOUT, {}, {
       params: {
         name: user.name
       }
     })
       .then((response) => {
-        // setShowPrompt(false);
+        setShowPrompt(false);
         if (response.data === "Logged out") {
           alert("Logged out");
         } else {
@@ -65,37 +78,36 @@ export default function App() {
         setAllowedList(DEFAULT_WORDS);
       })
       .catch((error) => {
-        console.log(error);
+        setCloseable(true);
+        setPromptMessage("Error communicating with backend! Please try again later");
+        setShowPrompt(true);
       });
-  }
+  }, [user]);
 
-  const handleLogOutOnClose = async () => {
-    if (document.visibilityState === 'hidden') {
-      await axios.patch(BACKEND_LOGOUT, null, {
-        params: {
-          name: user.name
-        }
-      })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }
+  useEffect(() => {
+    const handleLogOutOnClose = (event) => {
+      event.preventDefault();
+      handleLogOut();
+      return;
+    };
+
+    window.addEventListener('beforeunload', handleLogOutOnClose);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleLogOutOnClose);
+    };
+  }, [handleLogOut]);
 
   const handleInvalidLogOut = (data) => {
-    // setCloseable(true);
-    // setPromptMessage(data);
-    // setShowPrompt(true);
-    console.log(data);
+    setCloseable(true);
+    setPromptMessage(data);
+    setShowPrompt(true);
   }
-
-  const [bestTree, setBestTree] = useState(undefined);
-
-  // when the window closes
-  window.addEventListener('visibilitychange', handleLogOutOnClose);
 
   return (
     <div className="App">
+
+      {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />)}
 
       <BrowserRouter>
         <Routes>
