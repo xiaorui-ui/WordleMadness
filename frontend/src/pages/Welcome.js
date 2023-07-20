@@ -32,6 +32,10 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
 
     const [warningPromptMessage, setWarningPromptMessage] = useState('');
 
+    const [treeWidth, setTreeWidth] = useState(0);
+
+    const [pruningMethod, setPruningMethod] = useState("");
+
     const navigate = useNavigate();
 
     const evaluateTree = (event) => {
@@ -42,7 +46,14 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
     return (
         <>
             <div className="sidebar">
-                <br />
+                <h2 style={{ fontWeight: 'normal' }}>Sections</h2>
+                <a href="#Answer list">Answer list</a><br />
+                <a href="#Allowed list">Allowed list</a><br />
+                <a href="#Search parameters">Search parameters</a><br />
+
+                <div style={{ height: "50px" }}></div>
+
+                <h2 style={{ fontWeight: 'normal' }}>Pages</h2>
                 {!user.isLoggedIn ?
                     <>
                         <Link to="/Login">Login to save your data</Link>
@@ -60,11 +71,13 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
             </div>
 
             <main className="main-content">
+                <p id="Answer list"></p>
                 <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
                     setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
                     setAnswerList={setAnswerList} setAllowedList={setAllowedList} setBestTree={setBestTree} />
                 {/* To implement firstTime */}
                 <Header user={user} firstTime={true} />
+
                 <h2>Answer List</h2>
                 <ModifyWords wordList={answerList} setWordList={setAnswerList} len={answerLength}
                     showPrompt={showPrompt} setShowPrompt={setShowPrompt}
@@ -80,6 +93,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                     promptMessage={promptMessage} setPromptMessage={setPromptMessage} closeable={closeable}
                     setCloseable={setCloseable} user={user} />
 
+                <p id="Allowed list"></p>
                 <h2>Allowed List</h2>
                 <ModifyWords wordList={allowedList} setWordList={setAllowedList} len={allowedLength}
                     showPrompt={showPrompt} setShowPrompt={setShowPrompt}
@@ -88,6 +102,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                     wordListFreq={allowedListFreq} setWordListFreq={setAllowedListFreq}
                     user={user} id={2} />
 
+                <p id="Search parameters"></p>
                 {/* Insert search parameters here */}
 
                 <button onClick={evaluateTree}>Click me</button>

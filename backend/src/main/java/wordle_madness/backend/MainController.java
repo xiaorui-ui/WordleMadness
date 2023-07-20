@@ -63,7 +63,7 @@ public class MainController {
         if (userRepository.existsUserByNameAndPassword(name, password)) {
             User currentUser = userRepository.findUserByName(name);
             if (currentUser.isLoggedIn()) {
-                return "User is already logged in";
+                return "This user is already logged in. Please check that you have logged out of all other sessions";
             }
             currentUser.logIn();
             userRepository.save(currentUser);
@@ -116,14 +116,14 @@ public class MainController {
     @GetMapping(path = "/getTree")
     public @ResponseBody String getTree(@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
-        // return currentUser.getTree();
+        return currentUser.getTree();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(currentUser.getTree());
-        } catch (JsonProcessingException j) {
-            throw new Error("Error occurred when processing tree!");
-        }
+        // ObjectMapper objectMapper = new ObjectMapper();
+        // try {
+        // return objectMapper.writeValueAsString(currentUser.getTree());
+        // } catch (JsonProcessingException j) {
+        // throw new Error("Error occurred when processing tree!");
+        // }
     }
 
     // to-do: set tree width as a parameter
@@ -139,12 +139,12 @@ public class MainController {
         NestedMap<Integer, String, List<String>> tree = new WordleMemo(allowed, ans,
                 allowed.get(0).length())
                 .solveMemo(ans, 5);
-        currentUser.setTree(tree);
+        // currentUser.setTree(tree);
         try {
             String treeString = objectMapper.writeValueAsString(tree);
             // cannot support long strings!
             // wrap treeString in another object, just like wordArray
-            // currentUser.setTree(treeString);
+            currentUser.setTree(treeString);
             userRepository.save(currentUser);
             return treeString;
         } catch (JsonProcessingException j) {

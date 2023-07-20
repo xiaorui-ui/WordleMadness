@@ -15,8 +15,8 @@ public class User {
 
     private String password;
 
-    private NestedMap<Integer, String, List<String>> tree;
-    // private String tree;
+    // private NestedMap<Integer, String, List<String>> tree;
+    private String tree;
 
     private boolean isLoggedIn;
 
@@ -106,20 +106,20 @@ public class User {
         return this.isLoggedIn;
     }
 
-    // public void setTree(String tree) {
-    // this.tree = tree;
-    // }
-
-    // public String getTree() {
-    // return this.tree;
-    // }
-
-    public void setTree(NestedMap<Integer, String, List<String>> tree) {
+    public void setTree(String tree) {
         this.tree = tree;
     }
 
-    public NestedMap<Integer, String, List<String>> getTree() {
+    public String getTree() {
         return this.tree;
     }
+
+    // public void setTree(NestedMap<Integer, String, List<String>> tree) {
+    // this.tree = tree;
+    // }
+
+    // public NestedMap<Integer, String, List<String>> getTree() {
+    // return this.tree;
+    // }
 
 }
