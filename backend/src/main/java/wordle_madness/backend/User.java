@@ -16,6 +16,7 @@ public class User {
     private String password;
 
     // private NestedMap<Integer, String, List<String>> tree;
+    @Column(length = Integer.MAX_VALUE)
     private String tree;
 
     private boolean isLoggedIn;
