@@ -74,6 +74,17 @@ public class MainController {
         return "Username does not exist, please register for a new account";
     }
 
+    @PatchMapping(path = "/cachedLogIn")
+    public @ResponseBody String cachedLogIn(@RequestParam String name) {
+        if (userRepository.existsUserByName(name)) {
+            User currentUser = userRepository.findUserByName(name);
+            currentUser.logIn();
+            userRepository.save(currentUser);
+            return "Logged in";
+        }
+        return "Username does not exist";
+    }
+
     // log out function
     @PatchMapping(path = "/logOut")
     public @ResponseBody String conditionalLogOut(@RequestParam String name) {
@@ -144,7 +155,7 @@ public class MainController {
             String treeString = objectMapper.writeValueAsString(tree);
             // cannot support long strings!
             // wrap treeString in another object, just like wordArray
-            currentUser.setTree(treeString);
+            currentUser.setTree(new Tree(treeString));
             userRepository.save(currentUser);
             return treeString;
         } catch (JsonProcessingException j) {

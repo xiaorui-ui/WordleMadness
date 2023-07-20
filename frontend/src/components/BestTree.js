@@ -54,12 +54,11 @@ export default function BestTree(answerList, allowedList, setBestTree, user,
             username: user.name
         }
     }).then((response) => {
-        console.log(response.data);
         setBestTree(response.data);
-        var dict = response.data.child;
-        for (let key in dict) {
-            console.log(dict[key]);
-        }
+        // var dict = response.data.child;
+        // for (let key in dict) {
+        //     console.log(dict[key]);
+        // }
         setShowPrompt(false);
         destination = '/DecisionTree';
         navigate(destination);

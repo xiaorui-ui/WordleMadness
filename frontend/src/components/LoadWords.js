@@ -4,7 +4,7 @@ import axios from 'axios';
 import { BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST, BACKEND_GET_TREE, DEFAULT_WORDS } from "./Constants";
 
 export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessage, setPromptMessage, closeable, setCloseable,
-    setAnswerList, setAllowedList, setBestTree }) {
+    setAnswerList, setAllowedList, setBestTree, loadingPrompt, setLoadingPrompt }) {
 
     const handleDismiss = () => {
         setShowPrompt(false);
@@ -18,14 +18,16 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
     useEffect(() => {
         if ((wordListLoaded && allowedListLoaded) && bestTreeLoaded) {
             setShowPrompt(false);
-        } else {
-            setCloseable(false);
-            setPromptMessage("Loading words");
-            setShowPrompt(true);
         }
-    }, [wordListLoaded, allowedListLoaded, bestTreeLoaded, setCloseable, setPromptMessage, setShowPrompt]);
+    }, [wordListLoaded, allowedListLoaded, bestTreeLoaded, setShowPrompt]);
 
     useEffect(() => {
+        if (user.isLoggedIn && loadingPrompt) {
+            setLoadingPrompt(false);
+        }
+        setPromptMessage("Loading words...");
+        setCloseable(false);
+        setShowPrompt(true);
         if (!user.isLoggedIn) {
             setAnswerList(DEFAULT_WORDS);
             setAllowedList(DEFAULT_WORDS);

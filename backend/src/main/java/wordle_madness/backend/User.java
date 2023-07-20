@@ -106,8 +106,8 @@ public class User {
         return this.isLoggedIn;
     }
 
-    public void setTree(String tree) {
-        this.tree = tree;
+    public void setTree(Tree tree) {
+        this.tree = tree.getTree();
     }
 
     public String getTree() {

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import CustomPrompt from '../components/CustomPrompt.js';
 import Username from '../components/LoginRegister/Username.js';
 import Password from '../components/LoginRegister/Password.js';
@@ -7,7 +7,7 @@ import LoginLogic from '../components/LoginRegister/LoginLogic.js';
 
 // to do: only allow one user to log in at once
 
-export default function Login({ setUser }) {
+export default function Login({ user, setUser }) {
 
     const [username, setUsername] = useState("");
     const [passwordValues, setPasswordValues] = useState({
@@ -18,9 +18,9 @@ export default function Login({ setUser }) {
     const [promptMessage, setPromptMessage] = useState("");
     const [closeable, setCloseable] = useState(true);
 
-    const handleDismiss = () => {
+    const handleDismiss = useCallback(() => {
         setShowPrompt(false);
-    }
+    }, [setShowPrompt]);
 
     const navigate = useNavigate();
 
@@ -29,6 +29,13 @@ export default function Login({ setUser }) {
         LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, "Login",
             navigate);
     }
+
+    useEffect(() => {
+        if (user.isLoggedIn) {
+            let destination = '/';
+            navigate(destination);
+        }
+    }, [user, navigate]);
 
     return (
         <>
