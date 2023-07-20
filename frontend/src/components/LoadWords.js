@@ -67,7 +67,8 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
                     setShowPrompt(true);
                 });
         }
-    }, [user, setAnswerList, setAllowedList, setShowPrompt, setCloseable, setPromptMessage]);
+    }, [user, setAnswerList, setAllowedList, setShowPrompt, setCloseable, setPromptMessage, loadingPrompt,
+    setBestTree, setLoadingPrompt]);
     return (
         <>
             {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />)}

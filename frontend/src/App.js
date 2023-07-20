@@ -128,7 +128,7 @@ export default function App() {
     const handleLogOutOnClose = (event) => {
       event.preventDefault();
       handleAbruptLogOut();
-      return;
+      event.returnValue = 'Are you sure you want to exit?';
     };
 
     window.addEventListener('beforeunload', handleLogOutOnClose);
