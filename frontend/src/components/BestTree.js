@@ -49,7 +49,7 @@ export default function BestTree(answerList, allowedList, setBestTree, user,
     if (!checkValid(answerList, allowedList)) {
         return;
     }
-    axios.patch(BACKEND_COMPUTE, null, {
+    axios.patch(BACKEND_COMPUTE, {}, {
         params: {
             username: user.name
         }

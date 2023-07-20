@@ -42,7 +42,7 @@ public class User {
         this.addWords(defaultWords);
         this.addAllowedWords(defaultAllowedWords);
         this.isLoggedIn = true;
-        this.tree = null;
+        this.tree = "";
     }
 
     public String getName() {

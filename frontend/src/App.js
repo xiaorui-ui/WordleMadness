@@ -25,7 +25,7 @@ export default function App() {
 
   const [closeable, setCloseable] = useState(true);
 
-  const [bestTree, setBestTree] = useState(undefined);
+  const [bestTree, setBestTree] = useState("");
 
   const [user, setUser] = useState({ isLoggedIn: false, name: "" });
 
