@@ -32,15 +32,41 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
 
     const [warningPromptMessage, setWarningPromptMessage] = useState('');
 
-    const [treeWidth, setTreeWidth] = useState(0);
+    const [treeWidth, setTreeWidth] = useState(-1);
 
     const [pruningMethod, setPruningMethod] = useState("");
 
     const navigate = useNavigate();
 
+    const handleWidthChange = (event) => {
+        setTreeWidth(event.target.value);
+    }
+
+    const handleSubmit = (event) => {
+        var str = " Press the enter key or confirm to continue.";
+        event.preventDefault();
+
+
+        setCloseable(false);
+        setPromptMessage("Saving...")
+        setShowPrompt(true);
+        if (!validNum(treeWidth)) {
+            setCloseable(true);
+            setPromptMessage("Tree width needs to be a whole number from 1 to 8" + str);
+            setShowPrompt(true);
+            return;
+        }
+        setShowPrompt(false);
+    }
+
+    function validNum(x) {
+        var arr = [1, 2, 3, 4, 5, 6, 7, 8];
+        return arr.includes(x);
+    }
+
     const evaluateTree = (event) => {
         event.preventDefault();
-        BestTree(answerList, allowedList, setBestTree, user, setPromptMessage, setShowPrompt, setCloseable, navigate);
+        BestTree(answerList, allowedList, treeWidth, setBestTree, user, setPromptMessage, setShowPrompt, setCloseable, navigate);
     }
 
     return (
@@ -56,7 +82,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                 <h2 style={{ fontWeight: 'normal' }}>Pages</h2>
                 {!user.isLoggedIn ?
                     <>
-                        <Link to="/Login">Login to save your data</Link>
+                        <Link to="/Login">Login to use decision tree</Link>
                         <br />
                     </>
                     :
@@ -103,8 +129,18 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                     wordListFreq={allowedListFreq} setWordListFreq={setAllowedListFreq}
                     user={user} id={2} />
 
-                <p id="Search parameters"></p>
+
+                <h2 id="Search parameters">Search parameters</h2>
                 {/* Insert search parameters here */}
+
+                {/* Implement scrolling menu bar later */}
+
+                <p>Tree width from 1-8:</p>
+                <input onChange={handleWidthChange} />
+                <br />
+
+                <div style={{ height: "30px" }}></div>
+
 
                 <button onClick={evaluateTree}>Click me</button>
                 {/* <a href="./DecisionTree" onClick={evaluateTree}>Compute</a> */}

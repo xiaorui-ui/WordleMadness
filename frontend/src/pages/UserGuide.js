@@ -31,7 +31,7 @@ export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadin
                         <span onClick={handleLogOut} style={{ cursor: "pointer" }}>Log Out</span> <br />
 
                     </> :
-                    <Link to="/Login">Log in to save your data</Link>
+                    <Link to="/Login">Log in to use decision tree</Link>
                 }
 
             </div>

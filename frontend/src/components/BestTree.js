@@ -1,7 +1,7 @@
 import { BACKEND_COMPUTE } from "./Constants";
 import axios from 'axios';
 
-export default function BestTree(answerList, allowedList, setBestTree, user,
+export default function BestTree(answerList, allowedList, treeWidth, setBestTree, user,
     setPromptMessage, setShowPrompt, setCloseable, navigate) {
 
     function subset(list1, list2) {
@@ -41,17 +41,35 @@ export default function BestTree(answerList, allowedList, setBestTree, user,
         return true;
     }
 
+    function validTreeWidth(treeWidth) {
+        console.log(treeWidth);
+        console.log(typeof treeWidth);
+        var arr = ["1", "2", "3", "4", "5", "6", "7", "8"];
+        if (arr.includes(treeWidth)) {
+            return true;
+        }
+        setCloseable(true);
+        setPromptMessage("Tree width needs to be a whole number from 1-8");
+        setShowPrompt(true);
+        return false;
+    }
+
     let destination = '';
 
     setCloseable(false);
     setPromptMessage("Loading result...");
     setShowPrompt(true);
+    if (!validTreeWidth(treeWidth)) {
+        return;
+    }
     if (!checkValid(answerList, allowedList)) {
         return;
     }
+    var width = parseInt(treeWidth) - 1;
     axios.patch(BACKEND_COMPUTE, {}, {
         params: {
-            username: user.name
+            username: user.name,
+            width: width
         }
     }).then((response) => {
         setBestTree(response.data);

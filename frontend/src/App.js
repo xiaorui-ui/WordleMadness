@@ -62,12 +62,13 @@ export default function App() {
         .then((response) => {
           setShowPrompt(false);
           if (response.data === "Logged out") {
-            alert("Logged out");
+            //alert("Logged out");
           } else {
             handleInvalidLogOut(response.data);
           }
           setAnswerList(DEFAULT_WORDS);
           setAllowedList(DEFAULT_WORDS);
+          setBestTree("");
         })
         .catch((error) => {
           setCloseable(true);
@@ -124,11 +125,18 @@ export default function App() {
 
 
   // Logging out the user upon closing the tab
+
+  const dummy = () => { return 2; };
+
   useEffect(() => {
     const handleLogOutOnClose = (event) => {
       event.preventDefault();
       handleAbruptLogOut();
-      return;
+      dummy();
+      // the prompt doesn't show, but interestingly this works
+      setPromptMessage("Logged out");
+      setShowPrompt(true);
+      setCloseable(true);
     };
 
     window.addEventListener('beforeunload', handleLogOutOnClose);
@@ -137,6 +145,55 @@ export default function App() {
       window.removeEventListener('beforeunload', handleLogOutOnClose);
     };
   }, [handleAbruptLogOut]);
+
+
+
+  // useEffect(() => {
+  //   const handleLogOutOnClose = (event) => {
+  //     event.preventDefault();
+  //     if (document.visibilityState === 'hidden' && document.hidden) {
+  //       handleAbruptLogOut();
+  //     }
+  //   };
+
+  //   document.addEventListener('visibilitychange', handleLogOutOnClose);
+
+  //   return () => {
+  //     document.removeEventListener('visibilitychange', handleLogOutOnClose);
+  //   };
+  // }, [handleAbruptLogOut]);
+
+
+  // useEffect(() => {
+  //   // Flag to track whether the tab has focus
+  //   let tabHasFocus = true;
+
+  //   const handleLogOutOnClose = (event) => {
+  //     event.preventDefault();
+  //     if (!tabHasFocus) {
+  //       // The tab is being closed or hidden
+  //       handleLogOut();
+  //     }
+  //   };
+
+  //   const handleTabFocus = () => {
+  //     tabHasFocus = true;
+  //   };
+
+  //   const handleTabBlur = () => {
+  //     tabHasFocus = false;
+  //   };
+
+  //   window.addEventListener('beforeunload', handleLogOutOnClose);
+  //   window.addEventListener('focus', handleTabFocus);
+  //   window.addEventListener('blur', handleTabBlur);
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handleLogOutOnClose);
+  //     window.removeEventListener('focus', handleTabFocus);
+  //     window.removeEventListener('blur', handleTabBlur);
+  //   };
+  // }, [handleLogOut]);
 
   return (
     <div className="App">
