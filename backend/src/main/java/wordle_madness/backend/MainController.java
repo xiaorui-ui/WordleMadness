@@ -143,7 +143,7 @@ public class MainController {
 
     @PatchMapping(path = "/compute")
     public @ResponseBody String leastTries(
-            @RequestParam String username) {
+            @RequestParam String username, @RequestParam int width) {
         User currentUser = userRepository.findUserByName(username);
         ArrayList<String> allowed = currentUser.getAllowedList();
         ArrayList<String> ans = currentUser.getWordList();
@@ -151,7 +151,7 @@ public class MainController {
         // Wordle(allowed, ans, len)
         NestedMap<Integer, String, List<String>> tree = new WordleMemo(allowed, ans,
                 allowed.get(0).length())
-                .solveMemo(ans, 5);
+                .solveMemo(ans, width);
         // currentUser.setTree(tree);
         try {
             String treeString = objectMapper.writeValueAsString(tree);
