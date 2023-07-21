@@ -60,7 +60,6 @@ public class MainController {
 
     @PatchMapping(path = "/verify")
     public @ResponseBody String conditionalLogin(@RequestParam String name, @RequestParam String password) {
-        System.out.println("testlogin");
         if (userRepository.existsUserByNameAndPassword(name, password)) {
             User currentUser = userRepository.findUserByName(name);
             if (currentUser.isLoggedIn()) {
@@ -89,7 +88,6 @@ public class MainController {
     // log out function
     @PatchMapping(path = "/logOut")
     public @ResponseBody String conditionalLogOut(@RequestParam String name) {
-        System.out.println("testlogout");
         if (userRepository.existsUserByName(name)) {
             User currentUser = userRepository.findUserByName(name);
             if (!currentUser.isLoggedIn()) {

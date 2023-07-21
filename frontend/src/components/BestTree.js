@@ -44,8 +44,6 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
     }
 
     function validTreeWidth(treeWidth) {
-        console.log(treeWidth);
-        console.log(typeof treeWidth);
         var arr = ["1", "2", "3", "4", "5", "6", "7", "8"];
         if (arr.includes(treeWidth)) {
             return true;
