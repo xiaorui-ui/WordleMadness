@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import wordle_madness.backend.algo.*;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -78,6 +79,13 @@ public class MainController {
     public @ResponseBody String cachedLogIn(@RequestParam String name) {
         if (userRepository.existsUserByName(name)) {
             User currentUser = userRepository.findUserByName(name);
+            if (currentUser.isLoggedIn()) {
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                } catch (InterruptedException interruptedException) {
+                    return "Syncing error! Please try again later.";
+                }
+            }
             currentUser.logIn();
             userRepository.save(currentUser);
             return "Logged in";

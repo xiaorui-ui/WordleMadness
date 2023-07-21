@@ -78,17 +78,6 @@ export default function App() {
     }
   }, [user]);
 
-  const handleAbruptLogOut = useCallback(async () => {
-    if (user.isLoggedIn) {
-      await axios.patch(BACKEND_LOGOUT, {}, {
-        params: {
-          name: user.name
-        }
-      })
-    }
-    return;
-  }, [user]);
-
   const handleInvalidLogOut = (data) => {
     setCloseable(true);
     setPromptMessage(data);
@@ -124,13 +113,23 @@ export default function App() {
     }
   }, []);
 
+  const abruptLogOutParams = useMemo(() => {
+    return new URLSearchParams({name: user.name})
+  }, [user]);
+
 
   // Logging out the user upon closing the tab
 
   useEffect(() => {
-    const handleLogOutOnClose = async (event) => {
+    const handleLogOutOnClose = (event) => {
       event.preventDefault();
-      await handleAbruptLogOut();
+      if (user.isLoggedIn) {
+        fetch(BACKEND_LOGOUT, {
+          method: "PATCH", 
+          body: abruptLogOutParams,
+          keepalive: true
+      })
+      }
     };
 
     window.addEventListener('beforeunload', handleLogOutOnClose);
@@ -138,7 +137,7 @@ export default function App() {
     return () => {
       window.removeEventListener('beforeunload', handleLogOutOnClose);
     };
-  }, [handleAbruptLogOut]);
+  }, [user, abruptLogOutParams]);
 
 
 
