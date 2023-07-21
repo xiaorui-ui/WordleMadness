@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SplitButton from "./SplitButton";
 
-export default function Tree({ bestTree, len }) {
+export default function Tree({ bestTree }) {
 
     var condition = !(bestTree === null);
 
@@ -35,8 +35,8 @@ export default function Tree({ bestTree, len }) {
                 (x, i) => {
                     return (
                         <div key={i}>
-                            <SplitButton changeStatus={renderSubtree} index={i} int={x} len={len} word={bestTree.v} />
-                            {render[i] && <Tree bestTree={bestTree.child[x]} len={len} />}
+                            <SplitButton changeStatus={renderSubtree} index={i} int={x} len={bestTree.v.length} word={bestTree.v} />
+                            {render[i] && <Tree bestTree={bestTree.child[x]} />}
                             <br />
                         </div >
                     )

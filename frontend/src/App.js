@@ -60,7 +60,6 @@ export default function App() {
         }
       })
         .then((response) => {
-          setShowPrompt(false);
           if (response.data === "Logged out") {
             //alert("Logged out");
           } else {
@@ -69,6 +68,8 @@ export default function App() {
           setAnswerList(DEFAULT_WORDS);
           setAllowedList(DEFAULT_WORDS);
           setBestTree("");
+          console.log(bestTree);
+          setShowPrompt(false);
         })
         .catch((error) => {
           setCloseable(true);

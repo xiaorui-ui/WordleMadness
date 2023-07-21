@@ -38,7 +38,7 @@ export default function AddWord({ wordList, setWordList, len,
   }
 
   const handleWordChange = (event) => {
-    setWord(event.target.value);
+    setWord(event.target.value.toLowerCase());
     // key in upper case in future
   }
 
@@ -59,16 +59,23 @@ export default function AddWord({ wordList, setWordList, len,
   }
 
   const handleSubmit = (event) => {
-    var str = " Press the enter key or confirm to continue.";
+    var str = " Press the enter key or close to continue.";
     event.preventDefault();
 
     setCloseable(false);
     setPromptMessage("Adding word...")
     setShowPrompt(true);
-    
+
     if (!onlyLetters(word)) {
       setCloseable(true);
       setPromptMessage("Enter only letters!" + str);
+      setShowPrompt(true);
+      return;
+    }
+
+    if (word.length > 100) {
+      setCloseable(true);
+      setPromptMessage("Enter a word with at most 100 characters!" + str);
       setShowPrompt(true);
       return;
     }

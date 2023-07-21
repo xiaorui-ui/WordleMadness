@@ -34,34 +34,12 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
 
     const [treeWidth, setTreeWidth] = useState(-1);
 
-    const [pruningMethod, setPruningMethod] = useState("");
+    // const [pruningMethod, setPruningMethod] = useState("");
 
     const navigate = useNavigate();
 
     const handleWidthChange = (event) => {
         setTreeWidth(event.target.value);
-    }
-
-    const handleSubmit = (event) => {
-        var str = " Press the enter key or confirm to continue.";
-        event.preventDefault();
-
-
-        setCloseable(false);
-        setPromptMessage("Saving...")
-        setShowPrompt(true);
-        if (!validNum(treeWidth)) {
-            setCloseable(true);
-            setPromptMessage("Tree width needs to be a whole number from 1 to 8" + str);
-            setShowPrompt(true);
-            return;
-        }
-        setShowPrompt(false);
-    }
-
-    function validNum(x) {
-        var arr = [1, 2, 3, 4, 5, 6, 7, 8];
-        return arr.includes(x);
     }
 
     const evaluateTree = (event) => {
@@ -131,13 +109,16 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
 
 
                 <h2 id="Search parameters">Search parameters</h2>
-                {/* Insert search parameters here */}
 
                 {/* Implement scrolling menu bar later */}
 
                 <p>Tree width from 1-8:</p>
                 <input onChange={handleWidthChange} />
-                <br />
+
+                <div style={{ height: "30px" }}></div>
+
+                <p>Pruning method: # of partitions</p>
+                {/* OTHERS WIP */}
 
                 <div style={{ height: "30px" }}></div>
 

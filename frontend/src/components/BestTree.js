@@ -4,6 +4,8 @@ import axios from 'axios';
 export default function BestTree(answerList, allowedList, treeWidth, setBestTree, user,
     setPromptMessage, setShowPrompt, setCloseable, navigate) {
 
+    var str = " Press the enter key or close to continue.";
+
     function subset(list1, list2) {
         let set = new Set(list2.map(element => element.word));
         for (let i = 0; i < list1.length; i++) {
@@ -19,22 +21,22 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
     function checkValid(list1, list2) {
         if (!user.isLoggedIn) {
             setCloseable(true);
-            setPromptMessage("Please login to use the decision tree!");
+            setPromptMessage("Please login to use the decision tree!" + str);
             setShowPrompt(true);
             return false;
         } else if (list1.length === 0 || list2.length === 0) {
             setCloseable(true);
-            setPromptMessage("Lists cannot be empty!");
+            setPromptMessage("Lists cannot be empty!" + str);
             setShowPrompt(true);
             return false;
         } else if (list1[0].word.length !== list2[0].word.length) {
             setCloseable(true);
-            setPromptMessage("Words in lists need same number of letters!");
+            setPromptMessage("Words in lists need same number of letters!" + str);
             setShowPrompt(true);
             return false;
         } else if (!subset(list1, list2)) {
             setCloseable(true);
-            setPromptMessage("Answer needs to be subset of allowed!");
+            setPromptMessage("Answer needs to be subset of allowed!" + str);
             setShowPrompt(true);
             return false;
         }
@@ -49,7 +51,7 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
             return true;
         }
         setCloseable(true);
-        setPromptMessage("Tree width needs to be a whole number from 1-8");
+        setPromptMessage("Tree width needs to be a whole number from 1-8!" + str);
         setShowPrompt(true);
         return false;
     }
@@ -83,7 +85,7 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
 
     }).catch((error) => {
         setCloseable(true);
-        setPromptMessage("Error syncing to backend! Please try again later.");
+        setPromptMessage("Error syncing to backend! Please try again later." + str);
         setShowPrompt(true);
     });
 }
