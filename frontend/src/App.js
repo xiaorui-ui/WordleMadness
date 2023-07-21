@@ -61,14 +61,13 @@ export default function App() {
       })
         .then((response) => {
           if (response.data === "Logged out") {
-            //alert("Logged out");
+            // alert("Logged out");
           } else {
             handleInvalidLogOut(response.data);
           }
           setAnswerList(DEFAULT_WORDS);
           setAllowedList(DEFAULT_WORDS);
           setBestTree("");
-          console.log(bestTree);
           setShowPrompt(false);
         })
         .catch((error) => {
@@ -79,14 +78,15 @@ export default function App() {
     }
   }, [user]);
 
-  const handleAbruptLogOut = useCallback(() => {
+  const handleAbruptLogOut = useCallback(async () => {
     if (user.isLoggedIn) {
-      axios.patch(BACKEND_LOGOUT, {}, {
+      await axios.patch(BACKEND_LOGOUT, {}, {
         params: {
           name: user.name
         }
       })
     }
+    return;
   }, [user]);
 
   const handleInvalidLogOut = (data) => {
@@ -127,17 +127,10 @@ export default function App() {
 
   // Logging out the user upon closing the tab
 
-  const dummy = () => { return 2; };
-
   useEffect(() => {
-    const handleLogOutOnClose = (event) => {
+    const handleLogOutOnClose = async (event) => {
       event.preventDefault();
-      handleAbruptLogOut();
-      dummy();
-      // the prompt doesn't show, but interestingly this works
-      setPromptMessage("Logged out");
-      setShowPrompt(true);
-      setCloseable(true);
+      await handleAbruptLogOut();
     };
 
     window.addEventListener('beforeunload', handleLogOutOnClose);
