@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { BACKEND_CACHED_LOGIN, BACKEND_LOGOUT, DEFAULT_WORDS } from "./components/Constants";
 import CustomPrompt from "./components/CustomPrompt";
+import WarningPrompt from "./components/WarningPrompt";
 
 
 export default function App() {
@@ -25,9 +26,17 @@ export default function App() {
 
   const [closeable, setCloseable] = useState(true);
 
+  const [showWarningPrompt, setShowWarningPrompt] = useState(false);
+
+  const [warningPromptMessage, setWarningPromptMessage] = useState('');
+
   const [bestTree, setBestTree] = useState("");
 
   const [user, setUser] = useState({ isLoggedIn: false, name: "" });
+
+  const abruptLogOutParams = useMemo(() => {
+    return new URLSearchParams({name: user.name})
+  }, [user]);
 
   const handleDismiss = useCallback(() => {
     setShowPrompt(false);
@@ -47,12 +56,52 @@ export default function App() {
     return allowedList[0].word.length;
   }, [allowedList]);
 
+  const handleNoLogin = useCallback(() => {
+    sessionStorage.removeItem("wordle-user");
+    setShowWarningPrompt(false);
+  }, [setShowWarningPrompt]);
+
+  const handleCachedLogIn = useCallback(() => {
+    setShowWarningPrompt(false);
+    const cache = sessionStorage.getItem("wordle-user");
+    setPromptMessage("Loading saved user details...")
+    setCloseable(false);
+    setShowPrompt(true);
+    axios.patch(BACKEND_CACHED_LOGIN, {}, {
+      params: {
+        name: cache
+      }
+    })
+      .then((response) => {
+        if (response.data === "Logged in") {
+          setUser({ isLoggedIn: true, name: cache });
+        } else {
+          sessionStorage.removeItem("wordle-user");
+          setCloseable(true);
+          setPromptMessage(response.data);
+          setShowPrompt(true);
+        }
+      })
+      .catch((error) => {
+        sessionStorage.removeItem("wordle-user");
+        setCloseable(true);
+        setPromptMessage("Error communicating with backend! Please try again later");
+        setShowPrompt(true);
+      });
+}, [setPromptMessage, setCloseable, setShowPrompt]);
+
+  const handleInvalidLogOut = useCallback((data) => {
+      setCloseable(true);
+      setPromptMessage(data);
+      setShowPrompt(true);
+    }, [setCloseable, setPromptMessage, setShowPrompt]);
+
   const handleLogOut = useCallback(() => {
     if (user.isLoggedIn) {
       setCloseable(false);
       setPromptMessage("Logging out...");
       setShowPrompt(true);
-      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("wordle-user");
       setUser({ name: "", isLoggedIn: false });
       axios.patch(BACKEND_LOGOUT, {}, {
         params: {
@@ -76,47 +125,16 @@ export default function App() {
           setShowPrompt(true);
         });
     }
-  }, [user]);
-
-  const handleInvalidLogOut = (data) => {
-    setCloseable(true);
-    setPromptMessage(data);
-    setShowPrompt(true);
-  }
+  }, [user, handleInvalidLogOut]);
 
   // Initial login if user has been saved in cache
   useEffect(() => {
-    const cache = sessionStorage.getItem("user");
+    const cache = sessionStorage.getItem("wordle-user");
     if (cache !== null && cache !== "") {
-      setPromptMessage("Loading saved user details...")
-      setCloseable(false);
-      setShowPrompt(true);
-      axios.patch(BACKEND_CACHED_LOGIN, {}, {
-        params: {
-          name: cache
-        }
-      })
-        .then((response) => {
-          if (response.data === "Logged in") {
-            setUser({ isLoggedIn: true, name: cache });
-          } else {
-            setCloseable(true);
-            setPromptMessage(response.data);
-            setShowPrompt(true);
-          }
-        })
-        .catch((error) => {
-          setCloseable(true);
-          setPromptMessage("Error communicating with backend! Please try again later");
-          setShowPrompt(true);
-        });
+      setWarningPromptMessage(`You have a previouly saved login as ${cache}. Do you wish to continue or log out?`);
+      setShowWarningPrompt(true);
     }
   }, []);
-
-  const abruptLogOutParams = useMemo(() => {
-    return new URLSearchParams({name: user.name})
-  }, [user]);
-
 
   // Logging out the user upon closing the tab
 
@@ -139,59 +157,12 @@ export default function App() {
     };
   }, [user, abruptLogOutParams]);
 
-
-
-  // useEffect(() => {
-  //   const handleLogOutOnClose = (event) => {
-  //     event.preventDefault();
-  //     if (document.visibilityState === 'hidden' && document.hidden) {
-  //       handleAbruptLogOut();
-  //     }
-  //   };
-
-  //   document.addEventListener('visibilitychange', handleLogOutOnClose);
-
-  //   return () => {
-  //     document.removeEventListener('visibilitychange', handleLogOutOnClose);
-  //   };
-  // }, [handleAbruptLogOut]);
-
-
-  // useEffect(() => {
-  //   // Flag to track whether the tab has focus
-  //   let tabHasFocus = true;
-
-  //   const handleLogOutOnClose = (event) => {
-  //     event.preventDefault();
-  //     if (!tabHasFocus) {
-  //       // The tab is being closed or hidden
-  //       handleLogOut();
-  //     }
-  //   };
-
-  //   const handleTabFocus = () => {
-  //     tabHasFocus = true;
-  //   };
-
-  //   const handleTabBlur = () => {
-  //     tabHasFocus = false;
-  //   };
-
-  //   window.addEventListener('beforeunload', handleLogOutOnClose);
-  //   window.addEventListener('focus', handleTabFocus);
-  //   window.addEventListener('blur', handleTabBlur);
-
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleLogOutOnClose);
-  //     window.removeEventListener('focus', handleTabFocus);
-  //     window.removeEventListener('blur', handleTabBlur);
-  //   };
-  // }, [handleLogOut]);
-
   return (
     <div className="App">
 
       {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />)}
+
+      {showWarningPrompt && (<WarningPrompt message={warningPromptMessage} onDismiss={handleNoLogin} onSave={handleCachedLogIn}/>)}
 
       <BrowserRouter>
         <Routes>

@@ -21,10 +21,13 @@ public class User {
 
     private boolean isLoggedIn;
 
-    private final String[] defaultWords = { "crane", "jazzy", "fjord", "found" };
+    private final String[] defaultWords = { "moral", "coral", "royal",
+            "rival", "flora", "mural", "lycra", "rural", "viral", "aural", "rally", "regal", "trial",
+            "renal", "glare", "blare", "flare" };
 
-    private final String[] defaultAllowedWords = { "crane", "jazzy", "fjord", "found" };
-
+    private final String[] defaultAllowedWords = { "moral", "coral", "royal",
+            "rival", "flora", "mural", "lycra", "rural", "viral", "aural", "rally", "regal", "trial",
+            "renal", "glare", "blare", "flare" };
     @Column(length = Integer.MAX_VALUE)
     private ArrayList<String> wordList;
     @Column(length = Integer.MAX_VALUE)

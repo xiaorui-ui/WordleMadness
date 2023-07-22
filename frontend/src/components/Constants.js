@@ -1,7 +1,7 @@
 // Local backend
-const BACKEND = "http://localhost:8080/backend";
+// const BACKEND = "http://localhost:8080/backend";
 // Production backend
-// const BACKEND = "https://skilful-earth-388409.as.r.appspot.com/backend";
+const BACKEND = "https://skilful-earth-388409.as.r.appspot.com/backend";
 const BACKEND_LOGIN = BACKEND + "/verify";
 const BACKEND_LOGOUT = BACKEND + "/logOut";
 const BACKEND_GET_WORD_LIST = BACKEND + "/getWords";
@@ -16,10 +16,23 @@ const BACKEND_SET_LISTS_TO_SAME = BACKEND + "/setListsToSame";
 const BACKEND_COMPUTE = BACKEND + "/compute";
 const BACKEND_CACHED_LOGIN = BACKEND + "/cachedLogIn";
 const DEFAULT_WORDS = [
-  { word: "crane", remove: false },
-  { word: "jazzy", remove: true },
-  { word: "fjord", remove: false },
-  { word: "found", remove: false }
+  { word: "moral", remove: false },
+  { word: "coral", remove: false },
+  { word: "loyal", remove: false },
+  { word: "rival", remove: false },
+  { word: "flora", remove: false },
+  { word: "mural", remove: false },
+  { word: "lycra", remove: false },
+  { word: "rural", remove: false },
+  { word: "viral", remove: false },
+  { word: "aural", remove: false },
+  { word: "rally", remove: false },
+  { word: "regal", remove: false },
+  { word: "trial", remove: false },
+  { word: "renal", remove: false },
+  { word: "glare", remove: false },
+  { word: "blare", remove: false },
+  { word: "flare", remove: false },
 ];
 
 export {

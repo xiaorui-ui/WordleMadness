@@ -24,7 +24,7 @@ const WarningPrompt = ({ message, onDismiss, onSave }) => {
                 <p>{message}</p>
                 <div className='vertical-center'>
                     <button onClick={onDismiss} data-testid="prompt-button">Cancel</button>
-                    <button onClick={onSave} data-testid="prompt-button">Save</button>
+                    <button onClick={onSave} data-testid="prompt-button">Continue</button>
                 </div>
             </div >
         </div>

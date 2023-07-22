@@ -32,7 +32,7 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                 setShowPrompt(false);
                 if (response.data === "Logged in") {
                     setUser({ name: username, isLoggedIn: true });
-                    sessionStorage.setItem("user", username);
+                    sessionStorage.setItem("wordle-user", username);
                     destination = '/';
                     navigate(destination);
                 } else {
@@ -62,7 +62,7 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                     setShowPrompt(false);
                     if (response.data === "Registered") {
                         setUser({ name: username, isLoggedIn: true });
-                        sessionStorage.setItem("user", username);
+                        sessionStorage.setItem("wordle-user", username);
                         destination = '/';
                         navigate(destination);
                     } else {

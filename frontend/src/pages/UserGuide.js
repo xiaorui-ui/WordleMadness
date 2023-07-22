@@ -82,9 +82,11 @@ export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadin
                     The txt word lists adds words in addition to those already present, instead of replacing them. This means you
                     can contatenate words from several lists, provided they are disjoint. The final implementation is still open
                     for discussion.
+                    Due to technical limitations, we can't handle lists that are too long at the moment. The web app can
+                    realistically handle answer lists and allowed lists a few thousand words long.
 
-                    Due to technical limitations, we can't handle lists that are too long at the moment. The web app can handle
-                    answer lists and allowed lists a few thousand words long.
+                    <div style={{ height: "30px" }}></div>
+
 
                 </p>
 
@@ -95,7 +97,7 @@ export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadin
 
                     <div style={{ height: "30px" }}></div>
 
-                    In the wlecome page, click the "click me" button to get the tree(this is subjected to change).
+                    In the welcome page, click the "click me" button to get the tree(this is subjected to change).
                     Do be patient as the algorithm is somewhat involved and involves tree search(pun intended)
                     since there are no known simpler ways to solve Wordle fully;
                     waiting times of up to a few minutes is perfectly normal for larger lists.

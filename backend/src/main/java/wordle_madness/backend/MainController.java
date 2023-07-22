@@ -81,7 +81,11 @@ public class MainController {
             User currentUser = userRepository.findUserByName(name);
             if (currentUser.isLoggedIn()) {
                 try {
-                    TimeUnit.SECONDS.sleep(3);
+                    TimeUnit.SECONDS.sleep(2);
+                    User delayedUser = userRepository.findUserByName(name);
+                    if (delayedUser.isLoggedIn()) {
+                        return "This user is already logged in. Please check that you have logged out of all other sessions";
+                    }
                 } catch (InterruptedException interruptedException) {
                     return "Syncing error! Please try again later.";
                 }
