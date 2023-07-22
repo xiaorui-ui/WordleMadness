@@ -52,7 +52,7 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
                 <p>Note: This tree is updated the last time compute was pressed within your account,
                     and <i>does not</i> auto-update upon logging in.</p>
                 <br />
-                {(bestTree === "" || answerList.length === 0) ? <>Compute or log in to get tree!</> : <Tree bestTree={bestTree} />}
+                {(bestTree === "") ? <>Compute or log in to get tree!</> : <Tree bestTree={bestTree} />}
             </div>
 
             {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />}

@@ -52,9 +52,6 @@ export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadin
 
                     <div style={{ height: "30px" }}></div>
 
-                    To use a public account, use "ccc" for both username and password.
-                    <div style={{ height: "30px" }}></div>
-
                 </p>
 
                 <h2 id="Welcome"> Welcome </h2>
