@@ -65,14 +65,7 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
                         setPromptMessage(`Word ${i + 1}, "${nextWord}" has a different number of letters from the current words in the list!`);
                         setShowPrompt(true);
                         return;
-                    } else if (currentWords.includes(nextWord)) {
-                        if (id === 1) {
-                            setCloseable(true);
-                            setPromptMessage(`Word ${nextWord} is repeated!`);
-                            setShowPrompt(true);
-                            return;
-                        }
-                    } else {
+                    } else if (!currentWords.includes(nextWord) && !words.slice(i + 1).includes(nextWord)) {
                         list.push(nextWord);
                     }
                 }
