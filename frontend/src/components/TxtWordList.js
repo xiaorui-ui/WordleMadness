@@ -11,7 +11,7 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
         for (let i = 0; i < list.length - 1; i++) {
             if (list[i].length != list[i + 1].length) {
                 setShowPrompt(true);
-                setPromptMessage(`Word ${i + 1}, ${list[i + 1]}, and word ${i + 2}, ${list[i + 2]}, in the txt have 
+                setPromptMessage(`Word ${i + 1}, "${list[i]}", and word ${i + 2}, "${list[i + 1]}", in the txt have 
                 a different number of characters! ${str}`);
                 setCloseable(true);
                 return false;
@@ -74,12 +74,13 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
                     var nextWord = words[i];
                     if (!onlyLetters(nextWord)) {
                         setCloseable(true);
-                        setPromptMessage(`Words to contain letters only, check word ${i + 1}, ${nextWord}! ${str}`);
+                        setPromptMessage(`Words to contain letters only, check word ${i + 1}, "${nextWord}"! ${str}`);
                         setShowPrompt(true);
                         return;
                     } else if (len !== -1 && nextWord.length !== len) {
                         setCloseable(true);
-                        setPromptMessage(`Word ${i + 1}, "${nextWord}" has a different number of letters from the current words in the list!`);
+                        setPromptMessage(`Word ${i + 1}, "${nextWord}" has a different number of letters from the current words in the list! 
+                        ${str}`);
                         setShowPrompt(true);
                         return;
                     } else if (!(currentWords.includes(nextWord)) && !(words.slice(i + 1).includes(nextWord))) {
