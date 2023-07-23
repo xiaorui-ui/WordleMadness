@@ -47,73 +47,51 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
             reader.onload = function (e) {
                 const contents = e.target.result;
                 const words = extractWords(contents);
-                // var freq = {};
+                const currentWords = wordList.map(word => word.word);
                 var l = words.length;
                 var list = [];
                 var str = " Press the enter key or confirm to continue.";
-                for (let j = 0; j < wordList.length; j++) {
-                    list.push(wordList[j]);
-                }
+                
+                // check that all words in the file are valid
                 for (let i = 0; i < l; i++) {
-                    if (!onlyLetters(words[i])) {
+                    var nextWord = words[i].toLowerCase();
+                    if (!onlyLetters(nextWord)) {
                         setCloseable(true);
-                        setPromptMessage(`Words to contain letters only, check word ${i + 1}! ${str}`);
+                        setPromptMessage(`Words to contain letters only, check word ${i + 1}, ${nextWord}! ${str}`);
                         setShowPrompt(true);
                         return;
-                    } else if (len !== -1 && words[i].length !== len) {
+                    } else if (len !== -1 && nextWord.length !== len) {
                         setCloseable(true);
-                        setPromptMessage(`Word ${i + 1}, "${words[i]}" has a different number of letters from the current words in the list!`);
+                        setPromptMessage(`Word ${i + 1}, "${nextWord}" has a different number of letters from the current words in the list!`);
                         setShowPrompt(true);
                         return;
-                    }
-                    // else if (freq.hasOwnProperty(words[i])) {
-                    //     // for now, we disallow the addition of new words
-                    //     setCloseable(true);
-                    //     setPromptMessage(`Word ${i} has appeared in the list before.`);
-                    //     setShowPrompt(true);
-                    //     return;
-                    // }
-                    // freq[words[i]] = 0;
-                    // freq[words[i]] += 1;
-
-                    list.push({ word: words[i], remove: false });
-                }
-                // for (let j = 0; j < wordList.length; j++) {
-                //     list.push(wordList[j]);
-                // }
-                for (let m = 0; m < list.length; m++) {
-                    for (let n = 0; n < m; n++) {
-                        const mstring = list[m].word;
-                        const nstring = list[n].word;
-                        if (mstring === nstring) {
+                    } else if (currentWords.includes(nextWord)) {
+                        if (id === 1) {
                             setCloseable(true);
-                            setPromptMessage(`Word ${list[n].word} is repeated!`);
-                            setShowPrompt(true);
-                            return;
-                        } else if (mstring.length !== nstring.length) {
-                            setCloseable(true);
-                            setPromptMessage(`Words submitted have different length!`);
+                            setPromptMessage(`Word ${nextWord} is repeated!`);
                             setShowPrompt(true);
                             return;
                         }
+                    } else {
+                        list.push(nextWord);
                     }
                 }
-                // console.log(freq);
-                // setWordListFreq(freq);
 
-                // Valid words submitted
+                // update words in backend if user is logged in
                 if (user.isLoggedIn) {
                     if (id === 1) {
-                        addWordsToBackendList(words);
+                        addWordsToBackendList(list);
                     }
                     else if (id === 2) {
-                        addWordsToBackendAllowedList(words);
+                        addWordsToBackendAllowedList(list);
                     }
                 } else {
                     setShowPrompt(false);
                 }
 
-                setWordList(list);
+                const newWords = wordList.concat(list.map((eachWord) => { return { word: eachWord, remove: false } }));
+
+                setWordList(newWords);
             };
             reader.readAsText(file);
         };

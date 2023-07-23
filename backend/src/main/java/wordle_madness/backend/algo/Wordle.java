@@ -1,7 +1,5 @@
 package wordle_madness.backend.algo;
 
-// import org.springframework.util.StopWatch;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,12 +22,6 @@ public class Wordle {
     // Value used to represent when the Wordle is solved(everything green)
     protected final int c;
 
-    // 2 choices:
-    // 1. HashMap<String, Integer>
-    // 2. HashMap<String, HashMap<String, Integer>>
-    // 2 is faster due to how hashing works(hashing doesn't work well when are
-    // millions of keys)
-
     // Comparison table of words represented by a hashmap. key = allowed word, value
     // = (HashMap, key = answer word, value = comparison value)
 
@@ -46,7 +38,7 @@ public class Wordle {
     // choice 1 implementation
 
     public static ConcurrentHashMap<Pair<String, String>, Integer> hash(List<String> allowed, List<String> ans, int l) {
-        ConcurrentHashMap<Pair<String, String>, Integer> h = new ConcurrentHashMap<>(50000000, 0.75F);
+        ConcurrentHashMap<Pair<String, String>, Integer> h = new ConcurrentHashMap<>();
         int allowedSize = allowed.size();
         int ansSize = ans.size();
         Stream<Pair<String, String>> s = Stream.iterate(0, x -> x < allowedSize, x -> x + 1)
@@ -56,20 +48,6 @@ public class Wordle {
         s.parallel().forEach(pair -> {
             h.put(pair, compare(pair.getFst(), pair.getSnd(), l));
         });
-        return h;
-    }
-
-    // choice 2 implementation, not used subsequently
-
-    public static HashMap<String, Integer> hash2(List<String> allowed, List<String> ans, int l) {
-        HashMap<String, Integer> h = new HashMap<>();
-        for (int i = 0; i < allowed.size(); i++) {
-            String s1 = allowed.get(i);
-            for (int j = 0; j < ans.size(); j++) {
-                String s2 = ans.get(j);
-                h.put(s1 + s2, Wordle.compare(s1, s2, 5));
-            }
-        }
         return h;
     }
 
@@ -238,7 +216,6 @@ public class Wordle {
 
         int sum = 0;
         for (Integer j : h.keySet()) {
-            // System.out.println(j + ", " + this.solve(h.get(j)).getSnd());
             sum += this.solve(h.get(j), t).getSnd();
         }
         sum += ans.size();

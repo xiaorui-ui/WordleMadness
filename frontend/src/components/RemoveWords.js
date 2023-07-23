@@ -37,19 +37,6 @@ export default function RemoveWords({ wordList, setWordList, showPrompt, setShow
         setCloseable(false);
         setPromptMessage("Removing words...")
         setShowPrompt(true);
-        // modify the frequency map
-        // modify the list
-
-        // for (let i = 0; i < wordList.length; i++) {
-        //     var word = wordList[i];
-        //     if (word.remove) {
-        //         if (wordListFreq[word.word] === 1) {
-        //             delete wordListFreq[word.word];
-        //         } else {
-        //             wordListFreq[word.word] -= 1;
-        //         }
-        //     }
-        // }
         var newArr = [...wordList.filter(word => !word.remove)];
         var removedArr = [...wordList.filter(word => word.remove)];
 

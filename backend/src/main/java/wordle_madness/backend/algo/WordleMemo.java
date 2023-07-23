@@ -4,25 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-// The original version seems to be correct and faster for some reason
 public class WordleMemo extends Wordle {
     public WordleMemo(List<String> allowed, List<String> ans, int l) {
         super(allowed, ans, l);
     }
-
-    // To make it truly memoized, the hashmaps check(w, l) should NOT be computed
-    // twice, again in the solve method.
-    // But most of the list isn't in succ anyways, so how much does it really
-    // matter?
-
-    // Almost to no extent lmao.
-
-    // No correctness issue here
-    // Alt only
-    // public List<Pair<String, HashMap<Integer, List<String>>>>
-    // succMemo(List<String> l) {
-
-    // This is slow because of the 'satellite data' so removed
 
     public NestedMap<Integer, String, List<String>> solveMemo(List<String> ans, int x) {
         int y = ans.size();
@@ -80,16 +65,11 @@ public class WordleMemo extends Wordle {
     }
 
     public NestedMap<Integer, String, List<String>> miniSolveMemo(String s, List<String> l, int x) {
-        // public Pair<Tree<String, Integer>, Integer> miniSolveMemo(Pair<String,
-        // HashMap<Integer, List<String>>> p
-        // , List<String> l) {
 
         int sum = 0;
 
         HashMap<Integer, List<String>> h = this.check(s, l); // for original
 
-        // String s = p.getFst();
-        // HashMap<Integer, List<String>> h = p.getSnd(); // alt
 
         NestedMap<Integer, String, List<String>> nm = new NestedMap<>(s, l);
 
@@ -100,8 +80,6 @@ public class WordleMemo extends Wordle {
             NestedMap<Integer, String, List<String>> nm1 = this.solveMemo(h.get(j), x);
             sum += nm1.getTries();
             nm.put(j, nm1);
-            // initialise the lists for everything
-            // nm.get(j).setW(h.get(j));
         }
 
         sum += l.size();

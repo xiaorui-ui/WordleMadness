@@ -34,6 +34,11 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
             setPromptMessage("Words in lists need same number of letters!" + str);
             setShowPrompt(true);
             return false;
+        } else if (list1.length * list2.length > 10000000) {
+            setCloseable(true);
+            setPromptMessage("Answer list size multiplied by allowed list size cannot exceed 10 million!" + str);
+            setShowPrompt(true);
+            return false;
         } else if (!subset(list1, list2)) {
             setCloseable(true);
             setPromptMessage("Answer needs to be subset of allowed!" + str);

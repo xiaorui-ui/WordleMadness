@@ -31,7 +31,7 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
         if (!user.isLoggedIn) {
             setAnswerList(DEFAULT_WORDS);
             setAllowedList(DEFAULT_WORDS);
-            setBestTree(null);
+            setBestTree("");
             setShowPrompt(false);
         } else {
             axios.get(BACKEND_GET_WORD_LIST, { params: { username: user.name } })
