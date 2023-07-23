@@ -7,7 +7,7 @@ const WarningPrompt = ({ message, onDismiss, onSave }) => {
         const handleKeyDown = (event) => {
             if (event.key === ':' || event.key === 'Enter') {
                 event.preventDefault();
-                onDismiss();
+                onSave();
             }
         };
 
@@ -16,7 +16,7 @@ const WarningPrompt = ({ message, onDismiss, onSave }) => {
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [onDismiss]);
+    }, [onSave]);
 
     return (
         <div className="modal-overlay" data-testid="prompt">

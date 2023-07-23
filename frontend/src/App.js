@@ -98,26 +98,27 @@ export default function App() {
 
   const handleLogOut = useCallback(() => {
     if (user.isLoggedIn) {
+      const username = user.name;
       setCloseable(false);
       setPromptMessage("Logging out...");
       setShowPrompt(true);
-      sessionStorage.removeItem("wordle-user");
       setUser({ name: "", isLoggedIn: false });
+      sessionStorage.removeItem("wordle-user");
+      setAnswerList(DEFAULT_WORDS);
+      setAllowedList(DEFAULT_WORDS);
+      setBestTree("");
       axios.patch(BACKEND_LOGOUT, {}, {
         params: {
-          name: user.name
+          name: username
         }
       })
-        .then((response) => {
+        .then((response) => {          
+          setShowPrompt(false);
           if (response.data === "Logged out") {
-            // alert("Logged out");
+            return;
           } else {
             handleInvalidLogOut(response.data);
           }
-          setAnswerList(DEFAULT_WORDS);
-          setAllowedList(DEFAULT_WORDS);
-          setBestTree("");
-          setShowPrompt(false);
         })
         .catch((error) => {
           setCloseable(true);

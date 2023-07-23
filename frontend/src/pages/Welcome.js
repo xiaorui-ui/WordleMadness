@@ -2,7 +2,6 @@ import "../styles.css";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header.js";
-// import Compute from "../components/Compute.js";
 import ModifyWords from "../components/ModifyWords.js";
 import LoadWords from "../components/LoadWords.js";
 import { Link } from 'react-router-dom';
@@ -33,8 +32,6 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
     const [warningPromptMessage, setWarningPromptMessage] = useState('');
 
     const [treeWidth, setTreeWidth] = useState(-1);
-
-    // const [pruningMethod, setPruningMethod] = useState("");
 
     const navigate = useNavigate();
 
@@ -108,7 +105,7 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                     user={user} id={2} />
 
 
-                {/* Consider making search parameters into a separate component */}
+                {/* Search parameters */}
                 <h2 id="Search parameters">Search parameters</h2>
 
 
@@ -134,15 +131,12 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                     <div style={{ height: "30px" }}></div>
                 </p>
 
-                {/* Implement scrolling menu bar later */}
-
                 <p>Tree width from 1-8:</p>
                 <input onChange={handleWidthChange} />
 
                 <div style={{ height: "30px" }}></div>
 
                 <p>Pruning method: # of colourings</p>
-                {/* OTHERS WIP */}
 
                 <div style={{ height: "30px" }}></div>
 
