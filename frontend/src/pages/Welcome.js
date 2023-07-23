@@ -110,6 +110,12 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
 
 
                 <p className="break-after-characters">
+                    We use decision trees to decide which word is the best word.
+                    At each stage, we shortlist a few possible words and decide which word is indeed the best in a
+                    bottom-up manner.
+
+                    <div style={{ height: "30px" }}></div>
+
                     Pruning method refers to how the words in the answer list are shortlisted.
                     Pruning by number of colourings means an allowed word can can give 8 colourings amongst the answers, say,
                     is favoured over another word that gives 7.
@@ -131,18 +137,17 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
                     <div style={{ height: "30px" }}></div>
                 </p>
 
+                <p>Pruning method: # of colourings</p>
+
+                <div style={{ height: "30px" }}></div>
+
                 <p>Tree width from 1-8:</p>
                 <input onChange={handleWidthChange} />
 
                 <div style={{ height: "30px" }}></div>
 
-                <p>Pruning method: # of colourings</p>
 
-                <div style={{ height: "30px" }}></div>
-
-
-                <button onClick={evaluateTree}>Click me</button>
-                {/* <a href="./DecisionTree" onClick={evaluateTree}>Compute</a> */}
+                <button onClick={evaluateTree}>Best word</button>
                 <div style={{ height: "30px" }}></div>
 
             </main>

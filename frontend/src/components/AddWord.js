@@ -39,7 +39,6 @@ export default function AddWord({ wordList, setWordList, len,
 
   const handleWordChange = (event) => {
     setWord(event.target.value.toLowerCase());
-    // key in upper case in future
   }
 
   const changeRemove = (i) => {
