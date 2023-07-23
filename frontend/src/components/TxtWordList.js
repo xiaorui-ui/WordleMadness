@@ -60,7 +60,6 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
             reader.onload = function (e) {
                 const contents = e.target.result;
                 const words = extractWords(contents).map(word => word.toLowerCase());
-                console.log(words);
                 const currentWords = wordList.map(word => word.word);
                 var l = words.length;
                 var list = [];
@@ -84,7 +83,6 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
                         setShowPrompt(true);
                         return;
                     } else if (!(currentWords.includes(nextWord)) && !(words.slice(i + 1).includes(nextWord))) {
-                        console.log(i);
                         list.push(nextWord);
                     }
                 }

@@ -33,7 +33,6 @@ export default function SplitButton({ changeStatus, index, int, len, word }) {
             ans.unshift(colors[x % 3]);
             x = Math.floor(x / 3);
         }
-        // console.log(ans);
         return ans;
     }
 
