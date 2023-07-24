@@ -9,7 +9,7 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
 
     function sameNumberLetters(list, str) {
         for (let i = 0; i < list.length - 1; i++) {
-            if (list[i].length != list[i + 1].length) {
+            if (list[i].length !== list[i + 1].length) {
                 setShowPrompt(true);
                 setPromptMessage(`Word ${i + 1}, "${list[i]}", and word ${i + 2}, "${list[i + 1]}", in the txt have 
                 a different number of characters! ${str}`);
