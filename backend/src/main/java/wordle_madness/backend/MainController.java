@@ -21,7 +21,6 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     @PostMapping(path = "/addWords")
     public @ResponseBody String addWords(@RequestParam String username, @RequestBody WordArray words) {
         User currentUser = userRepository.findUserByName(username);
@@ -30,7 +29,6 @@ public class MainController {
         return "Success";
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     @PostMapping(path = "/addAllowedWords")
     public @ResponseBody String addAllowedWords(@RequestParam String username, @RequestBody WordArray words) {
         User currentUser = userRepository.findUserByName(username);
@@ -39,7 +37,6 @@ public class MainController {
         return "Success";
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     @PatchMapping(path = "/deleteWords")
     public @ResponseBody String deleteWords(@RequestParam String username, @RequestBody WordArray words) {
         User currentUser = userRepository.findUserByName(username);
@@ -48,7 +45,6 @@ public class MainController {
         return "Success";
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     @PatchMapping(path = "/deleteAllowedWords")
     public @ResponseBody String deleteAllowedWords(@RequestParam String username, @RequestBody WordArray words) {
         User currentUser = userRepository.findUserByName(username);
@@ -57,7 +53,6 @@ public class MainController {
         return "Success";
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     @PatchMapping(path = "/setListsToSame")
     public @ResponseBody String setListsToSame(@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
@@ -66,7 +61,7 @@ public class MainController {
         return "Success";
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+    // Mechanism for standard login (verification of details)
     @PatchMapping(path = "/verify")
     public @ResponseBody String conditionalLogin(@RequestParam String name, @RequestParam String password) {
         if (userRepository.existsUserByNameAndPassword(name, password)) {
@@ -83,34 +78,23 @@ public class MainController {
         return "Username does not exist, please register for a new account";
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
-    @PatchMapping(path = "/cachedLogIn")
-    public @ResponseBody String cachedLogIn(@RequestParam String name) {
+    // Mechanism for logout and cached login
+    @PatchMapping(path = "/logInOut")
+    public @ResponseBody String logInOut(@RequestParam String name, @RequestParam boolean newLoginState) {
         if (userRepository.existsUserByName(name)) {
             User currentUser = userRepository.findUserByName(name);
-            if (currentUser.isLoggedIn()) {
-                return "This user is already logged in. Please check that you have logged out of all other sessions";
+            if (newLoginState) {
+                currentUser.logIn();
+            } else {
+                currentUser.logOut();
             }
-            currentUser.logIn();
             userRepository.save(currentUser);
-            return "Logged in";
+            return String.format("Logged %s", newLoginState ? "in" : "out");
         }
-        return "Username does not exist";
+        return String.format("User %s does not exist", name);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
-    @PatchMapping(path = "/logOut")
-    public @ResponseBody String conditionalLogOut(@RequestParam String name) {
-        if (userRepository.existsUserByName(name)) {
-            User currentUser = userRepository.findUserByName(name);
-            currentUser.logOut();
-            userRepository.save(currentUser);
-            return "Logged out";
-        }
-        return "User does not exist";
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+    // Mechanism for registration
     @PostMapping(path = "/register")
     public @ResponseBody String registerUser(@RequestParam String name, @RequestParam String password) {
         if (userRepository.existsUserByName(name)) {
@@ -122,28 +106,24 @@ public class MainController {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     @GetMapping(path = "/getWords")
     public @ResponseBody ArrayList<String> getWordList(@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
         return currentUser.getWordList();
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     @GetMapping(path = "/getAllowedWords")
     public @ResponseBody ArrayList<String> getAllowedList(@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
         return currentUser.getAllowedList();
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     @GetMapping(path = "/getTree")
     public @ResponseBody String getTree(@RequestParam String username) {
         User currentUser = userRepository.findUserByName(username);
         return currentUser.getTree();
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
     @PatchMapping(path = "/compute")
     public @ResponseBody String leastTries(
             @RequestParam String username, @RequestParam int width) {

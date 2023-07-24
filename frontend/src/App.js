@@ -7,7 +7,7 @@ import DecisionTree from "./pages/DecisionTree.js";
 import Register from "./pages/Register.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import { BACKEND_CACHED_LOGIN, BACKEND_LOGOUT, DEFAULT_WORDS } from "./components/Constants";
+import { BACKEND_LOGINOUT, DEFAULT_WORDS } from "./components/Constants";
 import CustomPrompt from "./components/CustomPrompt";
 import WarningPrompt from "./components/WarningPrompt";
 
@@ -35,7 +35,11 @@ export default function App() {
   const [user, setUser] = useState({ isLoggedIn: false, name: "" });
 
   const abruptLogOutParams = useMemo(() => {
-    return new URLSearchParams({name: user.name})
+    return new URLSearchParams(
+      { 
+        name: user.name,
+        newLoginState: false 
+      });
   }, [user]);
 
   const handleDismiss = useCallback(() => {
@@ -67,9 +71,10 @@ export default function App() {
     setPromptMessage("Loading saved user details...")
     setCloseable(false);
     setShowPrompt(true);
-    axios.patch(BACKEND_CACHED_LOGIN, {}, {
+    axios.patch(BACKEND_LOGINOUT, {}, {
       params: {
-        name: cache
+        name: cache,
+        newLoginState: true
       }
     })
       .then((response) => {
@@ -107,9 +112,10 @@ export default function App() {
       setAnswerList(DEFAULT_WORDS);
       setAllowedList(DEFAULT_WORDS);
       setBestTree("");
-      axios.patch(BACKEND_LOGOUT, {}, {
+      axios.patch(BACKEND_LOGINOUT, {}, {
         params: {
-          name: username
+          name: username,
+          newLoginState: false
         }
       })
         .then((response) => {          
@@ -143,7 +149,7 @@ export default function App() {
     const handleLogOutOnClose = (event) => {
       event.preventDefault();
       if (user.isLoggedIn) {
-        fetch(BACKEND_LOGOUT, {
+        fetch(BACKEND_LOGINOUT, {
           method: "PATCH", 
           body: abruptLogOutParams,
           keepalive: true
