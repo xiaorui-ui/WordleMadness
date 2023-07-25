@@ -80,10 +80,13 @@ public class MainController {
 
     // Mechanism for logout and cached login
     @PatchMapping(path = "/logInOut")
-    public @ResponseBody String logInOut(@RequestParam String name, @RequestParam boolean newLoginState) {
+    public synchronized @ResponseBody String logInOut(@RequestParam String name, @RequestParam boolean newLoginState) {
         if (userRepository.existsUserByName(name)) {
             User currentUser = userRepository.findUserByName(name);
             if (newLoginState) {
+                if (currentUser.isLoggedIn()) {
+                    return "This user is already logged in. Please check that you have logged out of all other sessions";
+                }
                 currentUser.logIn();
             } else {
                 currentUser.logOut();
