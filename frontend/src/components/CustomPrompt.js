@@ -4,19 +4,21 @@ import "../prompt.css";
 const CustomPrompt = ({ message, onDismiss, closeable }) => {
 
     useEffect(() => {
-        const handleKeyDown = (event) => {
-            if (event.key === ':' || event.key === 'Enter') {
-                event.preventDefault();
-                onDismiss();
-            }
-        };
+        if (closeable) {
+            const handleKeyDown = (event) => {
+                if (event.key === ':' || event.key === 'Enter') {
+                    event.preventDefault();
+                    onDismiss();
+                }
+            };
 
-        document.addEventListener('keydown', handleKeyDown);
+            document.addEventListener('keydown', handleKeyDown);
 
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [onDismiss]);
+            return () => {
+                document.removeEventListener('keydown', handleKeyDown);
+            };
+        }
+    }, [closeable, onDismiss]);
 
     return (
         <div className="modal-overlay" data-testid="prompt">
