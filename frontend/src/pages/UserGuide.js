@@ -1,14 +1,7 @@
 import { Link } from "react-router-dom";
 import textInput from '../txtInput.png';
-import { useEffect } from "react";
 
-export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadingPrompt }) {
-
-    useEffect(() => {
-        if (user.isLoggedIn && loadingPrompt) {
-            setLoadingPrompt(false);
-        }
-    }, [user, loadingPrompt, setLoadingPrompt]);
+export default function UserGuide({ user, handleLogOut }) {
 
     return (
         <div>
@@ -17,7 +10,6 @@ export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadin
                     user.isLoggedIn && <div>{`Hi, ${user.name}!`}</div>
                 }<br />
                 <h2 style={{ fontWeight: 'normal' }}>Sections</h2>
-                <a href="#Why">Why Wordle Madness?</a><br />
                 <a href="#Logging-in">Logging In</a><br />
                 <a href="#Welcome">Welcome</a><br />
                 <a href="#Decision tree">Decision Tree</a><br />
@@ -32,7 +24,7 @@ export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadin
                         <span onClick={handleLogOut} style={{ cursor: "pointer" }}>Log Out</span> <br />
 
                     </> :
-                    <Link to="/Login">Log in to use decision tree</Link>
+                    <Link to="/Login">Log in to save your data</Link>
                 }
 
             </div>
@@ -44,27 +36,17 @@ export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadin
 
                 We solve Wordles and we're here to help!
 
-                <h2 id="Why"> Why Wordle Madness? </h2>
-                <p className="break-after-characters">
-                    <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" rel="noreferrer"> Wordle
-                    </a> is a word puzzle game developed in 2021 and its popularity exploded in early 2022,
-                    with a number of solvers already online. There are a number of efficient <a
-                        href="https://jonathanolson.net/wordle-solver/" target="_blank" rel="noreferrer">
-                        solvers</a> online for the default list.
-
-                    <div style={{ height: "30px" }}></div>
-
-                    We want to take it a one level further, and find the most efficient solution for any word list you provide.
-                    We also want you(yes you!) to see how parameters will affect the Wordle solving time and result in a
-                    hands-on manner.
-                </p>
-
                 <h2 id="Logging-in"> Logging in </h2>
                 <p className="break-after-characters">
                     You can either log in to an existing account or register for a new account . The first time
                     logging in with your new account will take quite a while, so please by patient :)
                     If the username is already existing but the password is wrong, you will need to create one
                     with another username, or try to recall your password.
+
+                    <div style={{ height: "30px" }}></div>
+
+                    To use a public account, use "ccc" for both username and password.
+                    <div style={{ height: "30px" }}></div>
 
                 </p>
 
@@ -76,7 +58,8 @@ export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadin
 
 
                     Users can edit two wordlists, the answer list and the allowed list. What are these?
-                    To find the best words to try in Wordle, you need two wordlists,
+                    To find the best words to try in <a href="https://www.nytimes.com/games/wordle/index.html"
+                        target="_blank" rel="noreferrer"> Wordle</a>, you need two wordlists,
                     a list of possible answers(answer list) and allowed words(allowed list),
                     the former of which is a subset of the latter. The lists can be edited independently.
 
@@ -92,12 +75,8 @@ export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadin
 
                     <div style={{ height: "30px" }}></div>
 
-                    The txt word lists adds words in addition to those already present, instead of replacing them. This means you
-                    can contatenate words from several lists. Duplicated words will automatically be filtered out, so fret not
-                    if some words from your .txt file "vanished".
-                    Due to technical limitations, we can't handle lists that are too long at the moment. The web app can
-                    realistically handle answer lists and allowed lists a few thousand words long.
-
+                    Due to technical limitations, we can't handle lists that are too long at the moment. The web app can handle
+                    answer lists a few hundred words long and allowed lists a few thousand words long.
 
                 </p>
 
@@ -108,7 +87,7 @@ export default function UserGuide({ user, handleLogOut, loadingPrompt, setLoadin
 
                     <div style={{ height: "30px" }}></div>
 
-                    In the welcome page, click the "click me" button to get the tree(this is subjected to change).
+                    In the decision tree page, click the "click me" button to get the tree(this is subjected to change).
                     Do be patient as the algorithm is somewhat involved and involves tree search(pun intended)
                     since there are no known simpler ways to solve Wordle fully;
                     waiting times of up to a few minutes is perfectly normal for larger lists.

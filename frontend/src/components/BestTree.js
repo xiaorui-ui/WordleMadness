@@ -4,7 +4,11 @@ import axios from 'axios';
 export default function BestTree(answerList, allowedList, treeWidth, setBestTree, user,
     setPromptMessage, setShowPrompt, setCloseable, navigate) {
 
-    var str = " Press the enter key or close to continue.";
+    const timeOutMessage = "Computing of tree took too long! Please make sure your words have been entered correctly";
+
+    const jsonErrorMessage = "Error occurred when processing list!";
+
+    const str = "\n Press the enter key or close to continue.";
 
     function subset(list1, list2) {
         let set = new Set(list2.map(element => element.word));
@@ -19,12 +23,7 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
     }
 
     function checkValid(list1, list2) {
-        if (!user.isLoggedIn) {
-            setCloseable(true);
-            setPromptMessage("Please login to use the decision tree!" + str);
-            setShowPrompt(true);
-            return false;
-        } else if (list1.length === 0 || list2.length === 0) {
+        if (list1.length === 0 || list2.length === 0) {
             setCloseable(true);
             setPromptMessage("Lists cannot be empty!" + str);
             setShowPrompt(true);
@@ -71,12 +70,25 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
         return;
     }
     var width = parseInt(treeWidth) - 1;
-    axios.patch(BACKEND_COMPUTE, {}, {
+    const guestAnswerList = user.isLoggedIn ? [] : answerList.map(word => word.word);
+    const guestAllowedList = user.isLoggedIn ? [] : allowedList.map(word => word.word);
+    axios.patch(BACKEND_COMPUTE, 
+        {
+            wordList: guestAnswerList,
+            allowedList: guestAllowedList
+        }, {
         params: {
             username: user.name,
             width: width
         }
     }).then((response) => {
+        const responseString = response.data;
+        if (responseString === timeOutMessage || responseString === jsonErrorMessage) {
+            setPromptMessage(responseString + str);
+            setCloseable(true);
+            setShowPrompt(true);
+            return;
+        }
         setBestTree(response.data);
         // var dict = response.data.child;
         // for (let key in dict) {
@@ -88,7 +100,7 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
 
     }).catch((error) => {
         setCloseable(true);
-        setPromptMessage("Error syncing to backend! Please try again later." + str);
+        setPromptMessage("Error syncing to backend! Please try again later" + str);
         setShowPrompt(true);
     });
 }

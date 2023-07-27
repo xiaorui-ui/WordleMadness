@@ -1,21 +1,9 @@
 import { Link } from "react-router-dom";
 // import Username from "../components/Username.js";
-import { useState } from "react";
-import LoadWords from "../components/LoadWords.js";
-import CustomPrompt from "../components/CustomPrompt.js";
 import Tree from "../components/DecisionTree/Tree.js";
 
 
-export default function DecisionTree({ answerList, setAnswerList, allowedList, setAllowedList,
-    user, handleLogOut, bestTree, setBestTree, loadingPrompt, setLoadingPrompt }) {
-
-    const [showPrompt, setShowPrompt] = useState(false);
-    const [promptMessage, setPromptMessage] = useState("");
-    const [closeable, setCloseable] = useState(true);
-
-    const handleDismiss = () => {
-        setShowPrompt(false);
-    }
+export default function DecisionTree({ user, handleLogOut, bestTree }) {
 
     return (
         <>
@@ -43,10 +31,6 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
             </div>
 
             <div className="main-content" >
-                <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
-                    setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
-                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} setBestTree={setBestTree}
-                    loadingPrompt={loadingPrompt} setLoadingPrompt={setLoadingPrompt} />
                 <p>Note: This tree is updated the last time compute was pressed within your account,
                     and <i>does not</i> auto-update upon logging in.</p>
                 <br />
@@ -54,8 +38,6 @@ export default function DecisionTree({ answerList, setAnswerList, allowedList, s
                 <br />
                 {(bestTree === "") ? <>Compute or log in to get tree!</> : <Tree bestTree={bestTree} />}
             </div>
-
-            {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />}
         </>
     )
 

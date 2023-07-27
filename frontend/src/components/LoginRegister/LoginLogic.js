@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { BACKEND_LOGIN, BACKEND_REGISTER } from '../Constants.js';
 
-export default function LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, type,
-    navigate) {
+export default function LoginLogic(initialAnswerList, initialAllowedList, setUser, username, passwordValues, setShowPrompt, 
+    setPromptMessage, setCloseable, type, navigate, setUnverifiedUser) {
 
     const handleInvalidLogin = (data) => {
         setCloseable(true);
@@ -19,6 +19,7 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
     let destination = '';
 
     const handleLogin = () => {
+        setUnverifiedUser({ name: username, isLoggedIn: true })
         setCloseable(false);
         setPromptMessage("Logging in...");
         setShowPrompt(true);
@@ -32,27 +33,34 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                 setShowPrompt(false);
                 if (response.data === "Logged in") {
                     setUser({ name: username, isLoggedIn: true });
+                    sessionStorage.removeItem("guest-lists");
                     sessionStorage.setItem("wordle-user", username);
                     destination = '/';
                     navigate(destination);
                 } else {
                     handleInvalidLogin(response.data);
                 }
+                setUnverifiedUser({ isLoggedIn: false, name: "" })
             })
             .catch((error) => {
                 setCloseable(true);
                 setPromptMessage("Error logging in! Please try again later.");
                 setShowPrompt(true);
+                setUnverifiedUser({ isLoggedIn: false, name: "" })
             });
     }
 
     const handleRegister = () => {
         if ((0 < username.length && username.length <= 10 &&
             3 <= passwordValues.password.length && passwordValues.password.length <= 10)) {
+            setUnverifiedUser({ name: username, isLoggedIn: true })
             setCloseable(false);
             setPromptMessage("Registering...");
             setShowPrompt(true);
-            axios.post(BACKEND_REGISTER, {}, {
+            axios.post(BACKEND_REGISTER, { 
+                wordList: initialAnswerList.map(word => word.word), 
+                allowedList: initialAllowedList.map(word => word.word)
+             }, {
                 params: {
                     name: username,
                     password: passwordValues.password
@@ -62,17 +70,20 @@ export default function LoginLogic(setUser, username, passwordValues, setShowPro
                     setShowPrompt(false);
                     if (response.data === "Registered") {
                         setUser({ name: username, isLoggedIn: true });
+                        sessionStorage.removeItem("guest-lists");
                         sessionStorage.setItem("wordle-user", username);
                         destination = '/';
                         navigate(destination);
                     } else {
                         handleInvalidRegistration();
                     }
+                    setUnverifiedUser({ isLoggedIn: false, name: "" })
                 })
                 .catch((error) => {
                     setCloseable(true);
                     setPromptMessage("Error registering user! Please try again later.");
                     setShowPrompt(true);
+                    setUnverifiedUser({ isLoggedIn: false, name: "" })
                 });
         } else if (username.length === 0) {
             setCloseable(true);

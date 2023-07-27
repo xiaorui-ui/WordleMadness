@@ -11,6 +11,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(unique = true)
     private String name;
 
     private String password;
@@ -21,13 +22,6 @@ public class User {
 
     private boolean isLoggedIn;
 
-    private final String[] defaultWords = { "moral", "coral", "royal",
-            "rival", "flora", "mural", "lycra", "rural", "viral", "aural", "rally", "regal", "trial",
-            "renal", "glare", "blare", "flare" };
-
-    private final String[] defaultAllowedWords = { "moral", "coral", "royal",
-            "rival", "flora", "mural", "lycra", "rural", "viral", "aural", "rally", "regal", "trial",
-            "renal", "glare", "blare", "flare" };
     @Column(length = Integer.MAX_VALUE)
     private ArrayList<String> wordList;
     @Column(length = Integer.MAX_VALUE)
@@ -42,8 +36,6 @@ public class User {
         setPassword(password);
         this.wordList = new ArrayList<>();
         this.allowedList = new ArrayList<>();
-        this.addWords(defaultWords);
-        this.addAllowedWords(defaultAllowedWords);
         this.isLoggedIn = true;
         this.tree = "";
     }
