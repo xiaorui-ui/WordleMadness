@@ -7,16 +7,14 @@ import LoginLogic from '../components/LoginRegister/LoginLogic.js';
 
 // to do: only allow one user to log in at once
 
-export default function Login({ user, setUser }) {
+export default function Login({ user, setUser, showPrompt, setShowPrompt, promptMessage, 
+    setPromptMessage, closeable, setCloseable, setUnverifiedUser }) {
 
     const [username, setUsername] = useState("");
     const [passwordValues, setPasswordValues] = useState({
         password: "",
         showPassword: false,
     });
-    const [showPrompt, setShowPrompt] = useState(false);
-    const [promptMessage, setPromptMessage] = useState("");
-    const [closeable, setCloseable] = useState(true);
 
     const handleDismiss = useCallback(() => {
         setShowPrompt(false);
@@ -26,8 +24,8 @@ export default function Login({ user, setUser }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, "Login",
-            navigate);
+        LoginLogic([], [], setUser, username, passwordValues, setShowPrompt, setPromptMessage, 
+            setCloseable, "Login", navigate, setUnverifiedUser);
     }
 
     useEffect(() => {

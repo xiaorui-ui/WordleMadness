@@ -101,7 +101,12 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
                 }
 
                 const newWords = wordList.concat(list.map((eachWord) => { return { word: eachWord, remove: false } }));
-
+                if (!user.isLoggedIn && newWords.length > 50) {
+                    setCloseable(true);
+                    setPromptMessage("Guests are limited to 50 words! Please login to have access to longer lists");
+                    setShowPrompt(true);
+                    return;
+                }
                 setWordList(newWords);
             };
             reader.readAsText(file);

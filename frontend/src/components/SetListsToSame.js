@@ -2,12 +2,13 @@ import WarningPrompt from "./WarningPrompt";
 import axios from 'axios';
 import { BACKEND_SET_LISTS_TO_SAME } from "./Constants";
 import CustomPrompt from "./CustomPrompt";
+import { useCallback } from "react";
 
 export default function SetListsToSame({ answerList, setAllowedList, showWarningPrompt, setShowWarningPrompt,
     warningPromptMessage, setWarningPromptMessage, showPrompt, setShowPrompt, promptMessage, setPromptMessage,
     closeable, setCloseable, user }) {
 
-    const handleSave = () => {
+    const handleSave = useCallback(() => {
         setShowWarningPrompt(false);
         setPromptMessage("Settng word lists to be the same...")
         setCloseable(false);
@@ -26,21 +27,21 @@ export default function SetListsToSame({ answerList, setAllowedList, showWarning
         } else {
             setShowPrompt(false);
         }
-    }
+    }, [user, answerList, setCloseable, setPromptMessage, setAllowedList, setShowPrompt, setShowWarningPrompt]);
 
-    const handleDismissWarning = () => {
+    const handleDismissWarning = useCallback(() => {
         setShowWarningPrompt(false);
-    }
+    }, [setShowWarningPrompt]);
 
-    const handleDismiss = () => {
+    const handleDismiss = useCallback(() => {
         setShowPrompt(false);
-    }
+    }, [setShowPrompt]);
 
-    const handleClick = () => {
+    const handleClick = useCallback(() => {
         setWarningPromptMessage("You are about to change the allowed word list to be the same as the answer word list. \n"
             + "This action is irreversible. Do you wish to continue?");
         setShowWarningPrompt(true);
-    }
+    }, [setWarningPromptMessage, setShowWarningPrompt]);
 
     return (
         <>

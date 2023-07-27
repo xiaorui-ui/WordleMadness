@@ -3,13 +3,13 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header.js";
 import ModifyWords from "../components/ModifyWords.js";
-import LoadWords from "../components/LoadWords.js";
 import { Link } from 'react-router-dom';
 import SetListsToSame from "../components/SetListsToSame";
 import BestTree from "../components/BestTree";
 
 export default function Welcome({ answerList, setAnswerList, allowedList, setAllowedList, answerLength, allowedLength,
-    user, setBestTree, handleLogOut, loadingPrompt, setLoadingPrompt }) {
+    user, setBestTree, handleLogOut, showPrompt, setShowPrompt, promptMessage,
+    setPromptMessage, closeable, setCloseable }) {
 
 
 
@@ -20,12 +20,6 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
     const [allowedListFreq, setAllowedListFreq] = useState({
         "crane": 1, "jazzy": 1, "fjord": 1
     });
-
-    const [promptMessage, setPromptMessage] = useState('');
-
-    const [showPrompt, setShowPrompt] = useState(false);
-
-    const [closeable, setCloseable] = useState(true);
 
     const [showWarningPrompt, setShowWarningPrompt] = useState(false);
 
@@ -73,10 +67,6 @@ export default function Welcome({ answerList, setAnswerList, allowedList, setAll
 
             <main className="main-content">
                 <p id="Answer list"></p>
-                <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
-                    setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
-                    setAnswerList={setAnswerList} setAllowedList={setAllowedList} setBestTree={setBestTree} loadingPrompt={loadingPrompt}
-                    setLoadingPrompt={setLoadingPrompt} />
                 {/* To implement firstTime */}
                 <Header user={user} firstTime={true} />
 

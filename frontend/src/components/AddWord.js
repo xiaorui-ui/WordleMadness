@@ -58,7 +58,7 @@ export default function AddWord({ wordList, setWordList, len,
   }
 
   const handleSubmit = (event) => {
-    var str = " Press the enter key or close to continue.";
+    var str = "\n Press the enter key or close to continue.";
     event.preventDefault();
 
     setCloseable(false);
@@ -75,6 +75,13 @@ export default function AddWord({ wordList, setWordList, len,
     if (word.length > 100) {
       setCloseable(true);
       setPromptMessage("Enter a word with at most 100 characters!" + str);
+      setShowPrompt(true);
+      return;
+    }
+
+    if (!user.isLoggedIn && wordList.length >= 50) {
+      setCloseable(true);
+      setPromptMessage("Guests are limited to 50 words! Please login to have access to longer lists" + str);
       setShowPrompt(true);
       return;
     }

@@ -5,16 +5,14 @@ import { useCallback, useEffect, useState } from 'react';
 import CustomPrompt from '../components/CustomPrompt.js';
 import LoginLogic from '../components/LoginRegister/LoginLogic.js';
 
-export default function Register({ user, setUser }) {
+export default function Register({ initialAnswerList, initialAllowedList, user, setUser, showPrompt, setShowPrompt,
+promptMessage, setPromptMessage, closeable, setCloseable, setUnverifiedUser }) {
 
     const [username, setUsername] = useState("");
     const [passwordValues, setPasswordValues] = useState({
         password: "",
         showPassword: false,
     });
-    const [showPrompt, setShowPrompt] = useState(false);
-    const [promptMessage, setPromptMessage] = useState("");
-    const [closeable, setCloseable] = useState(true);
 
     const handleDismiss = useCallback(() => {
         setShowPrompt(false);
@@ -31,8 +29,8 @@ export default function Register({ user, setUser }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        LoginLogic(setUser, username, passwordValues, setShowPrompt, setPromptMessage, setCloseable, "Register",
-            navigate);
+        LoginLogic(initialAnswerList, initialAllowedList, setUser, username, passwordValues, setShowPrompt, 
+            setPromptMessage, setCloseable, "Register", navigate, setUnverifiedUser);
     }
 
     return (
