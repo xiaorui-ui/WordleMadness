@@ -146,7 +146,7 @@ public class UserManagementService {
         return currentUser.getTree();
     }
 
-    public String leastTries(String username, int width) {
+    public CompletableFuture<String> leastTries(String username, int width) {
             CompletableFuture<String> futureTreeString = CompletableFuture.supplyAsync(() -> {
                 User currentUser = userRepository.findUserByName(username);
                 ArrayList<String> allowed = currentUser.getAllowedList();
@@ -167,6 +167,6 @@ public class UserManagementService {
             return futureTreeString.completeOnTimeout(
                     "Computing of tree took too long! Please make sure your words have been entered correctly",
                     5,
-                    TimeUnit.MINUTES).join();
+                    TimeUnit.MINUTES);
     }
 }
