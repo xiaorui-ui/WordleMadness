@@ -6,7 +6,7 @@ import CustomPrompt from '../components/CustomPrompt.js';
 import LoginLogic from '../components/LoginRegister/LoginLogic.js';
 
 export default function Register({ initialAnswerList, initialAllowedList, user, setUser, showPrompt, setShowPrompt,
-promptMessage, setPromptMessage, closeable, setCloseable, setUnverifiedUser }) {
+    promptMessage, setPromptMessage, closeable, setCloseable, setUnverifiedUser, tree, time }) {
 
     const [username, setUsername] = useState("");
     const [passwordValues, setPasswordValues] = useState({
@@ -29,8 +29,8 @@ promptMessage, setPromptMessage, closeable, setCloseable, setUnverifiedUser }) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        LoginLogic(initialAnswerList, initialAllowedList, setUser, username, passwordValues, setShowPrompt, 
-            setPromptMessage, setCloseable, "Register", navigate, setUnverifiedUser);
+        LoginLogic(initialAnswerList, initialAllowedList, setUser, username, passwordValues, setShowPrompt,
+            setPromptMessage, setCloseable, "Register", navigate, setUnverifiedUser, tree, time);
     }
 
     return (

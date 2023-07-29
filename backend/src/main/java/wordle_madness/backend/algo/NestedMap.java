@@ -11,7 +11,7 @@ public class NestedMap<K, V, W> {
     public final HashMap<K, NestedMap<K, V, W>> child;
     private V v;
     private W w;
-    private int tries;
+    private int guesses;
 
     // Overloaded constructor
     public NestedMap() {
@@ -26,11 +26,11 @@ public class NestedMap<K, V, W> {
         this.w = w;
     }
 
-    public NestedMap(V v, W w, int tries) {
+    public NestedMap(V v, W w, int guesses) {
         this.child = new HashMap<>();
         this.v = v;
         this.w = w;
-        this.tries = tries;
+        this.guesses = guesses;
     }
 
     public boolean containsKey(K k) {
@@ -66,8 +66,8 @@ public class NestedMap<K, V, W> {
         return this.w;
     }
 
-    public int getTries() {
-        return this.tries;
+    public int getGuesses() {
+        return this.guesses;
     }
 
     public void setV(V v) {
@@ -78,8 +78,8 @@ public class NestedMap<K, V, W> {
         this.w = w;
     }
 
-    public void setTries(int tries) {
-        this.tries = tries;
+    public void setGuesses(int guesses) {
+        this.guesses = guesses;
     }
 
     public int deepest() {

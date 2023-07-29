@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CustomPrompt from '../components/CustomPrompt.js';
 import Username from '../components/LoginRegister/Username.js';
 import Password from '../components/LoginRegister/Password.js';
 import LoginLogic from '../components/LoginRegister/LoginLogic.js';
 
-// to do: only allow one user to log in at once
 
-export default function Login({ user, setUser, showPrompt, setShowPrompt, promptMessage, 
+export default function Login({ user, setUser, showPrompt, setShowPrompt, promptMessage,
     setPromptMessage, closeable, setCloseable, setUnverifiedUser }) {
 
     const [username, setUsername] = useState("");
@@ -24,8 +24,8 @@ export default function Login({ user, setUser, showPrompt, setShowPrompt, prompt
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        LoginLogic([], [], setUser, username, passwordValues, setShowPrompt, setPromptMessage, 
-            setCloseable, "Login", navigate, setUnverifiedUser);
+        LoginLogic([], [], setUser, username, passwordValues, setShowPrompt, setPromptMessage,
+            setCloseable, "Login", navigate, setUnverifiedUser, "", -1);
     }
 
     useEffect(() => {
@@ -37,6 +37,8 @@ export default function Login({ user, setUser, showPrompt, setShowPrompt, prompt
 
     return (
         <>
+            {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />}
+
             <div className="sidebar">
                 <br />
                 <a href="/">Continue without logging in</a>
@@ -46,9 +48,6 @@ export default function Login({ user, setUser, showPrompt, setShowPrompt, prompt
 
             {/* default font size = 16px */}
             <div className='login' >
-
-
-                {showPrompt && <CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />}
 
                 <h1>Wordle Madness</h1>
                 <form id="Login" onSubmit={handleSubmit}>
@@ -64,7 +63,7 @@ export default function Login({ user, setUser, showPrompt, setShowPrompt, prompt
 
                     <div style={{ height: "30px" }}></div>
 
-                    <a href="/Register" style={{ fontSize: "18px" }}>Register here</a>
+                    <Link to="/Register" style={{ fontSize: "18px" }}>Register here</Link>
 
                 </form>
             </div >

@@ -23,7 +23,7 @@ const CustomPrompt = ({ message, onDismiss, closeable }) => {
     return (
         <div className="modal-overlay" data-testid="prompt">
             <div className="modal-content">
-                <p>{message}</p>
+                <p className='break-after-characters'>{message}</p>
                 <div className='vertical-center'>
                     {closeable && <button onClick={onDismiss} data-testid="prompt-button">Close</button>}
                 </div>

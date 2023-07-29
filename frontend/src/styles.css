@@ -1,6 +1,7 @@
 .App {
   font-family: Cambria;
   /* text-align: center; */
+  /* background-color: rgb(255, 242, 204); */
 }
 
 table {
@@ -82,6 +83,7 @@ button {
   border: none;
   border-radius: 5px;
   padding: 8px;
+  /* font: Sans-serif; */
 }
 
 .button-1 {

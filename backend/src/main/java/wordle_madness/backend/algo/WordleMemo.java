@@ -56,11 +56,11 @@ public class WordleMemo extends Wordle {
 
         List<String> l = this.succ(ans, x);
         NestedMap<Integer, String, List<String>> max = new NestedMap<>();
-        max.setTries(Integer.MAX_VALUE);
+        max.setGuesses(Integer.MAX_VALUE);
         NestedMap<Integer, String, List<String>> n = l.stream().parallel()
                 .map(z -> this.miniSolveMemo(z, ans, x))
                 .reduce(max,
-                        (z, aa) -> (z.getTries() < aa.getTries()) ? z : aa);
+                        (z, aa) -> (z.getGuesses() < aa.getGuesses()) ? z : aa);
         return n;
     }
 
@@ -70,7 +70,6 @@ public class WordleMemo extends Wordle {
 
         HashMap<Integer, List<String>> h = this.check(s, l); // for original
 
-
         NestedMap<Integer, String, List<String>> nm = new NestedMap<>(s, l);
 
         if (h.size() == 1) {
@@ -78,7 +77,7 @@ public class WordleMemo extends Wordle {
         }
         for (int j : h.keySet()) {
             NestedMap<Integer, String, List<String>> nm1 = this.solveMemo(h.get(j), x);
-            sum += nm1.getTries();
+            sum += nm1.getGuesses();
             nm.put(j, nm1);
         }
 
@@ -88,7 +87,7 @@ public class WordleMemo extends Wordle {
             sum -= 1;
             nm.replace(c, null);
         }
-        nm.setTries(sum);
+        nm.setGuesses(sum);
         return nm;
     }
 

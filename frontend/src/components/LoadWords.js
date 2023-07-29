@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import CustomPrompt from "./CustomPrompt.js";
 import axios from 'axios';
-import { BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST, BACKEND_GET_TREE, DEFAULT_WORDS } from "./Constants";
+import {
+    BACKEND_GET_WORD_LIST, BACKEND_GET_ALLOWED_WORD_LIST, BACKEND_GET_TREE, BACKEND_GET_TIME,
+    DEFAULT_WORDS
+} from "./Constants";
 
 export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessage, setPromptMessage, closeable, setCloseable,
-    setAnswerList, setAllowedList, setBestTree }) {
+    setAnswerList, setAllowedList, setBestTree, setTime }) {
 
     const handleDismiss = useCallback(() => {
         setShowPrompt(false);
@@ -13,17 +16,19 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
     const [wordListLoaded, setWordListLoaded] = useState(false);
     const [allowedListLoaded, setAllowedListLoaded] = useState(false);
     const [bestTreeLoaded, setBestTreeLoaded] = useState(false);
+    const [timeLoaded, setTimeLoaded] = useState(false);
 
 
     // Closes the loading words prompt if all the words are loaded, then resets the boolean values.
     useEffect(() => {
-        if (wordListLoaded && allowedListLoaded && bestTreeLoaded) {
+        if (wordListLoaded && allowedListLoaded && bestTreeLoaded && timeLoaded) {
             setShowPrompt(false);
             setWordListLoaded(false);
             setAllowedListLoaded(false);
             setBestTreeLoaded(false);
+            setTimeLoaded(false);
         }
-    }, [wordListLoaded, allowedListLoaded, bestTreeLoaded, setShowPrompt]);
+    }, [wordListLoaded, allowedListLoaded, bestTreeLoaded, timeLoaded, setShowPrompt]);
 
     useEffect(() => {
         if (user.isLoggedIn) {
@@ -31,38 +36,60 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
             setPromptMessage("Loading words...");
             setCloseable(false);
             setShowPrompt(true);
-                axios.get(BACKEND_GET_WORD_LIST, { params: { username: user.name } })
-                    .then((response) => {
-                        const ansList = response.data.map(str => { return { word: str, remove: false } });
-                        setAnswerList(ansList);
-                        setWordListLoaded(true);
-                    })
-                    .catch((error) => {
-                        setCloseable(true);
-                        setPromptMessage("Error syncing to backend! Please try again later.");
-                        setShowPrompt(true);
-                    });
-                axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: user.name } })
-                    .then((response) => {
-                        const allowedList = response.data.map(str => { return { word: str, remove: false } });
-                        setAllowedList(allowedList);
-                        setAllowedListLoaded(true);
-                    })
-                    .catch((error) => {
-                        setCloseable(true);
-                        setPromptMessage("Error syncing to backend! Please try again later.");
-                        setShowPrompt(true);
-                    });
-                axios.get(BACKEND_GET_TREE, { params: { username: user.name } })
-                    .then((response) => {
-                        setBestTree(response.data);
-                        setBestTreeLoaded(true);
-                    })
-                    .catch((error) => {
-                        setCloseable(true);
-                        setPromptMessage("Error syncing to backend! Please try again later.");
-                        setShowPrompt(true);
-                    });
+            axios.get(BACKEND_GET_WORD_LIST, { params: { username: user.name } })
+                .then((response) => {
+                    const ansList = response.data.map(str => { return { word: str, remove: false } });
+                    setAnswerList(ansList);
+
+                    console.log(ansList);
+
+                    setWordListLoaded(true);
+                })
+                .catch((error) => {
+                    setCloseable(true);
+                    setPromptMessage("Error syncing to backend! Please try again later.");
+                    setShowPrompt(true);
+                });
+            axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: user.name } })
+                .then((response) => {
+                    const allowedList = response.data.map(str => { return { word: str, remove: false } });
+
+                    console.log(allowedList);
+
+                    setAllowedList(allowedList);
+                    setAllowedListLoaded(true);
+                })
+                .catch((error) => {
+                    setCloseable(true);
+                    setPromptMessage("Error syncing to backend! Please try again later.");
+                    setShowPrompt(true);
+                });
+            axios.get(BACKEND_GET_TREE, { params: { username: user.name } })
+                .then((response) => {
+                    setBestTree(response.data);
+
+                    console.log(response.data);
+
+                    setBestTreeLoaded(true);
+                })
+                .catch((error) => {
+                    setCloseable(true);
+                    setPromptMessage("Error syncing to backend! Please try again later.");
+                    setShowPrompt(true);
+                });
+            axios.get(BACKEND_GET_TIME, { params: { username: user.name } })
+                .then((response) => {
+                    setTime(response.data);
+
+                    console.log(response.data);
+
+                    setTimeLoaded(true);
+                })
+                .catch((error) => {
+                    setCloseable(true);
+                    setPromptMessage("Error syncing to backend! Please try again later.");
+                    setShowPrompt(true);
+                });
         } else {
             // Loads logged-out lists. Note: when logged out, decision trees are NOT saved.
             const wordLists = JSON.parse(sessionStorage.getItem("guest-lists"));

@@ -10,7 +10,7 @@ export default function SetListsToSame({ answerList, setAllowedList, showWarning
 
     const handleSave = useCallback(() => {
         setShowWarningPrompt(false);
-        setPromptMessage("Settng word lists to be the same...")
+        setPromptMessage("Setting word lists to be the same...")
         setCloseable(false);
         setShowPrompt(true);
         setAllowedList(answerList.slice());

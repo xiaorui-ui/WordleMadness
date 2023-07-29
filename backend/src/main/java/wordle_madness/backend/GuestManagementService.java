@@ -12,10 +12,10 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class GuestManagementService {
-    public String leastTries(DoubleWordArray guestLists, int width) {
+    public String leastTries(Initializer wordsAndTree, int width) {
         CompletableFuture<String> futureTreeString = CompletableFuture.supplyAsync(() -> {
-            List<String> allowed = List.of(guestLists.getAllowedList());
-            List<String> ans = List.of(guestLists.getWordList());
+            List<String> allowed = List.of(wordsAndTree.getAllowedList());
+            List<String> ans = List.of(wordsAndTree.getWordList());
             ObjectMapper objectMapper = new ObjectMapper();
             NestedMap<Integer, String, List<String>> tree = new WordleMemo(allowed, ans,
                     allowed.get(0).length())

@@ -44,6 +44,12 @@ public class MainController {
         return "Success";
     }
 
+    @PatchMapping(path = "/setTime")
+    public String setTime(@RequestParam String username, @RequestParam int time) {
+        userManagementService.setTime(username, time);
+        return "Success";
+    }
+
     // Mechanism for standard login (verification of details)
     @PatchMapping(path = "/verify")
     public String conditionalLogin(@RequestParam String name, @RequestParam String password) {
@@ -63,8 +69,8 @@ public class MainController {
     // Mechanism for registration
     @PostMapping(path = "/register")
     public String registerUser(@RequestParam String name, @RequestParam String password,
-                                             @RequestBody DoubleWordArray initialWords) {
-        return userManagementService.registerUser(name, password, initialWords);
+            @RequestBody Initializer wordsAndTree, @RequestParam int time) {
+        return userManagementService.registerUser(name, password, wordsAndTree, time);
     }
 
     @GetMapping(path = "/getWords")
@@ -82,12 +88,17 @@ public class MainController {
         return userManagementService.getTree(username);
     }
 
+    @GetMapping(path = "/getTime")
+    public int getTime(@RequestParam String username) {
+        return userManagementService.getTime(username);
+    }
+
     @PatchMapping(path = "/compute")
     public String leastTries(
             @RequestParam String username, @RequestParam int width,
-            @RequestBody DoubleWordArray guestLists) {
+            @RequestBody Initializer wordsAndTree) {
         if (username.equals("")) {
-            return guestManagementService.leastTries(guestLists, width);
+            return guestManagementService.leastTries(wordsAndTree, width);
         }
         return userManagementService.leastTries(username, width);
     }

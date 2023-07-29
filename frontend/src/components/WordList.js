@@ -1,3 +1,5 @@
+// implement scrolling bar within word list
+
 export default function WordList({ words, onWordChange }) {
 
     const handleChange = (i) => () => {
@@ -5,7 +7,7 @@ export default function WordList({ words, onWordChange }) {
     }
 
     return (
-        <>
+        <div className="table-container" style={{ maxHeight: "500px", maxWidth: "700px", overflow: "auto" }}>
             <table>
                 <thead>
                     <tr style={{ height: "80px", fontSize: "18px" }}>
@@ -35,6 +37,6 @@ export default function WordList({ words, onWordChange }) {
 
             </table>
             {words.length === 0 && (<p>Add in some words!</p>)}
-        </>
+        </div>
     )
 }

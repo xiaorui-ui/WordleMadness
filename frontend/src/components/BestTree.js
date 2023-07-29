@@ -1,8 +1,8 @@
-import { BACKEND_COMPUTE } from "./Constants";
+import { BACKEND_COMPUTE, BACKEND_SET_TIME } from "./Constants";
 import axios from 'axios';
 
 export default function BestTree(answerList, allowedList, treeWidth, setBestTree, user,
-    setPromptMessage, setShowPrompt, setCloseable, navigate) {
+    setPromptMessage, setShowPrompt, setCloseable, navigate, setTime) {
 
     const timeOutMessage = "Computing of tree took too long! Please make sure your words have been entered correctly";
 
@@ -72,8 +72,11 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
     var width = parseInt(treeWidth) - 1;
     const guestAnswerList = user.isLoggedIn ? [] : answerList.map(word => word.word);
     const guestAllowedList = user.isLoggedIn ? [] : allowedList.map(word => word.word);
-    axios.patch(BACKEND_COMPUTE, 
+
+    var start = Date.now();
+    axios.patch(BACKEND_COMPUTE,
         {
+            tree: "",
             wordList: guestAnswerList,
             allowedList: guestAllowedList
         }, {
@@ -96,11 +99,30 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
         // }
         setShowPrompt(false);
         destination = '/DecisionTree';
+        window.scrollTo(0, 0);
         navigate(destination);
+        var end = Date.now();
+        var time = end - start;
+        setTime(time);
+        // check this part thoroughly
+        if (user.isLoggedIn) {
+            axios.patch(BACKEND_SET_TIME,
+                {}, {
+                params: {
+                    username: user.name,
+                    time: parseInt(time)
+                }
+            }).catch((error) => {
+                setCloseable(true);
+                setPromptMessage("Error saving time" + str);
+                setShowPrompt(true);
+            });
+        }
 
     }).catch((error) => {
         setCloseable(true);
         setPromptMessage("Error syncing to backend! Please try again later" + str);
         setShowPrompt(true);
     });
+
 }

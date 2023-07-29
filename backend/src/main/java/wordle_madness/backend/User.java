@@ -1,7 +1,7 @@
 package wordle_madness.backend;
 
 import jakarta.persistence.*;
-import wordle_madness.backend.algo.*;
+// import wordle_madness.backend.algo.*;
 
 import java.util.*;
 
@@ -19,6 +19,8 @@ public class User {
     // private NestedMap<Integer, String, List<String>> tree;
     @Column(length = Integer.MAX_VALUE)
     private String tree;
+    // time in milliseconds
+    private int time;
 
     private boolean isLoggedIn;
 
@@ -31,13 +33,14 @@ public class User {
     public User() {
     }
 
-    public User(String name, String password) {
+    public User(String name, String password, Initializer wordsAndTree, int time) {
         setName(name);
         setPassword(password);
         this.wordList = new ArrayList<>();
         this.allowedList = new ArrayList<>();
         this.isLoggedIn = true;
-        this.tree = "";
+        this.tree = wordsAndTree.getTree();
+        this.time = time;
     }
 
     public String getName() {
@@ -110,12 +113,12 @@ public class User {
         return this.tree;
     }
 
-    // public void setTree(NestedMap<Integer, String, List<String>> tree) {
-    // this.tree = tree;
-    // }
+    public void setTime(int time) {
+        this.time = time;
+    }
 
-    // public NestedMap<Integer, String, List<String>> getTree() {
-    // return this.tree;
-    // }
+    public int getTime() {
+        return this.time;
+    }
 
 }

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { BACKEND_LOGIN, BACKEND_REGISTER } from '../Constants.js';
 
-export default function LoginLogic(initialAnswerList, initialAllowedList, setUser, username, passwordValues, setShowPrompt, 
-    setPromptMessage, setCloseable, type, navigate, setUnverifiedUser) {
+export default function LoginLogic(initialAnswerList, initialAllowedList, setUser, username, passwordValues, setShowPrompt,
+    setPromptMessage, setCloseable, type, navigate, setUnverifiedUser, tree, time) {
 
     const handleInvalidLogin = (data) => {
         setCloseable(true);
@@ -57,13 +57,16 @@ export default function LoginLogic(initialAnswerList, initialAllowedList, setUse
             setCloseable(false);
             setPromptMessage("Registering...");
             setShowPrompt(true);
-            axios.post(BACKEND_REGISTER, { 
-                wordList: initialAnswerList.map(word => word.word), 
-                allowedList: initialAllowedList.map(word => word.word)
-             }, {
+            axios.post(BACKEND_REGISTER,
+                {
+                    tree: JSON.stringify(tree),
+                    wordList: initialAnswerList.map(word => word.word),
+                    allowedList: initialAllowedList.map(word => word.word)
+                }, {
                 params: {
                     name: username,
-                    password: passwordValues.password
+                    password: passwordValues.password,
+                    time: parseInt(time)
                 }
             })
                 .then((response) => {

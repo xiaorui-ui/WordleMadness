@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wordle_madness.backend.algo.*;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -49,6 +48,12 @@ public class UserManagementService {
     public void setListsToSame(String username) {
         User currentUser = userRepository.findUserByName(username);
         currentUser.setListsToSame();
+        userRepository.save(currentUser);
+    }
+
+    public void setTime(String username, int time) {
+        User currentUser = userRepository.findUserByName(username);
+        currentUser.setTime(time);
         userRepository.save(currentUser);
     }
 
@@ -112,7 +117,8 @@ public class UserManagementService {
         }
     }
 
-    public String registerUser(String name, String password, DoubleWordArray initialWords) {
+    public String registerUser(String name, String password, Initializer wordsAndTree,
+            int time) {
         userLocks.putIfAbsent(name, new ReentrantLock());
         ReentrantLock userLock = userLocks.get(name);
         userLock.lock();
@@ -120,9 +126,10 @@ public class UserManagementService {
             if (userRepository.existsUserByName(name)) {
                 return "User already exists";
             } else {
-                User newUser = new User(name, password);
-                newUser.addWords(initialWords.getWordList());
-                newUser.addAllowedWords(initialWords.getAllowedList());
+                User newUser = new User(name, password, wordsAndTree, time);
+                // to ensure that answer and allowed lists are pointing to different objects?
+                newUser.addWords(wordsAndTree.getWordList());
+                newUser.addAllowedWords(wordsAndTree.getAllowedList());
                 userRepository.save(newUser);
                 return "Registered";
             }
@@ -146,27 +153,32 @@ public class UserManagementService {
         return currentUser.getTree();
     }
 
+    public int getTime(String username) {
+        User currentUser = userRepository.findUserByName(username);
+        return currentUser.getTime();
+    }
+
     public String leastTries(String username, int width) {
-            CompletableFuture<String> futureTreeString = CompletableFuture.supplyAsync(() -> {
-                User currentUser = userRepository.findUserByName(username);
-                ArrayList<String> allowed = currentUser.getAllowedList();
-                ArrayList<String> ans = currentUser.getWordList();
-                ObjectMapper objectMapper = new ObjectMapper();
-                NestedMap<Integer, String, List<String>> tree = new WordleMemo(allowed, ans,
-                        allowed.get(0).length())
-                        .solveMemo(ans, width);
-                try {
-                    String treeString = objectMapper.writeValueAsString(tree);
-                    currentUser.setTree(new Tree(treeString));
-                    userRepository.save(currentUser);
-                    return treeString;
-                } catch (JsonProcessingException j) {
-                    return "Error occurred when processing list!";
-                }
-            });
-            return futureTreeString.completeOnTimeout(
-                    "Computing of tree took too long! Please make sure your words have been entered correctly",
-                    5,
-                    TimeUnit.MINUTES).join();
+        CompletableFuture<String> futureTreeString = CompletableFuture.supplyAsync(() -> {
+            User currentUser = userRepository.findUserByName(username);
+            ArrayList<String> allowed = currentUser.getAllowedList();
+            ArrayList<String> ans = currentUser.getWordList();
+            ObjectMapper objectMapper = new ObjectMapper();
+            NestedMap<Integer, String, List<String>> tree = new WordleMemo(allowed, ans,
+                    allowed.get(0).length())
+                    .solveMemo(ans, width);
+            try {
+                String treeString = objectMapper.writeValueAsString(tree);
+                currentUser.setTree(new Tree(treeString));
+                userRepository.save(currentUser);
+                return treeString;
+            } catch (JsonProcessingException j) {
+                return "Error occurred when processing list!";
+            }
+        });
+        return futureTreeString.completeOnTimeout(
+                "Computing of tree took too long! Please make sure your words have been entered correctly",
+                5,
+                TimeUnit.MINUTES).join();
     }
 }

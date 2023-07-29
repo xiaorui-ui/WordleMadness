@@ -1,4 +1,5 @@
 import axios from 'axios';
+import TxtHelp from "./Welcome/TxtHelp"
 import { useState } from "react";
 import { BACKEND_ADD_WORDS, BACKEND_ADD_ALLOWED_WORDS } from "./Constants";
 
@@ -6,6 +7,7 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
     onlyLetters, setWordListFreq, user, id }) {
 
     const [selectedFile, setSelectedFile] = useState(null);
+    const [showTxtHelp, setShowTxtHelp] = useState(false);
 
     function sameNumberLetters(list, str) {
         for (let i = 0; i < list.length - 1; i++) {
@@ -113,6 +115,10 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
         };
     }
 
+    const handleHelp = () => {
+        setShowTxtHelp(true);
+    }
+
     function extractWords(contents) {
         const wordPattern = /\b\w+\b/g; // Regular expression to match words
         const matches = contents.match(wordPattern);
@@ -121,7 +127,7 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
 
 
     return (
-        <div>
+        <>
             <>Upload TXT File: </>
             <input
                 id="file-upload"
@@ -132,6 +138,17 @@ export default function TxtWordList({ wordList, setWordList, len, setPromptMessa
                 style={{ fontSize: "14px" }}
             />
             {selectedFile && <p>Selected file: {selectedFile.name}</p>}
-        </div>
+
+            <br />
+
+            <button className="button-2" style={{ position: "absolute", left: "50%" }}
+                onClick={handleHelp}>How it works</button>
+
+            <br />
+
+            {showTxtHelp && <TxtHelp setShowTxtHelp={setShowTxtHelp} />}
+
+            <div style={{ height: "50px" }}></div>
+        </>
     );
 }

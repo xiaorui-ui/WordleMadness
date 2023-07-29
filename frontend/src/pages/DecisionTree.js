@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import React, { useEffect, useRef } from 'react';
 // import Username from "../components/Username.js";
 import Tree from "../components/DecisionTree/Tree.js";
 
 
-export default function DecisionTree({ user, handleLogOut, bestTree }) {
+export default function DecisionTree({ user, handleLogOut, bestTree, time }) {
 
     return (
         <>
@@ -12,7 +13,7 @@ export default function DecisionTree({ user, handleLogOut, bestTree }) {
                 {!user.isLoggedIn ?
                     <>
                         <br />
-                        <Link to="/Login">Login to use decision tree</Link>
+                        <Link to="/Login">Login</Link>
                         <br />
                     </>
                     :
@@ -31,12 +32,25 @@ export default function DecisionTree({ user, handleLogOut, bestTree }) {
             </div>
 
             <div className="main-content" >
-                <p>Note: This tree is updated the last time compute was pressed within your account,
-                    and <i>does not</i> auto-update upon logging in.</p>
+                <p>
+                    Note: This tree is updated the last time compute was pressed within your account,
+                    and <i>does not</i> auto-update upon logging in.
+                </p>
+
+
                 <br />
-                <p>Press a colouring to explore the sub-branch! Press it again to collapse it.</p>
-                <br />
-                {(bestTree === "") ? <>Compute or log in to get tree!</> : <Tree bestTree={bestTree} />}
+
+                {(bestTree === "") ? <>Compute or log in to get tree!</> :
+                    <>
+                        <p>
+                            {(time !== -1) && <p>Time taken: {time / 1000} s</p>}
+                            <br />
+                            Press a colouring to explore the sub-branch! Press it again to collapse it.
+
+
+                        </p>
+                        <Tree bestTree={bestTree} />
+                    </>}
             </div>
         </>
     )

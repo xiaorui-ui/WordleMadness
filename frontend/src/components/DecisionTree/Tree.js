@@ -26,9 +26,13 @@ export default function Tree({ bestTree }) {
     return (
         <div style={{ paddingLeft: "100px" }}>
             <br />
-            <>{bestTree.w.length} words,
-                {/* best word: {bestTree.v}, */}
-                {keyList.length} colourings, {bestTree.tries} tries total</>
+            {(bestTree.guesses > 1) ?
+                <>{bestTree.w.length} words, {keyList.length}
+                    &nbsp;colourings, {bestTree.guesses}
+                    &nbsp;total or {(bestTree.guesses / bestTree.w.length).toFixed(3)}
+                    &nbsp;average guesses left</> :
+                <>Solved!</>}
+
             <div style={{ height: "10px" }}></div>
             {keyList.map(
                 (x, i) => {
