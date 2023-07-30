@@ -18,15 +18,15 @@ export default function UserGuide({ user, handleLogOut }) {
                 <div style={{ height: "50px" }}></div>
 
                 <h2 style={{ fontWeight: 'normal' }}>Pages</h2>
-                <Link to="/">Edit Word Lists</Link> <br />
-                <Link to="/DecisionTree">Decision Tree</Link> <br />
                 {user.isLoggedIn ?
                     <>
-                        <span onClick={handleLogOut} style={{ cursor: "pointer" }}>Log Out</span> <br />
+                        <span onClick={handleLogOut} style={{ cursor: "pointer" }}>Log Out</span>
 
                     </> :
-                    <Link to="/Login">Login</Link>
-                }
+                    <Link to="/Login">Login/Registration</Link>
+                } <br />
+                <Link to="/">Edit Word Lists</Link> <br />
+                <Link to="/DecisionTree">Decision Tree</Link> <br />
 
             </div>
 
@@ -52,7 +52,7 @@ export default function UserGuide({ user, handleLogOut }) {
                     We want to take it a one level further, and find the most efficient solution for any word list you provide.
                     By efficient, we mean least number of guesses <i>on average</i>. Here, we assume that every word has an equal chance to
                     be the answer, so this is equivalent to having least number of guesses in total.
-                    We also want you(yes you!) to see how parameters will affect the Wordle solving time and result in a
+                    We also want you(yes, you!) to see how parameters will affect the Wordle solving time and result in a
                     hands-on manner.
 
                 </p>

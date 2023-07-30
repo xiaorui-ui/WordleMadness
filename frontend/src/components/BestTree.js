@@ -47,25 +47,25 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
         return true;
     }
 
-    function validTreeWidth(treeWidth) {
-        var arr = ["1", "2", "3", "4", "5", "6", "7", "8"];
-        if (arr.includes(treeWidth)) {
-            return true;
-        }
-        setCloseable(true);
-        setPromptMessage("Tree width needs to be a whole number from 1-8!" + str);
-        setShowPrompt(true);
-        return false;
-    }
+    // function validTreeWidth(treeWidth) {
+    //     var arr = ["1", "2", "3", "4", "5", "6", "7", "8"];
+    //     if (arr.includes(treeWidth)) {
+    //         return true;
+    //     }
+    //     setCloseable(true);
+    //     setPromptMessage("Tree width needs to be a whole number from 1-8!" + str);
+    //     setShowPrompt(true);
+    //     return false;
+    // }
 
     let destination = '';
 
     setCloseable(false);
     setPromptMessage("Loading result...");
     setShowPrompt(true);
-    if (!validTreeWidth(treeWidth)) {
-        return;
-    }
+    // if (!validTreeWidth(treeWidth)) {
+    //     return;
+    // }
     if (!checkValid(answerList, allowedList)) {
         return;
     }

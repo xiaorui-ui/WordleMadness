@@ -83,7 +83,8 @@ button {
   border: none;
   border-radius: 5px;
   padding: 8px;
-  /* font: Sans-serif; */
+  font-family: Cambria;
+  font-size: 14px;
 }
 
 .button-1 {
@@ -148,4 +149,19 @@ a:hover {
 .main-content {
   flex: 1;
   margin-left: 15%;
+}
+
+.options {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  border-radius: 4px;
+  overflow-y: auto;
+}
+
+.show {
+  display: block;
 }
