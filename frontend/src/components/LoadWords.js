@@ -7,7 +7,7 @@ import {
 } from "./Constants";
 
 export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessage, setPromptMessage, closeable, setCloseable,
-    setAnswerList, setAllowedList, setBestTree, setTime }) {
+    setAnswerList, setAllowedList, setBestTree, setTime, setGuestListsCacheChecked }) {
 
     const handleDismiss = useCallback(() => {
         setShowPrompt(false);
@@ -96,9 +96,10 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
                 setAnswerList(DEFAULT_WORDS);
                 setWordListLoaded(true);
             }
+            setGuestListsCacheChecked(true);
             setBestTreeLoaded(true);
         }
-    }, [user, setAnswerList, setAllowedList, setBestTree, setShowPrompt, setCloseable, setPromptMessage]);
+    }, [user, setAnswerList, setAllowedList, setBestTree, setTime, setGuestListsCacheChecked, setShowPrompt, setCloseable, setPromptMessage]);
     return (
         <>
             {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />)}
