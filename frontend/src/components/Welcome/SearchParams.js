@@ -8,7 +8,6 @@ const SearchParams = ({ treeWidth, setTreeWidth }) => {
     }
 
     const [selectedOption, setSelectedOption] = useState('');
-    const [hoveredOption, setHoveredOption] = useState('');
     const options = [1, 2, 3, 4, 5, 6, 7, 8].map(i => {
         return { value: i, label: i };
     })
@@ -16,14 +15,12 @@ const SearchParams = ({ treeWidth, setTreeWidth }) => {
     const handleOptionChange = (x) => {
         setSelectedOption(x);
         setTreeWidth(Number(x.value));
-        console.log(Number(x.value));
-        console.log(typeof Number(x.value));
     };
 
     const customStyles = {
         option: (provided, state) => ({
             ...provided,
-            color: state.isFocused ? 'red' : 'black',
+            color: 'black',
             cursor: 'pointer',
         }),
     };
@@ -51,7 +48,7 @@ const SearchParams = ({ treeWidth, setTreeWidth }) => {
 
                 It is worth mentioning that the word with the most number of colourings need not be the best word,
                 which is why we care about the width of the decision tree in the first place.
-                The smallest counter-example we are aware of with common words is counter_example.txt,
+                The smallest counter-example we are aware of with common words is counter_example.txt for both lists,
                 which we provided in the link.
                 However, number of colourings is still a decent and quick method at predicting which word is the best,
                 which is why we chose it to be the pruning method in the first place.

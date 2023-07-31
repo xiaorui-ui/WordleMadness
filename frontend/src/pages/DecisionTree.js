@@ -40,7 +40,7 @@ export default function DecisionTree({ user, handleLogOut, bestTree, time }) {
 
                 <br />
 
-                {(bestTree === "") ? <>Compute or log in to get tree!</> :
+                {(bestTree === "") ? <>Press "best word" or log in to get tree!</> :
                     <>
                         <p>
                             {(time !== -1) && <p>Time taken: {time / 1000} s</p>}

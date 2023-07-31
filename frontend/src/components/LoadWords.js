@@ -41,8 +41,6 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
                     const ansList = response.data.map(str => { return { word: str, remove: false } });
                     setAnswerList(ansList);
 
-                    console.log(ansList);
-
                     setWordListLoaded(true);
                 })
                 .catch((error) => {
@@ -53,8 +51,6 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
             axios.get(BACKEND_GET_ALLOWED_WORD_LIST, { params: { username: user.name } })
                 .then((response) => {
                     const allowedList = response.data.map(str => { return { word: str, remove: false } });
-
-                    console.log(allowedList);
 
                     setAllowedList(allowedList);
                     setAllowedListLoaded(true);
@@ -68,8 +64,6 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
                 .then((response) => {
                     setBestTree(response.data);
 
-                    console.log(response.data);
-
                     setBestTreeLoaded(true);
                 })
                 .catch((error) => {
@@ -80,8 +74,6 @@ export default function LoadWords({ user, showPrompt, setShowPrompt, promptMessa
             axios.get(BACKEND_GET_TIME, { params: { username: user.name } })
                 .then((response) => {
                     setTime(response.data);
-
-                    console.log(response.data);
 
                     setTimeLoaded(true);
                 })
