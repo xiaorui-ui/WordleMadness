@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class GuestManagementService {
-    public String leastTries(Initializer wordsAndTree, int width) {
+    public CompletableFuture<String> leastTries(Initializer wordsAndTree, int width) {
         CompletableFuture<String> futureTreeString = CompletableFuture.supplyAsync(() -> {
             List<String> allowed = List.of(wordsAndTree.getAllowedList());
             List<String> ans = List.of(wordsAndTree.getWordList());
@@ -30,6 +30,6 @@ public class GuestManagementService {
         return futureTreeString.completeOnTimeout(
                 "Computing of tree took too long! Please make sure your words have been entered correctly",
                 1,
-                TimeUnit.MINUTES).join();
+                TimeUnit.MINUTES);
     }
 }

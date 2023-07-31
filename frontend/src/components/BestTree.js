@@ -114,7 +114,7 @@ export default function BestTree(answerList, allowedList, treeWidth, setBestTree
 
     }).catch((error) => {
         setCloseable(true);
-        setPromptMessage("Error syncing to backend! Please try again later" + str);
+        setPromptMessage("Error syncing to backend! Please try again later." + str);
         setShowPrompt(true);
     });
 

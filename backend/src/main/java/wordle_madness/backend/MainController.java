@@ -3,6 +3,7 @@ package wordle_madness.backend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @CrossOrigin(origins = "${spring.datasource.frontend}")
@@ -94,7 +95,7 @@ public class MainController {
     }
 
     @PatchMapping(path = "/compute")
-    public String leastTries(
+    public CompletableFuture<String> leastTries(
             @RequestParam String username, @RequestParam int width,
             @RequestBody Initializer wordsAndTree) {
         if (username.equals("")) {
