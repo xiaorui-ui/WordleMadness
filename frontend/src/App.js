@@ -29,6 +29,10 @@ export default function App() {
 
   const [closeable, setCloseable] = useState(true);
 
+  // Variable to ensure that on initial render,
+  // retrieving guest list cache through LoadWords occurs before updating the cache through useEffect
+  const [guestListsCacheChecked, setGuestListsCacheChecked] = useState(false);
+
   // Prompt variables for individual page prompts
   const [showPagePrompt, setShowPagePrompt] = useState(false);
 
@@ -167,10 +171,10 @@ export default function App() {
 
   // If user is not logged in, saving the lists in sessionStorage instead
   useEffect(() => {
-    if (!user.isLoggedIn) {
+    if (!user.isLoggedIn && guestListsCacheChecked) {
       sessionStorage.setItem("guest-lists", JSON.stringify({ ansList: answerList, allowedList: allowedList }));
     }
-  }, [user, allowedList, answerList]);
+  }, [user, allowedList, answerList, guestListsCacheChecked]);
 
   // Logging out the user upon closing the tab or refreshing (abrupt logout)
   useEffect(() => {
@@ -197,7 +201,8 @@ export default function App() {
 
       <LoadWords user={user} showPrompt={showPrompt} setShowPrompt={setShowPrompt} promptMessage={promptMessage}
         setPromptMessage={setPromptMessage} closeable={closeable} setCloseable={setCloseable}
-        setAnswerList={setAnswerList} setAllowedList={setAllowedList} setBestTree={setBestTree} setTime={setTime} />
+        setAnswerList={setAnswerList} setAllowedList={setAllowedList} setBestTree={setBestTree} setTime={setTime}
+        setGuestListsCacheChecked={setGuestListsCacheChecked} />
 
       {showPrompt && (<CustomPrompt message={promptMessage} onDismiss={handleDismiss} closeable={closeable} />)}
 

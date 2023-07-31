@@ -27,9 +27,11 @@ public class GuestManagementService {
                 return "Error occurred when processing list!";
             }
         });
-        return futureTreeString.completeOnTimeout(
+        CompletableFuture<String> response = futureTreeString.completeOnTimeout(
                 "Computing of tree took too long! Please make sure your words have been entered correctly",
                 1,
                 TimeUnit.MINUTES);
+        response.thenRunAsync(System::gc);
+        return response;
     }
 }
