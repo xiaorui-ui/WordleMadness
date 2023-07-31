@@ -1,7 +1,7 @@
 // Local backend
 // const BACKEND = "http://localhost:8080/backend";
 // Production backend
-const BACKEND = "https://wordle-madness-backend.as.r.appspot.com/backend";
+const BACKEND = "https://wordle-madness-backend.delightfulwater-21442138.eastasia.azurecontainerapps.io/backend";
 const BACKEND_CACHED_LOGIN = BACKEND + "/cachedLogIn";
 const BACKEND_LOGIN = BACKEND + "/verify";
 const BACKEND_LOGOUT = BACKEND + "/logOut";
