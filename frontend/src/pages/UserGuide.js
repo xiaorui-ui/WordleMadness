@@ -95,14 +95,13 @@ export default function UserGuide({ user, handleLogOut }) {
                     <div style={{ height: "30px" }}></div>
 
                     Due to technical limitations, we can't handle lists that are too long at the moment. The web app can handle
-                    answer lists several thousand words long and allowed lists ten thousand words long.
+                    answer and allowed lists a few thousand words long if you are logged in, and 50 words if you aren't.
 
                 </p>
 
                 <h2 id="Decision tree"> Decision Tree </h2>
                 <p className="break-after-characters">
                     At long last, after 2 months of hard work(amongst juggling other commitments), the decision tree is finally available!
-                    To use this feature, you have to be logged in.
 
                     <div style={{ height: "30px" }}></div>
 
